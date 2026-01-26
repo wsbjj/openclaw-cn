@@ -7,21 +7,21 @@ import { formatDocsLink } from "../terminal/links.js";
 import { theme } from "../terminal/theme.js";
 
 export function registerAcpCli(program: Command) {
-  const acp = program.command("acp").description("Run an ACP bridge backed by the Gateway");
+  const acp = program.command("acp").description("运行由网关支持的 ACP 桥接");
 
   acp
-    .option("--url <url>", "Gateway WebSocket URL (defaults to gateway.remote.url when configured)")
-    .option("--token <token>", "Gateway token (if required)")
-    .option("--password <password>", "Gateway password (if required)")
-    .option("--session <key>", "Default session key (e.g. agent:main:main)")
-    .option("--session-label <label>", "Default session label to resolve")
-    .option("--require-existing", "Fail if the session key/label does not exist", false)
-    .option("--reset-session", "Reset the session key before first use", false)
-    .option("--no-prefix-cwd", "Do not prefix prompts with the working directory", false)
-    .option("--verbose, -v", "Verbose logging to stderr", false)
+    .option("--url <url>", "网关 WebSocket URL（已配置时默认为 gateway.remote.url）")
+    .option("--token <token>", "网关令牌（如需要）")
+    .option("--password <password>", "网关密码（如需要）")
+    .option("--session <key>", "默认会话密钥（例如 agent:main:main）")
+    .option("--session-label <label>", "要解析的默认会话标签")
+    .option("--require-existing", "如果会话密钥/标签不存在则失败", false)
+    .option("--reset-session", "首次使用前重置会话密钥", false)
+    .option("--no-prefix-cwd", "不要在提示符前加工作目录", false)
+    .option("--verbose, -v", "向 stderr 输出详细日志", false)
     .addHelpText(
       "after",
-      () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/acp", "docs.clawd.bot/cli/acp")}\n`,
+      () => `\n${theme.muted("文档：")} ${formatDocsLink("/cli/acp", "docs.clawd.bot/cli/acp")}\n`,
     )
     .action((opts) => {
       try {
@@ -44,12 +44,12 @@ export function registerAcpCli(program: Command) {
 
   acp
     .command("client")
-    .description("Run an interactive ACP client against the local ACP bridge")
-    .option("--cwd <dir>", "Working directory for the ACP session")
-    .option("--server <command>", "ACP server command (default: clawdbot)")
-    .option("--server-args <args...>", "Extra arguments for the ACP server")
-    .option("--server-verbose", "Enable verbose logging on the ACP server", false)
-    .option("--verbose, -v", "Verbose client logging", false)
+    .description("运行与本地 ACP 桥接交互的客户端")
+    .option("--cwd <dir>", "ACP 会话的工作目录")
+    .option("--server <command>", "ACP 服务器命令（默认：clawdbot）")
+    .option("--server-args <args...>", "ACP 服务器的额外参数")
+    .option("--server-verbose", "在 ACP 服务器上启用详细日志", false)
+    .option("--verbose, -v", "详细客户端日志", false)
     .action(async (opts) => {
       try {
         await runAcpClientInteractive({

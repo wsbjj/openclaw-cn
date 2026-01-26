@@ -20,17 +20,17 @@ import { registerBrowserStateCommands } from "./browser-cli-state.js";
 export function registerBrowserCli(program: Command) {
   const browser = program
     .command("browser")
-    .description("Manage clawd's dedicated browser (Chrome/Chromium)")
-    .option("--url <url>", "Override browser control URL (default from ~/.clawdbot/clawdbot.json)")
-    .option("--browser-profile <name>", "Browser profile name (default from config)")
-    .option("--json", "Output machine-readable JSON", false)
+    .description("管理 clawd 专用浏览器（Chrome/Chromium）")
+    .option("--url <url>", "覆盖浏览器控制 URL（默认来自 ~/.clawdbot/clawdbot.json）")
+    .option("--browser-profile <name>", "浏览器配置文件名称（默认来自配置）")
+    .option("--json", "输出机器可读的 JSON", false)
     .addHelpText(
       "after",
       () =>
-        `\n${theme.heading("Examples:")}\n${formatHelpExamples(
+        `\n${theme.heading("示例：")}\n${formatHelpExamples(
           [...browserCoreExamples, ...browserActionExamples].map((cmd) => [cmd, ""]),
           true,
-        )}\n\n${theme.muted("Docs:")} ${formatDocsLink(
+        )}\n\n${theme.muted("文档：")} ${formatDocsLink(
           "/cli/browser",
           "docs.clawd.bot/cli/browser",
         )}\n`,

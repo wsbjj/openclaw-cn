@@ -20,21 +20,22 @@ function parsePortWithFallback(value: unknown, fallback: number): number {
 export function registerNodeCli(program: Command) {
   const node = program
     .command("node")
-    .description("Run a headless node host (system.run/system.which)")
+    .description("运行无头节点主机（system.run/system.which）")
     .addHelpText(
       "after",
-      () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/node", "docs.clawd.bot/cli/node")}\n`,
+      () =>
+        `\n${theme.muted("文档：")} ${formatDocsLink("/cli/node", "docs.clawd.bot/cli/node")}\n`,
     );
 
   node
     .command("run")
-    .description("Run the headless node host (foreground)")
-    .option("--host <host>", "Gateway host")
-    .option("--port <port>", "Gateway port")
-    .option("--tls", "Use TLS for the gateway connection", false)
-    .option("--tls-fingerprint <sha256>", "Expected TLS certificate fingerprint (sha256)")
-    .option("--node-id <id>", "Override node id (clears pairing token)")
-    .option("--display-name <name>", "Override node display name")
+    .description("运行无头节点主机（前台）")
+    .option("--host <host>", "网关主机")
+    .option("--port <port>", "网关端口")
+    .option("--tls", "使用 TLS 连接网关", false)
+    .option("--tls-fingerprint <sha256>", "预期的 TLS 证书指纹（sha256）")
+    .option("--node-id <id>", "覆盖节点 ID（清除配对令牌）")
+    .option("--display-name <name>", "覆盖节点显示名称")
     .action(async (opts) => {
       const existing = await loadNodeHostConfig();
       const host =
@@ -52,48 +53,48 @@ export function registerNodeCli(program: Command) {
 
   node
     .command("status")
-    .description("Show node host status")
-    .option("--json", "Output JSON", false)
+    .description("显示节点主机状态")
+    .option("--json", "输出 JSON", false)
     .action(async (opts) => {
       await runNodeDaemonStatus(opts);
     });
 
   node
     .command("install")
-    .description("Install the node host service (launchd/systemd/schtasks)")
-    .option("--host <host>", "Gateway host")
-    .option("--port <port>", "Gateway port")
-    .option("--tls", "Use TLS for the gateway connection", false)
-    .option("--tls-fingerprint <sha256>", "Expected TLS certificate fingerprint (sha256)")
-    .option("--node-id <id>", "Override node id (clears pairing token)")
-    .option("--display-name <name>", "Override node display name")
-    .option("--runtime <runtime>", "Service runtime (node|bun). Default: node")
-    .option("--force", "Reinstall/overwrite if already installed", false)
-    .option("--json", "Output JSON", false)
+    .description("安装节点主机服务（launchd/systemd/schtasks）")
+    .option("--host <host>", "网关主机")
+    .option("--port <port>", "网关端口")
+    .option("--tls", "使用 TLS 连接网关", false)
+    .option("--tls-fingerprint <sha256>", "预期的 TLS 证书指纹（sha256）")
+    .option("--node-id <id>", "覆盖节点 ID（清除配对令牌）")
+    .option("--display-name <name>", "覆盖节点显示名称")
+    .option("--runtime <runtime>", "服务运行时（node|bun）。默认：node")
+    .option("--force", "如已安装则重新安装/覆盖", false)
+    .option("--json", "输出 JSON", false)
     .action(async (opts) => {
       await runNodeDaemonInstall(opts);
     });
 
   node
     .command("uninstall")
-    .description("Uninstall the node host service (launchd/systemd/schtasks)")
-    .option("--json", "Output JSON", false)
+    .description("卸载节点主机服务（launchd/systemd/schtasks）")
+    .option("--json", "输出 JSON", false)
     .action(async (opts) => {
       await runNodeDaemonUninstall(opts);
     });
 
   node
     .command("stop")
-    .description("Stop the node host service (launchd/systemd/schtasks)")
-    .option("--json", "Output JSON", false)
+    .description("停止节点主机服务（launchd/systemd/schtasks）")
+    .option("--json", "输出 JSON", false)
     .action(async (opts) => {
       await runNodeDaemonStop(opts);
     });
 
   node
     .command("restart")
-    .description("Restart the node host service (launchd/systemd/schtasks)")
-    .option("--json", "Output JSON", false)
+    .description("重启节点主机服务（launchd/systemd/schtasks）")
+    .option("--json", "输出 JSON", false)
     .action(async (opts) => {
       await runNodeDaemonRestart(opts);
     });
