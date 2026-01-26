@@ -5,25 +5,22 @@ import { formatCliBannerLine, hasEmittedCliBanner } from "../banner.js";
 import type { ProgramContext } from "./context.js";
 
 const EXAMPLES = [
-  [
-    "clawdbot channels login --verbose",
-    "Link personal WhatsApp Web and show QR + connection logs.",
-  ],
+  ["clawdbot channels login --verbose", "连接个人 WhatsApp Web 并显示二维码和连接日志。"],
   [
     'clawdbot message send --target +15555550123 --message "Hi" --json',
-    "Send via your web session and print JSON result.",
+    "通过你的 Web 会话发送消息并输出 JSON 结果。",
   ],
-  ["clawdbot gateway --port 18789", "Run the WebSocket Gateway locally."],
-  ["clawdbot --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
-  ["clawdbot gateway --force", "Kill anything bound to the default gateway port, then start it."],
-  ["clawdbot gateway ...", "Gateway control via WebSocket."],
+  ["clawdbot gateway --port 18789", "在本地运行 WebSocket 网关。"],
+  ["clawdbot --dev gateway", "在 ws://127.0.0.1:19001 运行开发网关（隔离状态/配置）。"],
+  ["clawdbot gateway --force", "终止占用默认网关端口的进程，然后启动网关。"],
+  ["clawdbot gateway ...", "通过 WebSocket 控制网关。"],
   [
     'clawdbot agent --to +15555550123 --message "Run summary" --deliver',
-    "Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.",
+    "通过网关与智能体直接对话；可选择发送 WhatsApp 回复。",
   ],
   [
     'clawdbot message send --channel telegram --target @mychat --message "Hi"',
-    "Send via your Telegram bot.",
+    "通过你的 Telegram 机器人发送消息。",
   ],
 ] as const;
 
@@ -34,14 +31,14 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     .version(ctx.programVersion)
     .option(
       "--dev",
-      "Dev profile: isolate state under ~/.clawdbot-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
+      "开发模式：将状态隔离到 ~/.clawdbot-dev，默认网关端口 19001，并调整派生端口（浏览器/画布）",
     )
     .option(
       "--profile <name>",
-      "Use a named profile (isolates CLAWDBOT_STATE_DIR/CLAWDBOT_CONFIG_PATH under ~/.clawdbot-<name>)",
+      "使用命名配置文件（将 CLAWDBOT_STATE_DIR/CLAWDBOT_CONFIG_PATH 隔离到 ~/.clawdbot-<name>）",
     );
 
-  program.option("--no-color", "Disable ANSI colors", false);
+  program.option("--no-color", "禁用 ANSI 颜色", false);
 
   program.configureHelp({
     optionTerm: (option) => theme.option(option.flags),
@@ -51,9 +48,9 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
   program.configureOutput({
     writeOut: (str) => {
       const colored = str
-        .replace(/^Usage:/gm, theme.heading("Usage:"))
-        .replace(/^Options:/gm, theme.heading("Options:"))
-        .replace(/^Commands:/gm, theme.heading("Commands:"));
+        .replace(/^Usage:/gm, theme.heading("用法："))
+        .replace(/^Options:/gm, theme.heading("选项："))
+        .replace(/^Commands:/gm, theme.heading("命令："));
       process.stdout.write(colored);
     },
     writeErr: (str) => process.stderr.write(str),
@@ -83,6 +80,6 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
   program.addHelpText("afterAll", ({ command }) => {
     if (command !== program) return "";
     const docs = formatDocsLink("/cli", "docs.clawd.bot/cli");
-    return `\n${theme.heading("Examples:")}\n${fmtExamples}\n\n${theme.muted("Docs:")} ${docs}\n`;
+    return `\n${theme.heading("示例：")}\n${fmtExamples}\n\n${theme.muted("文档：")} ${docs}\n`;
   });
 }

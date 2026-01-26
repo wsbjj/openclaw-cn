@@ -34,67 +34,67 @@ function resolveInstallDaemonFlag(
 export function registerOnboardCommand(program: Command) {
   program
     .command("onboard")
-    .description("Interactive wizard to set up the gateway, workspace, and skills")
+    .description("交互式向导，用于设置网关、工作区和技能")
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/onboard", "docs.clawd.bot/cli/onboard")}\n`,
+        `\n${theme.muted("文档：")} ${formatDocsLink("/cli/onboard", "docs.clawd.bot/cli/onboard")}\n`,
     )
-    .option("--workspace <dir>", "Agent workspace directory (default: ~/clawd)")
-    .option("--reset", "Reset config + credentials + sessions + workspace before running wizard")
-    .option("--non-interactive", "Run without prompts", false)
+    .option("--workspace <dir>", "智能体工作区目录（默认：~/clawd）")
+    .option("--reset", "运行向导前重置配置 + 凭据 + 会话 + 工作区")
+    .option("--non-interactive", "无提示运行", false)
     .option(
       "--accept-risk",
-      "Acknowledge that agents are powerful and full system access is risky (required for --non-interactive)",
+      "确认智能体功能强大且完全系统访问存在风险（--non-interactive 必需）",
       false,
     )
-    .option("--flow <flow>", "Wizard flow: quickstart|advanced|manual")
-    .option("--mode <mode>", "Wizard mode: local|remote")
+    .option("--flow <flow>", "向导流程：quickstart|快速开始|advanced|高级|manual|手动")
+    .option("--mode <mode>", "向导模式：local|本地|remote|远程")
     .option(
       "--auth-choice <choice>",
-      "Auth: setup-token|claude-cli|token|chutes|openai-codex|openai-api-key|openrouter-api-key|ai-gateway-api-key|moonshot-api-key|kimi-code-api-key|synthetic-api-key|venice-api-key|codex-cli|gemini-api-key|zai-api-key|apiKey|minimax-api|minimax-api-lightning|opencode-zen|skip",
+      "认证方式：setup-token|claude-cli|token|chutes|openai-codex|openai-api-key|openrouter-api-key|ai-gateway-api-key|moonshot-api-key|kimi-code-api-key|synthetic-api-key|venice-api-key|codex-cli|gemini-api-key|zai-api-key|apiKey|minimax-api|minimax-api-lightning|opencode-zen|skip",
     )
     .option(
       "--token-provider <id>",
-      "Token provider id (non-interactive; used with --auth-choice token)",
+      "Token 提供商 ID（非交互模式；与 --auth-choice token 配合使用）",
     )
-    .option("--token <token>", "Token value (non-interactive; used with --auth-choice token)")
+    .option("--token <token>", "Token 值（非交互模式；与 --auth-choice token 配合使用）")
+    .option("--token-profile-id <id>", "认证配置文件 ID（非交互模式；默认：<provider>:manual）")
+    .option("--token-expires-in <duration>", "可选的 Token 过期时间（如 365d, 12h）")
+    .option("--anthropic-api-key <key>", "Anthropic API 密钥")
+    .option("--openai-api-key <key>", "OpenAI API 密钥")
+    .option("--openrouter-api-key <key>", "OpenRouter API 密钥")
+    .option("--ai-gateway-api-key <key>", "Vercel AI Gateway API 密钥")
+    .option("--moonshot-api-key <key>", "Moonshot API 密钥")
+    .option("--kimi-code-api-key <key>", "Kimi Code API 密钥")
+    .option("--gemini-api-key <key>", "Gemini API 密钥")
+    .option("--zai-api-key <key>", "Z.AI API 密钥")
+    .option("--minimax-api-key <key>", "MiniMax API 密钥")
+    .option("--synthetic-api-key <key>", "Synthetic API 密钥")
+    .option("--venice-api-key <key>", "Venice API 密钥")
+    .option("--opencode-zen-api-key <key>", "OpenCode Zen API 密钥")
+    .option("--gateway-port <port>", "网关端口")
     .option(
-      "--token-profile-id <id>",
-      "Auth profile id (non-interactive; default: <provider>:manual)",
+      "--gateway-bind <mode>",
+      "网关绑定：loopback|本地回环|tailnet|lan|局域网|auto|自动|custom|自定义",
     )
-    .option("--token-expires-in <duration>", "Optional token expiry duration (e.g. 365d, 12h)")
-    .option("--anthropic-api-key <key>", "Anthropic API key")
-    .option("--openai-api-key <key>", "OpenAI API key")
-    .option("--openrouter-api-key <key>", "OpenRouter API key")
-    .option("--ai-gateway-api-key <key>", "Vercel AI Gateway API key")
-    .option("--moonshot-api-key <key>", "Moonshot API key")
-    .option("--kimi-code-api-key <key>", "Kimi Code API key")
-    .option("--gemini-api-key <key>", "Gemini API key")
-    .option("--zai-api-key <key>", "Z.AI API key")
-    .option("--minimax-api-key <key>", "MiniMax API key")
-    .option("--synthetic-api-key <key>", "Synthetic API key")
-    .option("--venice-api-key <key>", "Venice API key")
-    .option("--opencode-zen-api-key <key>", "OpenCode Zen API key")
-    .option("--gateway-port <port>", "Gateway port")
-    .option("--gateway-bind <mode>", "Gateway bind: loopback|tailnet|lan|auto|custom")
-    .option("--gateway-auth <mode>", "Gateway auth: off|token|password")
-    .option("--gateway-token <token>", "Gateway token (token auth)")
-    .option("--gateway-password <password>", "Gateway password (password auth)")
-    .option("--remote-url <url>", "Remote Gateway WebSocket URL")
-    .option("--remote-token <token>", "Remote Gateway token (optional)")
-    .option("--tailscale <mode>", "Tailscale: off|serve|funnel")
-    .option("--tailscale-reset-on-exit", "Reset tailscale serve/funnel on exit")
-    .option("--install-daemon", "Install gateway service")
-    .option("--no-install-daemon", "Skip gateway service install")
-    .option("--skip-daemon", "Skip gateway service install")
-    .option("--daemon-runtime <runtime>", "Daemon runtime: node|bun")
-    .option("--skip-channels", "Skip channel setup")
-    .option("--skip-skills", "Skip skills setup")
-    .option("--skip-health", "Skip health check")
-    .option("--skip-ui", "Skip Control UI/TUI prompts")
-    .option("--node-manager <name>", "Node manager for skills: npm|pnpm|bun")
-    .option("--json", "Output JSON summary", false)
+    .option("--gateway-auth <mode>", "网关认证：off|关闭|token|令牌|password|密码")
+    .option("--gateway-token <token>", "网关令牌（令牌认证）")
+    .option("--gateway-password <password>", "网关密码（密码认证）")
+    .option("--remote-url <url>", "远程网关 WebSocket URL")
+    .option("--remote-token <token>", "远程网关令牌（可选）")
+    .option("--tailscale <mode>", "Tailscale 模式：off|关闭|serve|服务|funnel|隧道")
+    .option("--tailscale-reset-on-exit", "退出时重置 Tailscale serve/funnel")
+    .option("--install-daemon", "安装网关服务")
+    .option("--no-install-daemon", "跳过网关服务安装")
+    .option("--skip-daemon", "跳过网关服务安装")
+    .option("--daemon-runtime <runtime>", "守护进程运行时：node|bun")
+    .option("--skip-channels", "跳过渠道设置")
+    .option("--skip-skills", "跳过技能设置")
+    .option("--skip-health", "跳过健康检查")
+    .option("--skip-ui", "跳过控制 UI/TUI 提示")
+    .option("--node-manager <name>", "技能的 Node 管理器：npm|pnpm|bun")
+    .option("--json", "输出 JSON 摘要", false)
     .action(async (opts, command) => {
       await runCommandWithRuntime(defaultRuntime, async () => {
         const installDaemon = resolveInstallDaemonFlag(command, {

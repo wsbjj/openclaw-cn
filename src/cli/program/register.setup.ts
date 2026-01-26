@@ -10,21 +10,21 @@ import { runCommandWithRuntime } from "../cli-utils.js";
 export function registerSetupCommand(program: Command) {
   program
     .command("setup")
-    .description("Initialize ~/.clawdbot/clawdbot.json and the agent workspace")
+    .description("初始化 ~/.clawdbot/clawdbot.json 和智能体工作区")
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/setup", "docs.clawd.bot/cli/setup")}\n`,
+        `\n${theme.muted("文档：")} ${formatDocsLink("/cli/setup", "docs.clawd.bot/cli/setup")}\n`,
     )
     .option(
       "--workspace <dir>",
-      "Agent workspace directory (default: ~/clawd; stored as agents.defaults.workspace)",
+      "智能体工作区目录（默认：~/clawd；存储为 agents.defaults.workspace）",
     )
-    .option("--wizard", "Run the interactive onboarding wizard", false)
-    .option("--non-interactive", "Run the wizard without prompts", false)
-    .option("--mode <mode>", "Wizard mode: local|remote")
-    .option("--remote-url <url>", "Remote Gateway WebSocket URL")
-    .option("--remote-token <token>", "Remote Gateway token (optional)")
+    .option("--wizard", "运行交互式引导向导", false)
+    .option("--non-interactive", "无提示运行向导", false)
+    .option("--mode <mode>", "向导模式：local|本地|remote|远程")
+    .option("--remote-url <url>", "远程网关 WebSocket URL")
+    .option("--remote-token <token>", "远程网关令牌（可选）")
     .action(async (opts, command) => {
       await runCommandWithRuntime(defaultRuntime, async () => {
         const hasWizardFlags = hasExplicitOptions(command, [

@@ -24,29 +24,29 @@ import { registerMessageBroadcastCommand } from "./message/register.broadcast.js
 export function registerMessageCommands(program: Command, ctx: ProgramContext) {
   const message = program
     .command("message")
-    .description("Send messages and channel actions")
+    .description("发送消息和渠道操作")
     .addHelpText(
       "after",
       () =>
         `
-${theme.heading("Examples:")}
+${theme.heading("示例：")}
 ${formatHelpExamples([
-  ['clawdbot message send --target +15555550123 --message "Hi"', "Send a text message."],
+  ['clawdbot message send --target +15555550123 --message "你好"', "发送文本消息。"],
   [
-    'clawdbot message send --target +15555550123 --message "Hi" --media photo.jpg',
-    "Send a message with media.",
+    'clawdbot message send --target +15555550123 --message "你好" --media photo.jpg',
+    "发送带媒体的消息。",
   ],
   [
-    'clawdbot message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
-    "Create a Discord poll.",
+    'clawdbot message poll --channel discord --target channel:123 --poll-question "吃什么？" --poll-option 披萨 --poll-option 寿司',
+    "创建 Discord 投票。",
   ],
   [
     'clawdbot message react --channel discord --target 123 --message-id 456 --emoji "✅"',
-    "React to a message.",
+    "对消息添加反应。",
   ],
 ])}
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/message", "docs.clawd.bot/cli/message")}`,
+${theme.muted("文档：")} ${formatDocsLink("/cli/message", "docs.clawd.bot/cli/message")}`,
     )
     .action(() => {
       message.help({ error: true });

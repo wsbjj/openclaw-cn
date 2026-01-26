@@ -20,55 +20,51 @@ import { collectOption } from "./helpers.js";
 export function registerAgentCommands(program: Command, args: { agentChannelOptions: string }) {
   program
     .command("agent")
-    .description("Run an agent turn via the Gateway (use --local for embedded)")
-    .requiredOption("-m, --message <text>", "Message body for the agent")
-    .option("-t, --to <number>", "Recipient number in E.164 used to derive the session key")
-    .option("--session-id <id>", "Use an explicit session id")
-    .option("--agent <id>", "Agent id (overrides routing bindings)")
-    .option("--thinking <level>", "Thinking level: off | minimal | low | medium | high")
-    .option("--verbose <on|off>", "Persist agent verbose level for the session")
+    .description("通过网关运行智能体轮次（使用 --local 运行内嵌智能体）")
+    .requiredOption("-m, --message <text>", "发送给智能体的消息内容")
+    .option("-t, --to <number>", "用于派生会话密钥的 E.164 格式接收方号码")
+    .option("--session-id <id>", "使用显式的会话 ID")
+    .option("--agent <id>", "智能体 ID（覆盖路由绑定）")
+    .option(
+      "--thinking <level>",
+      "思考级别：off|关闭 | minimal|最小 | low|低 | medium|中 | high|高",
+    )
+    .option("--verbose <on|off>", "为会话持久化智能体详细日志级别")
     .option(
       "--channel <channel>",
-      `Delivery channel: ${args.agentChannelOptions} (default: ${DEFAULT_CHAT_CHANNEL})`,
+      `交付渠道：${args.agentChannelOptions}（默认：${DEFAULT_CHAT_CHANNEL}）`,
     )
-    .option("--reply-to <target>", "Delivery target override (separate from session routing)")
-    .option("--reply-channel <channel>", "Delivery channel override (separate from routing)")
-    .option("--reply-account <id>", "Delivery account id override")
-    .option(
-      "--local",
-      "Run the embedded agent locally (requires model provider API keys in your shell)",
-      false,
-    )
-    .option("--deliver", "Send the agent's reply back to the selected channel", false)
-    .option("--json", "Output result as JSON", false)
-    .option(
-      "--timeout <seconds>",
-      "Override agent command timeout (seconds, default 600 or config value)",
-    )
+    .option("--reply-to <target>", "交付目标覆盖（与会话路由分离）")
+    .option("--reply-channel <channel>", "交付渠道覆盖（与路由分离）")
+    .option("--reply-account <id>", "交付账户 ID 覆盖")
+    .option("--local", "本地运行内嵌智能体（需要在 shell 中配置模型提供商 API 密钥）", false)
+    .option("--deliver", "将智能体的回复发送到所选渠道", false)
+    .option("--json", "以 JSON 格式输出结果", false)
+    .option("--timeout <seconds>", "覆盖智能体命令超时（秒，默认 600 或配置值）")
     .addHelpText(
       "after",
       () =>
         `
-${theme.heading("Examples:")}
+${theme.heading("示例：")}
 ${formatHelpExamples([
-  ['clawdbot agent --to +15555550123 --message "status update"', "Start a new session."],
-  ['clawdbot agent --agent ops --message "Summarize logs"', "Use a specific agent."],
+  ['clawdbot agent --to +15555550123 --message "状态更新"', "开始新会话。"],
+  ['clawdbot agent --agent ops --message "汇总日志"', "使用特定智能体。"],
   [
-    'clawdbot agent --session-id 1234 --message "Summarize inbox" --thinking medium',
-    "Target a session with explicit thinking level.",
+    'clawdbot agent --session-id 1234 --message "汇总收件箱" --thinking medium',
+    "指定会话并设置思考级别。",
   ],
   [
-    'clawdbot agent --to +15555550123 --message "Trace logs" --verbose on --json',
-    "Enable verbose logging and JSON output.",
+    'clawdbot agent --to +15555550123 --message "跟踪日志" --verbose on --json',
+    "启用详细日志和 JSON 输出。",
   ],
-  ['clawdbot agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
+  ['clawdbot agent --to +15555550123 --message "召唤回复" --deliver', "发送回复。"],
   [
-    'clawdbot agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
-    "Send reply to a different channel/target.",
+    'clawdbot agent --agent ops --message "生成报告" --deliver --reply-channel slack --reply-to "#reports"',
+    "将回复发送到不同的渠道/目标。",
   ],
 ])}
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.clawd.bot/cli/agent")}`,
+${theme.muted("文档：")} ${formatDocsLink("/cli/agent", "docs.clawd.bot/cli/agent")}`,
     )
     .action(async (opts) => {
       const verboseLevel = typeof opts.verbose === "string" ? opts.verbose.toLowerCase() : "";
@@ -82,18 +78,18 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.clawd.bot/cli/agent
 
   const agents = program
     .command("agents")
-    .description("Manage isolated agents (workspaces + auth + routing)")
+    .description("管理隔离的智能体（工作区 + 认证 + 路由）")
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/agents", "docs.clawd.bot/cli/agents")}\n`,
+        `\n${theme.muted("文档：")} ${formatDocsLink("/cli/agents", "docs.clawd.bot/cli/agents")}\n`,
     );
 
   agents
     .command("list")
-    .description("List configured agents")
-    .option("--json", "Output JSON instead of text", false)
-    .option("--bindings", "Include routing bindings", false)
+    .description("列出已配置的智能体")
+    .option("--json", "输出 JSON 而不是文本", false)
+    .option("--bindings", "包含路由绑定", false)
     .action(async (opts) => {
       await runCommandWithRuntime(defaultRuntime, async () => {
         await agentsListCommand(
@@ -105,13 +101,13 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.clawd.bot/cli/agent
 
   agents
     .command("add [name]")
-    .description("Add a new isolated agent")
-    .option("--workspace <dir>", "Workspace directory for the new agent")
-    .option("--model <id>", "Model id for this agent")
-    .option("--agent-dir <dir>", "Agent state directory for this agent")
-    .option("--bind <channel[:accountId]>", "Route channel binding (repeatable)", collectOption, [])
-    .option("--non-interactive", "Disable prompts; requires --workspace", false)
-    .option("--json", "Output JSON summary", false)
+    .description("添加新的隔离智能体")
+    .option("--workspace <dir>", "新智能体的工作区目录")
+    .option("--model <id>", "此智能体的模型 ID")
+    .option("--agent-dir <dir>", "此智能体的状态目录")
+    .option("--bind <channel[:accountId]>", "路由渠道绑定（可重复）", collectOption, [])
+    .option("--non-interactive", "禁用提示；需要 --workspace", false)
+    .option("--json", "输出 JSON 摘要", false)
     .action(async (name, opts, command) => {
       await runCommandWithRuntime(defaultRuntime, async () => {
         const hasFlags = hasExplicitOptions(command, [
@@ -139,28 +135,28 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.clawd.bot/cli/agent
 
   agents
     .command("set-identity")
-    .description("Update an agent identity (name/theme/emoji/avatar)")
-    .option("--agent <id>", "Agent id to update")
-    .option("--workspace <dir>", "Workspace directory used to locate the agent + IDENTITY.md")
-    .option("--identity-file <path>", "Explicit IDENTITY.md path to read")
-    .option("--from-identity", "Read values from IDENTITY.md", false)
-    .option("--name <name>", "Identity name")
-    .option("--theme <theme>", "Identity theme")
-    .option("--emoji <emoji>", "Identity emoji")
-    .option("--avatar <value>", "Identity avatar (workspace path, http(s) URL, or data URI)")
-    .option("--json", "Output JSON summary", false)
+    .description("更新智能体身份（名称/主题/表情/头像）")
+    .option("--agent <id>", "要更新的智能体 ID")
+    .option("--workspace <dir>", "用于定位智能体和 IDENTITY.md 的工作区目录")
+    .option("--identity-file <path>", "显式指定要读取的 IDENTITY.md 路径")
+    .option("--from-identity", "从 IDENTITY.md 读取值", false)
+    .option("--name <name>", "身份名称")
+    .option("--theme <theme>", "身份主题")
+    .option("--emoji <emoji>", "身份表情")
+    .option("--avatar <value>", "身份头像（工作区路径、http(s) URL 或 data URI）")
+    .option("--json", "输出 JSON 摘要", false)
     .addHelpText(
       "after",
       () =>
         `
-${theme.heading("Examples:")}
+${theme.heading("示例：")}
 ${formatHelpExamples([
-  ['clawdbot agents set-identity --agent main --name "Clawd" --emoji "🦞"', "Set name + emoji."],
-  ["clawdbot agents set-identity --agent main --avatar avatars/clawd.png", "Set avatar path."],
-  ["clawdbot agents set-identity --workspace ~/clawd --from-identity", "Load from IDENTITY.md."],
+  ['clawdbot agents set-identity --agent main --name "Clawd" --emoji "🧠"', "设置名称和表情。"],
+  ["clawdbot agents set-identity --agent main --avatar avatars/clawd.png", "设置头像路径。"],
+  ["clawdbot agents set-identity --workspace ~/clawd --from-identity", "从 IDENTITY.md 加载。"],
   [
     "clawdbot agents set-identity --identity-file ~/clawd/IDENTITY.md --agent main",
-    "Use a specific IDENTITY.md.",
+    "使用特定的 IDENTITY.md。",
   ],
 ])}
 `,
@@ -186,9 +182,9 @@ ${formatHelpExamples([
 
   agents
     .command("delete <id>")
-    .description("Delete an agent and prune workspace/state")
-    .option("--force", "Skip confirmation", false)
-    .option("--json", "Output JSON summary", false)
+    .description("删除智能体并清理工作区/状态")
+    .option("--force", "跳过确认", false)
+    .option("--json", "输出 JSON 摘要", false)
     .action(async (id, opts) => {
       await runCommandWithRuntime(defaultRuntime, async () => {
         await agentsDeleteCommand(
