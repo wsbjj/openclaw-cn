@@ -60,14 +60,14 @@ async function requestDeviceCode(params: { challenge: string }): Promise<QwenDev
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`Qwen device authorization failed: ${text || response.statusText}`);
+    throw new Error(`Qwen设备授权失败：${text || response.statusText}`);
   }
 
   const payload = (await response.json()) as QwenDeviceAuthorization & { error?: string };
   if (!payload.device_code || !payload.user_code || !payload.verification_uri) {
     throw new Error(
       payload.error ??
-        "Qwen device authorization returned an incomplete payload (missing user_code or verification_uri).",
+        "Qwen设备授权返回了不完整的载荷（缺少user_code或verification_uri）。",
     );
   }
   return payload;
@@ -123,7 +123,7 @@ async function pollDeviceToken(params: {
   };
 
   if (!tokenPayload.access_token || !tokenPayload.refresh_token || !tokenPayload.expires_in) {
-    return { status: "error", message: "Qwen OAuth returned incomplete token payload." };
+    return { status: "error", message: "Qwen OAuth返回了不完整的令牌载荷。" };
   }
 
   return {
@@ -148,8 +148,8 @@ export async function loginQwenPortalOAuth(params: {
 
   await params.note(
     [
-      `Open ${verificationUrl} to approve access.`,
-      `If prompted, enter the code ${device.user_code}.`,
+      `打开${verificationUrl}以批准访问。`,
+      `如果提示，请输入代码${device.user_code}。`,
     ].join("\n"),
     "Qwen OAuth",
   );
@@ -165,7 +165,7 @@ export async function loginQwenPortalOAuth(params: {
   const timeoutMs = device.expires_in * 1000;
 
   while (Date.now() - start < timeoutMs) {
-    params.progress.update("Waiting for Qwen OAuth approval…");
+    params.progress.update("等待Qwen OAuth批准…");
     const result = await pollDeviceToken({
       deviceCode: device.device_code,
       verifier,
@@ -176,7 +176,7 @@ export async function loginQwenPortalOAuth(params: {
     }
 
     if (result.status === "error") {
-      throw new Error(`Qwen OAuth failed: ${result.message}`);
+      throw new Error(`Qwen OAuth失败：${result.message}`);
     }
 
     if (result.status === "pending" && result.slowDown) {
@@ -186,5 +186,5 @@ export async function loginQwenPortalOAuth(params: {
     await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
   }
 
-  throw new Error("Qwen OAuth timed out waiting for authorization.");
+  throw new Error("Qwen OAuth等待授权超时。");
 }

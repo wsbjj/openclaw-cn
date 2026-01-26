@@ -60,15 +60,15 @@ export async function setupSkills(
 
   await prompter.note(
     [
-      `Eligible: ${eligible.length}`,
-      `Missing requirements: ${missing.length}`,
-      `Blocked by allowlist: ${blocked.length}`,
+      `符合条件：${eligible.length}`,
+      `缺少需求：${missing.length}`,
+      `被允许列表阻止：${blocked.length}`,
     ].join("\n"),
-    "Skills status",
+    "技能状态",
   );
 
   const shouldConfigure = await prompter.confirm({
-    message: "Configure skills now? (recommended)",
+    message: "现在配置技能？（推荐）",
     initialValue: true,
   });
   if (!shouldConfigure) return cfg;
@@ -79,10 +79,10 @@ export async function setupSkills(
         "Many skill dependencies are shipped via Homebrew.",
         "Without brew, you'll need to build from source or download releases manually.",
       ].join("\n"),
-      "Homebrew recommended",
+      "推荐使用Homebrew",
     );
     const showBrewInstall = await prompter.confirm({
-      message: "Show Homebrew install command?",
+      message: "显示Homebrew安装命令？",
       initialValue: true,
     });
     if (showBrewInstall) {
@@ -91,13 +91,13 @@ export async function setupSkills(
           "Run:",
           '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
         ].join("\n"),
-        "Homebrew install",
+        "Homebrew安装",
       );
     }
   }
 
   const nodeManager = (await prompter.select({
-    message: "Preferred node manager for skill installs",
+    message: "技能安装的首选节点管理器",
     options: resolveNodeManagerOptions(),
   })) as "npm" | "pnpm" | "bun";
 
@@ -117,12 +117,12 @@ export async function setupSkills(
   );
   if (installable.length > 0) {
     const toInstall = await prompter.multiselect({
-      message: "Install missing skill dependencies",
+      message: "安装缺失的技能依赖项",
       options: [
         {
           value: "__skip__",
-          label: "Skip for now",
-          hint: "Continue without installing dependencies",
+          label: "暂时跳过",
+          hint: "在不安装依赖项的情况下继续",
         },
         ...installable.map((skill) => ({
           value: skill.name,
@@ -153,10 +153,8 @@ export async function setupSkills(
         spin.stop(`Install failed: ${name}${code}${detail ? ` — ${detail}` : ""}`);
         if (result.stderr) runtime.log(result.stderr.trim());
         else if (result.stdout) runtime.log(result.stdout.trim());
-        runtime.log(
-          `Tip: run \`${formatCliCommand("clawdbot doctor")}\` to review skills + requirements.`,
-        );
-        runtime.log("Docs: https://docs.clawd.bot/skills");
+        runtime.log(`提示：运行\`${formatCliCommand("clawdbot doctor")}\`来查看技能+需求。`);
+        runtime.log("文档：https://docs.clawd.bot/skills");
       }
     }
   }
@@ -164,14 +162,14 @@ export async function setupSkills(
   for (const skill of missing) {
     if (!skill.primaryEnv || skill.missing.env.length === 0) continue;
     const wantsKey = await prompter.confirm({
-      message: `Set ${skill.primaryEnv} for ${skill.name}?`,
+      message: `为${skill.name}设置${skill.primaryEnv}？`,
       initialValue: false,
     });
     if (!wantsKey) continue;
     const apiKey = String(
       await prompter.text({
-        message: `Enter ${skill.primaryEnv}`,
-        validate: (value) => (value?.trim() ? undefined : "Required"),
+        message: `输入${skill.primaryEnv}`,
+        validate: (value) => (value?.trim() ? undefined : "必填"),
       }),
     );
     next = upsertSkillEntry(next, skill.skillKey, { apiKey: apiKey.trim() });

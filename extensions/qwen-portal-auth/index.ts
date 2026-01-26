@@ -31,7 +31,7 @@ function buildModelDefinition(params: { id: string; name: string; input: Array<"
 const qwenPortalPlugin = {
   id: "qwen-portal-auth",
   name: "Qwen OAuth",
-  description: "OAuth flow for Qwen (free-tier) models",
+  description: "Qwen（免费版）模型的OAuth流程",
   configSchema: emptyPluginConfigSchema(),
   register(api) {
     api.registerProvider({
@@ -43,10 +43,10 @@ const qwenPortalPlugin = {
         {
           id: "device",
           label: "Qwen OAuth",
-          hint: "Device code login",
+          hint: "设备码登录",
           kind: "device_code",
           run: async (ctx) => {
-            const progress = ctx.prompter.progress("Starting Qwen OAuth…");
+            const progress = ctx.prompter.progress("正在启动Qwen OAuth…");
             try {
               const result = await loginQwenPortalOAuth({
                 openUrl: ctx.openUrl,
@@ -54,7 +54,7 @@ const qwenPortalPlugin = {
                 progress,
               });
 
-              progress.stop("Qwen OAuth complete");
+              progress.stop("Qwen OAuth完成")
 
               const profileId = `${PROVIDER_ID}:default`;
               const baseUrl = normalizeBaseUrl(result.resourceUrl);
@@ -105,14 +105,14 @@ const qwenPortalPlugin = {
                 },
                 defaultModel: DEFAULT_MODEL,
                 notes: [
-                  "Qwen OAuth tokens auto-refresh. Re-run login if refresh fails or access is revoked.",
-                  `Base URL defaults to ${DEFAULT_BASE_URL}. Override models.providers.${PROVIDER_ID}.baseUrl if needed.`,
+                  "Qwen OAuth令牌自动刷新。如果刷新失败或访问权限被撤销，请重新运行登录。",
+                  `基础URL默认为${DEFAULT_BASE_URL}。如有需要，请覆盖models.providers.${PROVIDER_ID}.baseUrl。`
                 ],
               };
             } catch (err) {
-              progress.stop("Qwen OAuth failed");
+              progress.stop("Qwen OAuth失败")
               await ctx.prompter.note(
-                "If OAuth fails, verify your Qwen account has portal access and try again.",
+                "如果OAuth失败，请验证您的Qwen账户是否有门户访问权限，然后重试。",
                 "Qwen OAuth",
               );
               throw err;

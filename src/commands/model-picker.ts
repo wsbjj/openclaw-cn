@@ -78,10 +78,10 @@ async function promptManualModel(params: {
   initialValue?: string;
 }): Promise<PromptDefaultModelResult> {
   const modelInput = await params.prompter.text({
-    message: params.allowBlank ? "Default model (blank to keep)" : "Default model",
+    message: params.allowBlank ? "默认模型（留空以保持）" : "默认模型",
     initialValue: params.initialValue,
     placeholder: "provider/model",
-    validate: params.allowBlank ? undefined : (value) => (value?.trim() ? undefined : "Required"),
+    validate: params.allowBlank ? undefined : (value) => (value?.trim() ? undefined : "必填"),
   });
   const model = String(modelInput ?? "").trim();
   if (!model) return {};
@@ -149,7 +149,7 @@ export async function promptDefaultModel(
     !hasPreferredProvider && providers.length > 1 && models.length > PROVIDER_FILTER_THRESHOLD;
   if (shouldPromptProvider) {
     const selection = await params.prompter.select({
-      message: "Filter models by provider",
+      message: "按提供商筛选模型",
       options: [
         { value: "*", label: "All providers" },
         ...providers.map((provider) => {
@@ -157,7 +157,7 @@ export async function promptDefaultModel(
           return {
             value: provider,
             label: provider,
-            hint: `${count} model${count === 1 ? "" : "s"}`,
+            hint: `${count} 个模型`,
           };
         }),
       ],
@@ -187,15 +187,13 @@ export async function promptDefaultModel(
   if (allowKeep) {
     options.push({
       value: KEEP_VALUE,
-      label: configuredRaw
-        ? `Keep current (${configuredRaw})`
-        : `Keep current (default: ${resolvedKey})`,
+      label: configuredRaw ? `保持当前（${configuredRaw}）` : `保持当前（默认：${resolvedKey}）`,
       hint:
         configuredRaw && configuredRaw !== resolvedKey ? `resolves to ${resolvedKey}` : undefined,
     });
   }
   if (includeManual) {
-    options.push({ value: MANUAL_VALUE, label: "Enter model manually" });
+    options.push({ value: MANUAL_VALUE, label: "手动输入模型" });
   }
 
   const seen = new Set<string>();
@@ -249,7 +247,7 @@ export async function promptDefaultModel(
   }
 
   const selection = await params.prompter.select({
-    message: params.message ?? "Default model",
+    message: params.message ?? "默认模型",
     options,
     initialValue,
   });
@@ -295,9 +293,7 @@ export async function promptModelAllowlist(params: {
   const catalog = await loadModelCatalog({ config: cfg, useCache: false });
   if (catalog.length === 0 && allowedKeys.length === 0) {
     const raw = await params.prompter.text({
-      message:
-        params.message ??
-        "Allowlist models (comma-separated provider/model; blank to keep current)",
+      message: params.message ?? "允许列表模型（以逗号分隔的提供商/模型；留空以保持当前）",
       initialValue: existingKeys.join(", "),
       placeholder: "openai-codex/gpt-5.2, anthropic/claude-opus-4-5",
     });
@@ -372,7 +368,7 @@ export async function promptModelAllowlist(params: {
   if (options.length === 0) return {};
 
   const selection = await params.prompter.multiselect({
-    message: params.message ?? "Models in /model picker (multi-select)",
+    message: params.message ?? "/model选择器中的模型（多选）",
     options,
     initialValues: initialKeys.length > 0 ? initialKeys : undefined,
   });
@@ -380,7 +376,7 @@ export async function promptModelAllowlist(params: {
   if (selected.length > 0) return { models: selected };
   if (existingKeys.length === 0) return { models: [] };
   const confirmClear = await params.prompter.confirm({
-    message: "Clear the model allowlist? (shows all models)",
+    message: "清除模型允许列表？（显示所有模型）",
     initialValue: false,
   });
   if (!confirmClear) return {};
