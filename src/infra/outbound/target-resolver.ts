@@ -313,6 +313,8 @@ export async function resolveMessagingTarget(params: {
     }
     if (trimmed.includes("@thread")) return true;
     if (/^(conversation|user):/i.test(trimmed)) return true;
+    // Feishu ID formats: oc_ (chat), ou_ (user open_id), on_ (union_id)
+    if (params.channel === "feishu" && /^o[cun]_[a-zA-Z0-9]+$/.test(trimmed)) return true;
     return false;
   };
   if (looksLikeTargetId()) {

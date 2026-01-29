@@ -1,4 +1,5 @@
 import type { Client } from "@larksuiteoapi/node-sdk";
+import { Readable } from "node:stream";
 import { getChildLogger } from "../logging.js";
 import { loadWebMedia } from "../web/media.js";
 import { mediaKindFromMime } from "../media/constants.js";
@@ -24,10 +25,13 @@ export type FeishuSendResult = {
  * Upload an image to Feishu and get image_key
  */
 export async function uploadImageFeishu(client: Client, imageBuffer: Buffer): Promise<string> {
+  // Convert Buffer to Readable stream - Feishu SDK's axios requires streams for multipart uploads
+  const imageStream = Readable.from(imageBuffer);
+
   const res = await client.im.image.create({
     data: {
       image_type: "message",
-      image: imageBuffer,
+      image: imageStream as any,
     },
   });
 
@@ -48,18 +52,52 @@ export async function uploadFileFeishu(
   fileType: "opus" | "mp4" | "pdf" | "doc" | "xls" | "ppt" | "stream",
   duration?: number,
 ): Promise<string> {
-  const res = await client.im.file.create({
-    data: {
-      file_type: fileType,
-      file_name: fileName,
-      file: fileBuffer,
-      ...(duration ? { duration } : {}),
-    },
-  });
+  logger.info(
+    `Uploading file to Feishu: name=${fileName}, type=${fileType}, size=${fileBuffer.length}`,
+  );
+
+  // Convert Buffer to Readable stream - Feishu SDK's axios requires streams for multipart uploads
+  const fileStream = Readable.from(fileBuffer);
+
+  let res: any;
+  try {
+    res = await client.im.file.create({
+      data: {
+        file_type: fileType,
+        file_name: fileName,
+        file: fileStream as any,
+        ...(duration ? { duration } : {}),
+      },
+    });
+  } catch (err: any) {
+    // Log the full error details
+    logger.error(`Feishu file upload exception: ${err?.message || err}`);
+    if (err?.response?.data) {
+      logger.error(`Response data: ${JSON.stringify(err.response.data)}`);
+    }
+    if (err?.response?.status) {
+      logger.error(`Response status: ${err.response.status}`);
+    }
+    throw new Error(`Feishu file upload failed: ${err?.message || err}`);
+  }
+
+  // Log full response for debugging
+  logger.info(`Feishu file upload response: ${JSON.stringify(res)}`);
+
+  // Check for API error code
+  if (res?.code !== undefined && res.code !== 0) {
+    const code = res.code;
+    const msg = res.msg || "unknown error";
+    logger.error(`Feishu file upload API error: code=${code}, msg=${msg}`);
+    throw new Error(`Feishu file upload failed: ${msg} (code: ${code})`);
+  }
 
   if (!res?.file_key) {
+    logger.error(`Feishu file upload failed - no file_key in response: ${JSON.stringify(res)}`);
     throw new Error(`Feishu file upload failed: no file_key returned`);
   }
+
+  logger.info(`Feishu file upload successful: file_key=${res.file_key}`);
   return res.file_key;
 }
 
@@ -127,9 +165,13 @@ export async function sendMessageFeishu(
   // Handle media URL - upload first, then send
   if (opts.mediaUrl) {
     try {
+      logger.info(`Loading media from: ${opts.mediaUrl}`);
       const media = await loadWebMedia(opts.mediaUrl, opts.maxBytes);
       const kind = mediaKindFromMime(media.contentType ?? undefined);
       const fileName = media.fileName ?? "file";
+      logger.info(
+        `Media loaded: kind=${kind}, contentType=${media.contentType}, fileName=${fileName}, size=${media.buffer.length}`,
+      );
 
       if (kind === "image") {
         // Upload image and send as image message
@@ -151,12 +193,16 @@ export async function sendMessageFeishu(
           fileName.toLowerCase().endsWith(".ogg");
 
         if (isOpus) {
+          logger.info(`Uploading opus audio: ${fileName}`);
           const fileKey = await uploadFileFeishu(client, media.buffer, fileName, "opus");
+          logger.info(`Opus upload successful, file_key: ${fileKey}`);
           msgType = "audio";
           finalContent = { file_key: fileKey };
         } else {
           // Send non-opus audio as file attachment
+          logger.info(`Uploading non-opus audio as file: ${fileName}`);
           const fileKey = await uploadFileFeishu(client, media.buffer, fileName, "stream");
+          logger.info(`File upload successful, file_key: ${fileKey}`);
           msgType = "file";
           finalContent = { file_key: fileKey };
         }
@@ -199,11 +245,13 @@ export async function sendMessageFeishu(
         return textRes.data ?? null;
       }
     } catch (err) {
-      logger.error(`Feishu media upload/send error: ${err}`);
-      // Fallback to sending URL as text
-      msgType = "text";
-      const textContent = content?.text ? `${content.text}\n${opts.mediaUrl}` : opts.mediaUrl;
-      finalContent = { text: textContent };
+      const errMsg = err instanceof Error ? err.message : String(err);
+      const errStack = err instanceof Error ? err.stack : undefined;
+      logger.error(`Feishu media upload/send error: ${errMsg}`);
+      if (errStack) logger.error(`Stack: ${errStack}`);
+      // Re-throw the error instead of falling back to text
+      // This makes debugging easier and prevents silent failures
+      throw new Error(`Feishu media upload failed: ${errMsg}`);
     }
   }
 
