@@ -7,7 +7,7 @@ read_when:
 
 # Chrome 扩展（浏览器中继）
 
-Moltbot Chrome 扩展让 AI 助手可以控制您**现有的 Chrome 标签页**（而不是启动一个独立的浏览器）。
+Openclaw Chrome 扩展让 AI 助手可以控制您**现有的 Chrome 标签页**（而不是启动一个独立的浏览器）。
 
 通过工具栏按钮一键附加/分离。
 
@@ -23,7 +23,7 @@ Moltbot Chrome 扩展让 AI 助手可以控制您**现有的 Chrome 标签页**�
 | **本地中继服务器** | 连接控制服务器和扩展（默认 `http://127.0.0.1:18792`） |
 | **Chrome MV3 扩展** | 通过 `chrome.debugger` 附加到标签页 |
 
-Moltbot 通过标准的 `browser` 工具控制附加的标签页。
+Openclaw 通过标准的 `browser` 工具控制附加的标签页。
 
 ---
 
@@ -32,13 +32,13 @@ Moltbot 通过标准的 `browser` 工具控制附加的标签页。
 ### 第一步：安装扩展文件
 
 ```bash
-moltbot-cn browser extension install
+openclaw-cn browser extension install
 ```
 
 ### 第二步：查看扩展目录
 
 ```bash
-moltbot-cn browser extension path
+openclaw-cn browser extension path
 ```
 
 ### 第三步：加载到 Chrome
@@ -50,7 +50,7 @@ moltbot-cn browser extension path
 
 ### 第四步：固定扩展图标
 
-点击 Chrome 工具栏的拼图图标，将 Moltbot 扩展固定到工具栏。
+点击 Chrome 工具栏的拼图图标，将 Openclaw 扩展固定到工具栏。
 
 ---
 
@@ -67,10 +67,10 @@ moltbot-cn browser extension path
 
 ```bash
 # 查看已附加的标签页
-moltbot-cn browser --browser-profile chrome tabs
+openclaw-cn browser --browser-profile chrome tabs
 
 # 获取页面快照
-moltbot-cn browser --browser-profile chrome snapshot
+openclaw-cn browser --browser-profile chrome snapshot
 ```
 
 ### AI 助手使用
@@ -89,7 +89,7 @@ AI 调用 `browser` 工具时指定 `profile="chrome"`。
 
 **如果看到 `!`：**
 - 确保网关正在运行（默认设置）
-- 或在本机运行 `moltbot-cn browser serve`
+- 或在本机运行 `openclaw-cn browser serve`
 
 ---
 
@@ -112,11 +112,11 @@ AI 调用 `browser` 工具时指定 `profile="chrome"`。
 
 ## 更新扩展
 
-升级 Moltbot 后：
+升级 Openclaw 后：
 
 1. 重新安装扩展文件：
 ```bash
-moltbot-cn browser extension install
+openclaw-cn browser extension install
 ```
 
 2. 在 Chrome 中重新加载：

@@ -101,6 +101,6 @@ If the Gateway runs on a different machine than the browser, run a standalone br
 clawdbot browser serve --bind 127.0.0.1 --port 18791 --token <token>
 ```
 
-Then point the Gateway at it using `browser.controlUrl` + `browser.controlToken` (or `CLAWDBOT_BROWSER_CONTROL_TOKEN`).
+Then point the Gateway at it using `browser.controlUrl` + `browser.controlToken` (or `OPENCLAW_BROWSER_CONTROL_TOKEN`).
 
 Security + TLS best-practices: [Browser tool](/tools/browser), [Tailscale](/gateway/tailscale), [Security](/gateway/security)

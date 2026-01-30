@@ -9,6 +9,6 @@
     ]
   },
   "peerDependencies": {
-    "moltbot-cn": "*"
+    "openclaw-cn": "*"
   }
 }

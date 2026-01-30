@@ -17,10 +17,10 @@ read_when:
 
 ### 方式一：通过安装向导添加（推荐）
 
-如果您刚安装完 Moltbot，可以直接运行向导，根据提示添加 Telegram：
+如果您刚安装完 Openclaw，可以直接运行向导，根据提示添加 Telegram：
 
 ```bash
-moltbot-cn onboard
+openclaw-cn onboard
 ```
 
 向导会引导您完成：
@@ -33,7 +33,7 @@ moltbot-cn onboard
 如果您已经完成了初始安装，可以用以下命令添加 Telegram 渠道：
 
 ```bash
-moltbot-cn channels add --channel telegram --token "您的Token"
+openclaw-cn channels add --channel telegram --token "您的Token"
 ```
 
 ---
@@ -75,21 +75,21 @@ moltbot-cn channels add --channel telegram --token "您的Token"
 
 ---
 
-## 第二步：配置 Moltbot
+## 第二步：配置 Openclaw
 
 ### 通过向导配置
 
-运行 `moltbot-cn onboard` 或 `moltbot-cn configure`，根据提示粘贴 Token。
+运行 `openclaw-cn onboard` 或 `openclaw-cn configure`，根据提示粘贴 Token。
 
 ### 通过命令行配置
 
 ```bash
-moltbot-cn channels add --channel telegram --token "123456789:ABCdef..."
+openclaw-cn channels add --channel telegram --token "123456789:ABCdef..."
 ```
 
 ### 通过配置文件配置
 
-编辑 `~/.moltbot/moltbot.json`：
+编辑 `~/.openclaw/openclaw.json`：
 
 ```json5
 {
@@ -116,7 +116,7 @@ export TELEGRAM_BOT_TOKEN="123456789:ABCdef..."
 ### 1. 启动网关
 
 ```bash
-moltbot-cn gateway
+openclaw-cn gateway
 ```
 
 ### 2. 发送测试消息
@@ -128,7 +128,7 @@ moltbot-cn gateway
 默认情况下，机器人会回复一个 **配对码**。您需要批准此代码：
 
 ```bash
-moltbot-cn pairing approve telegram <配对码>
+openclaw-cn pairing approve telegram <配对码>
 ```
 
 批准后即可正常对话。
@@ -169,8 +169,8 @@ Telegram 机器人默认启用 **隐私模式**，只能接收 @提及 的消息
 - **默认**：`dmPolicy: "pairing"`，陌生用户会收到配对码
 - **批准配对**：
   ```bash
-  moltbot-cn pairing list telegram      # 查看待审批列表
-  moltbot-cn pairing approve telegram <CODE>  # 批准
+  openclaw-cn pairing list telegram      # 查看待审批列表
+  openclaw-cn pairing approve telegram <CODE>  # 批准
   ```
 - **白名单模式**：通过 `channels.telegram.allowFrom` 配置允许的用户 ID
 
@@ -243,7 +243,7 @@ Telegram 机器人默认启用 **隐私模式**，只能接收 @提及 的消息
 
 **方法一**（推荐）：
 1. 启动网关并给机器人发消息
-2. 运行 `moltbot-cn logs --follow` 查看 `from.id`
+2. 运行 `openclaw-cn logs --follow` 查看 `from.id`
 
 **方法二**：
 私聊 `@userinfobot`，它会返回您的用户 ID。
@@ -269,7 +269,7 @@ Telegram 机器人默认启用 **隐私模式**，只能接收 @提及 的消息
 1. 检查隐私模式是否已禁用（BotFather `/setprivacy`）
 2. 检查群组是否在 `channels.telegram.groups` 配置中
 3. 确认机器人是群组成员
-4. 查看日志：`moltbot-cn logs --follow`
+4. 查看日志：`openclaw-cn logs --follow`
 
 ### 命令不生效
 

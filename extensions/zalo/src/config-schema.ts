@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema } from "moltbot-cn/plugin-sdk";
+import { MarkdownConfigSchema } from "openclaw-cn/plugin-sdk";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);

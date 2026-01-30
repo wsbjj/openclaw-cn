@@ -79,7 +79,7 @@ async function promptChannelMode(runtime: RuntimeEnv): Promise<ChannelsWizardMod
         {
           value: "remove",
           label: "删除渠道配置",
-          hint: "从 clawdbot.json 中删除渠道令牌/设置",
+          hint: "从 openclaw.json 中删除渠道令牌/设置",
         },
       ],
       initialValue: "configure",
@@ -196,7 +196,7 @@ export async function runConfigureWizard(
       }
       if (!snapshot.valid) {
         outro(
-          `配置无效。请运行 \`${formatCliCommand("moltbot-cn doctor")}\` 修复它，然后重新运行 configure。`,
+          `配置无效。请运行 \`${formatCliCommand("openclaw-cn doctor")}\` 修复它，然后重新运行 configure。`,
         );
         runtime.exit(1);
         return;
@@ -206,8 +206,8 @@ export async function runConfigureWizard(
     const localUrl = "ws://127.0.0.1:18789";
     const localProbe = await probeGatewayReachable({
       url: localUrl,
-      token: baseConfig.gateway?.auth?.token ?? process.env.CLAWDBOT_GATEWAY_TOKEN,
-      password: baseConfig.gateway?.auth?.password ?? process.env.CLAWDBOT_GATEWAY_PASSWORD,
+      token: baseConfig.gateway?.auth?.token ?? process.env.OPENCLAW_GATEWAY_TOKEN,
+      password: baseConfig.gateway?.auth?.password ?? process.env.OPENCLAW_GATEWAY_PASSWORD,
     });
     const remoteUrl = baseConfig.gateway?.remote?.url?.trim() ?? "";
     const remoteProbe = remoteUrl
@@ -272,7 +272,7 @@ export async function runConfigureWizard(
     let gatewayToken: string | undefined =
       nextConfig.gateway?.auth?.token ??
       baseConfig.gateway?.auth?.token ??
-      process.env.CLAWDBOT_GATEWAY_TOKEN;
+      process.env.OPENCLAW_GATEWAY_TOKEN;
 
     const persistConfig = async () => {
       nextConfig = applyWizardMetadata(nextConfig, {
@@ -375,9 +375,9 @@ export async function runConfigureWizard(
         const remoteUrl = nextConfig.gateway?.remote?.url?.trim();
         const wsUrl =
           nextConfig.gateway?.mode === "remote" && remoteUrl ? remoteUrl : localLinks.wsUrl;
-        const token = nextConfig.gateway?.auth?.token ?? process.env.CLAWDBOT_GATEWAY_TOKEN;
+        const token = nextConfig.gateway?.auth?.token ?? process.env.OPENCLAW_GATEWAY_TOKEN;
         const password =
-          nextConfig.gateway?.auth?.password ?? process.env.CLAWDBOT_GATEWAY_PASSWORD;
+          nextConfig.gateway?.auth?.password ?? process.env.OPENCLAW_GATEWAY_PASSWORD;
         await waitForGatewayReachable({
           url: wsUrl,
           token,
@@ -500,9 +500,9 @@ export async function runConfigureWizard(
           const remoteUrl = nextConfig.gateway?.remote?.url?.trim();
           const wsUrl =
             nextConfig.gateway?.mode === "remote" && remoteUrl ? remoteUrl : localLinks.wsUrl;
-          const token = nextConfig.gateway?.auth?.token ?? process.env.CLAWDBOT_GATEWAY_TOKEN;
+          const token = nextConfig.gateway?.auth?.token ?? process.env.OPENCLAW_GATEWAY_TOKEN;
           const password =
-            nextConfig.gateway?.auth?.password ?? process.env.CLAWDBOT_GATEWAY_PASSWORD;
+            nextConfig.gateway?.auth?.password ?? process.env.OPENCLAW_GATEWAY_PASSWORD;
           await waitForGatewayReachable({
             url: wsUrl,
             token,
@@ -549,9 +549,9 @@ export async function runConfigureWizard(
       basePath: nextConfig.gateway?.controlUi?.basePath,
     });
     // Try both new and old passwords since gateway may still have old config.
-    const newPassword = nextConfig.gateway?.auth?.password ?? process.env.CLAWDBOT_GATEWAY_PASSWORD;
-    const oldPassword = baseConfig.gateway?.auth?.password ?? process.env.CLAWDBOT_GATEWAY_PASSWORD;
-    const token = nextConfig.gateway?.auth?.token ?? process.env.CLAWDBOT_GATEWAY_TOKEN;
+    const newPassword = nextConfig.gateway?.auth?.password ?? process.env.OPENCLAW_GATEWAY_PASSWORD;
+    const oldPassword = baseConfig.gateway?.auth?.password ?? process.env.OPENCLAW_GATEWAY_PASSWORD;
+    const token = nextConfig.gateway?.auth?.token ?? process.env.OPENCLAW_GATEWAY_TOKEN;
 
     let gatewayProbe = await probeGatewayReachable({
       url: links.wsUrl,

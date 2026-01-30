@@ -412,8 +412,8 @@ export async function statusCommand(
       runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
     }
   }
-  runtime.log(theme.muted(`Full report: ${formatCliCommand("moltbot-cn security audit")}`));
-  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("moltbot-cn security audit --deep")}`));
+  runtime.log(theme.muted(`Full report: ${formatCliCommand("openclaw-cn security audit")}`));
+  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("openclaw-cn security audit --deep")}`));
 
   runtime.log("");
   runtime.log(theme.heading("Channels"));
@@ -569,11 +569,11 @@ export async function statusCommand(
     runtime.log("");
   }
   runtime.log("Next steps:");
-  runtime.log(`  Need to share?      ${formatCliCommand("moltbot-cn status --all")}`);
-  runtime.log(`  Need to debug live? ${formatCliCommand("moltbot-cn logs --follow")}`);
+  runtime.log(`  Need to share?      ${formatCliCommand("openclaw-cn status --all")}`);
+  runtime.log(`  Need to debug live? ${formatCliCommand("openclaw-cn logs --follow")}`);
   if (gatewayReachable) {
-    runtime.log(`  Need to test channels? ${formatCliCommand("moltbot-cn status --deep")}`);
+    runtime.log(`  Need to test channels? ${formatCliCommand("openclaw-cn status --deep")}`);
   } else {
-    runtime.log(`  Fix reachability first: ${formatCliCommand("moltbot-cn gateway probe")}`);
+    runtime.log(`  Fix reachability first: ${formatCliCommand("openclaw-cn gateway probe")}`);
   }
 }

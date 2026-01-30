@@ -119,7 +119,7 @@ Not ready: 0
 clawdbot hooks enable <name>
 ```
 
-Enable a specific hook by adding it to your config (`~/.clawdbot/config.json`).
+Enable a specific hook by adding it to your config (`~/.openclaw/config.json`).
 
 **Note:** Hooks managed by plugins show `plugin:<id>` in `clawdbot hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
@@ -182,7 +182,7 @@ clawdbot hooks install <path-or-spec>
 Install a hook pack from a local folder/archive or npm.
 
 **What it does:**
-- Copies the hook pack into `~/.clawdbot/hooks/<id>`
+- Copies the hook pack into `~/.openclaw/hooks/<id>`
 - Enables the installed hooks in `hooks.internal.entries.*`
 - Records the install under `hooks.internal.installs`
 
@@ -232,7 +232,7 @@ Saves session context to memory when you issue `/new`.
 clawdbot hooks enable session-memory
 ```
 
-**Output:** `~/clawd/memory/YYYY-MM-DD-slug.md`
+**Output:** `~/clawwork/memory/YYYY-MM-DD-slug.md`
 
 **See:** [session-memory documentation](/hooks#session-memory)
 
@@ -246,19 +246,19 @@ Logs all command events to a centralized audit file.
 clawdbot hooks enable command-logger
 ```
 
-**Output:** `~/.clawdbot/logs/commands.log`
+**Output:** `~/.openclaw/logs/commands.log`
 
 **View logs:**
 
 ```bash
 # Recent commands
-tail -n 20 ~/.clawdbot/logs/commands.log
+tail -n 20 ~/.openclaw/logs/commands.log
 
 # Pretty-print
-cat ~/.clawdbot/logs/commands.log | jq .
+cat ~/.openclaw/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.clawdbot/logs/commands.log | jq .
+grep '"action":"new"' ~/.openclaw/logs/commands.log | jq .
 ```
 
 **See:** [command-logger documentation](/hooks#command-logger)

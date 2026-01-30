@@ -32,15 +32,15 @@ The app does not spawn the Gateway as a child process.
 
 ## Launchd control
 
-The app manages a per‑user LaunchAgent labeled `com.clawdbot.gateway`
-(or `com.clawdbot.<profile>` when using `--profile`/`CLAWDBOT_PROFILE`).
+The app manages a per‑user LaunchAgent labeled `com.openclaw.gateway`
+(or `com.openclaw.<profile>` when using `--profile`/`OPENCLAW_PROFILE`).
 
 ```bash
-launchctl kickstart -k gui/$UID/com.clawdbot.gateway
-launchctl bootout gui/$UID/com.clawdbot.gateway
+launchctl kickstart -k gui/$UID/com.openclaw.gateway
+launchctl bootout gui/$UID/com.openclaw.gateway
 ```
 
-Replace the label with `com.clawdbot.<profile>` when running a named profile.
+Replace the label with `com.openclaw.<profile>` when running a named profile.
 
 If the LaunchAgent isn’t installed, enable it from the app or run
 `clawdbot gateway install`.
@@ -74,7 +74,7 @@ Gateway -> Node Service (WS)
 Security + ask + allowlist are stored locally on the Mac in:
 
 ```
-~/.clawdbot/exec-approvals.json
+~/.openclaw/exec-approvals.json
 ```
 
 Example:

@@ -1,11 +1,11 @@
 ---
-summary: "All configuration options for ~/.clawdbot/clawdbot.json with examples"
+summary: "All configuration options for ~/.openclaw/openclaw.json with examples"
 read_when:
   - Adding or modifying config fields
 ---
 # Configuration 🔧
 
-Clawdbot reads an optional **JSON5** config from `~/.clawdbot/clawdbot.json` (comments + trailing commas allowed).
+Clawdbot reads an optional **JSON5** config from `~/.openclaw/openclaw.json` (comments + trailing commas allowed).
 
 If the file is missing, Clawdbot uses safe-ish defaults (embedded Pi agent + per-sender sessions + workspace `~/clawd`). You usually only need a config to:
 - restrict who can trigger the bot (`channels.whatsapp.allowFrom`, `channels.telegram.allowFrom`, etc.)
@@ -47,7 +47,7 @@ Use `config.apply` to validate + write the full config and restart the Gateway i
 It writes a restart sentinel and pings the last active session after the Gateway comes back.
 
 Warning: `config.apply` replaces the **entire config**. If you want to change only a few keys,
-use `config.patch` or `clawdbot config set`. Keep a backup of `~/.clawdbot/clawdbot.json`.
+use `config.patch` or `clawdbot config set`. Keep a backup of `~/.openclaw/openclaw.json`.
 
 Params:
 - `raw` (string) — JSON5 payload for the entire config
@@ -146,7 +146,7 @@ Split your config into multiple files using the `$include` directive. This is us
 ### Basic usage
 
 ```json5
-// ~/.clawdbot/clawdbot.json
+// ~/.openclaw/openclaw.json
 {
   gateway: { port: 18789 },
   
@@ -164,7 +164,7 @@ Split your config into multiple files using the `$include` directive. This is us
 ```
 
 ```json5
-// ~/.clawdbot/agents.json5
+// ~/.openclaw/agents.json5
 {
   defaults: { sandbox: { mode: "all", scope: "session" } },
   list: [
@@ -221,7 +221,7 @@ Included files can themselves contain `$include` directives (up to 10 levels dee
 ### Example: Multi-client legal setup
 
 ```json5
-// ~/.clawdbot/clawdbot.json
+// ~/.openclaw/openclaw.json
 {
   gateway: { port: 18789, auth: { token: "secret" } },
   
@@ -248,7 +248,7 @@ Included files can themselves contain `$include` directives (up to 10 levels dee
 ```
 
 ```json5
-// ~/.clawdbot/clients/mueller/agents.json5
+// ~/.openclaw/clients/mueller/agents.json5
 [
   { id: "mueller-transcribe", workspace: "~/clients/mueller/transcribe" },
   { id: "mueller-docs", workspace: "~/clients/mueller/docs" }
@@ -256,7 +256,7 @@ Included files can themselves contain `$include` directives (up to 10 levels dee
 ```
 
 ```json5
-// ~/.clawdbot/clients/mueller/broadcast.json5
+// ~/.openclaw/clients/mueller/broadcast.json5
 {
   "120363403215116621@g.us": ["mueller-transcribe", "mueller-docs"]
 }
@@ -270,7 +270,7 @@ Clawdbot reads env vars from the parent process (shell, launchd/systemd, CI, etc
 
 Additionally, it loads:
 - `.env` from the current working directory (if present)
-- a global fallback `.env` from `~/.clawdbot/.env` (aka `$CLAWDBOT_STATE_DIR/.env`)
+- a global fallback `.env` from `~/.openclaw/.env` (aka `$OPENCLAW_STATE_DIR/.env`)
 
 Neither `.env` file overrides existing env vars.
 
@@ -307,8 +307,8 @@ This effectively sources your shell profile.
 ```
 
 Env var equivalent:
-- `CLAWDBOT_LOAD_SHELL_ENV=1`
-- `CLAWDBOT_SHELL_ENV_TIMEOUT_MS=15000`
+- `OPENCLAW_LOAD_SHELL_ENV=1`
+- `OPENCLAW_SHELL_ENV_TIMEOUT_MS=15000`
 
 ### Env var substitution in config
 
@@ -326,7 +326,7 @@ You can reference environment variables directly in any config string value usin
   },
   gateway: {
     auth: {
-      token: "${CLAWDBOT_GATEWAY_TOKEN}"
+      token: "${OPENCLAW_GATEWAY_TOKEN}"
     }
   }
 }
@@ -355,22 +355,22 @@ You can reference environment variables directly in any config string value usin
 ### Auth storage (OAuth + API keys)
 
 Clawdbot stores **per-agent** auth profiles (OAuth + API keys) in:
-- `<agentDir>/auth-profiles.json` (default: `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`)
+- `<agentDir>/auth-profiles.json` (default: `~/.openclaw/agents/<agentId>/agent/auth-profiles.json`)
 
 See also: [/concepts/oauth](/concepts/oauth)
 
 Legacy OAuth imports:
-- `~/.clawdbot/credentials/oauth.json` (or `$CLAWDBOT_STATE_DIR/credentials/oauth.json`)
+- `~/.openclaw/credentials/oauth.json` (or `$OPENCLAW_STATE_DIR/credentials/oauth.json`)
 
 The embedded Pi agent maintains a runtime cache at:
 - `<agentDir>/auth.json` (managed automatically; don’t edit manually)
 
 Legacy agent dir (pre multi-agent):
-- `~/.clawdbot/agent/*` (migrated by `clawdbot doctor` into `~/.clawdbot/agents/<defaultAgentId>/agent/*`)
+- `~/.openclaw/agent/*` (migrated by `clawdbot doctor` into `~/.openclaw/agents/<defaultAgentId>/agent/*`)
 
 Overrides:
-- OAuth dir (legacy import only): `CLAWDBOT_OAUTH_DIR`
-- Agent dir (default agent root override): `CLAWDBOT_AGENT_DIR` (preferred), `PI_CODING_AGENT_DIR` (legacy)
+- OAuth dir (legacy import only): `OPENCLAW_OAUTH_DIR`
+- Agent dir (default agent root override): `OPENCLAW_AGENT_DIR` (preferred), `PI_CODING_AGENT_DIR` (legacy)
 
 On first use, Clawdbot imports `oauth.json` entries into `auth-profiles.json`.
 
@@ -491,8 +491,8 @@ Controls how WhatsApp direct chats (DMs) are handled:
 Pairing codes expire after 1 hour; the bot only sends a pairing code when a new request is created. Pending DM pairing requests are capped at **3 per channel** by default.
 
 Pairing approvals:
-- `moltbot-cn pairing list whatsapp`
-- `moltbot-cn pairing approve whatsapp <code>`
+- `openclaw-cn pairing list whatsapp`
+- `openclaw-cn pairing approve whatsapp <code>`
 
 ### `channels.whatsapp.allowFrom`
 
@@ -542,8 +542,8 @@ Run multiple WhatsApp accounts in one gateway:
         default: {}, // optional; keeps the default id stable
         personal: {},
         biz: {
-          // Optional override. Default: ~/.clawdbot/credentials/whatsapp/biz
-          // authDir: "~/.clawdbot/credentials/whatsapp/biz",
+          // Optional override. Default: ~/.openclaw/credentials/whatsapp/biz
+          // authDir: "~/.openclaw/credentials/whatsapp/biz",
         }
       }
     }
@@ -734,7 +734,7 @@ Inbound messages are routed to an agent via bindings.
     If none are set, the **first entry** in the list is the default agent.
   - `name`: display name for the agent.
   - `workspace`: default `~/clawd-<agentId>` (for `main`, falls back to `agents.defaults.workspace`).
-  - `agentDir`: default `~/.clawdbot/agents/<agentId>/agent`.
+  - `agentDir`: default `~/.openclaw/agents/<agentId>/agent`.
   - `model`: per-agent default model, overrides `agents.defaults.model` for that agent.
     - string form: `"provider/model"`, overrides only `agents.defaults.model.primary`
     - object form: `{ primary, fallbacks }` (fallbacks override `agents.defaults.model.fallbacks`; `[]` disables global fallbacks for that agent)
@@ -959,7 +959,7 @@ Notes:
 - `channels.telegram.customCommands` adds extra Telegram bot menu entries. Names are normalized; conflicts with native commands are ignored.
 - `commands.bash: true` enables `! <cmd>` to run host shell commands (`/bash <cmd>` also works as an alias). Requires `tools.elevated.enabled` and allowlisting the sender in `tools.elevated.allowFrom.<channel>`.
 - `commands.bashForegroundMs` controls how long bash waits before backgrounding. While a bash job is running, new `! <cmd>` requests are rejected (one at a time).
-- `commands.config: true` enables `/config` (reads/writes `clawdbot.json`).
+- `commands.config: true` enables `/config` (reads/writes `openclaw.json`).
 - `channels.<provider>.configWrites` gates config mutations initiated by that channel (default: true). This applies to `/config set|unset` plus provider-specific auto-migrations (Telegram supergroup ID changes, Slack channel ID changes).
 - `commands.debug: true` enables `/debug` (runtime-only overrides).
 - `commands.restart: true` enables `/restart` and the gateway tool restart action.
@@ -1260,7 +1260,7 @@ Slack action groups (gate `slack` tool actions):
 ### `channels.mattermost` (bot token)
 
 Mattermost ships as a plugin and is not bundled with the core install.
-Install it first: `moltbot-cn plugins install @clawdbot/mattermost` (or `./extensions/mattermost` from a git checkout).
+Install it first: `openclaw-cn plugins install @clawdbot/mattermost` (or `./extensions/mattermost` from a git checkout).
 
 Mattermost requires a bot token plus the base URL for your server:
 
@@ -1519,7 +1519,7 @@ voice notes; other channels send MP3 audio.
       },
       maxTextLength: 4000,
       timeoutMs: 30000,
-      prefsPath: "~/.clawdbot/settings/tts.json",
+      prefsPath: "~/.openclaw/settings/tts.json",
       elevenlabs: {
         apiKey: "elevenlabs_api_key",
         baseUrl: "https://api.elevenlabs.io",
@@ -2170,7 +2170,7 @@ Defaults (if enabled):
 - scope: `"agent"` (one container + workspace per agent)
 - Debian bookworm-slim based image
 - agent workspace access: `workspaceAccess: "none"` (default)
-  - `"none"`: use a per-scope sandbox workspace under `~/.clawdbot/sandboxes`
+  - `"none"`: use a per-scope sandbox workspace under `~/.openclaw/sandboxes`
 - `"ro"`: keep the sandbox workspace at `/workspace`, and mount the agent workspace read-only at `/agent` (disables `write`/`edit`/`apply_patch`)
   - `"rw"`: mount the agent workspace read/write at `/workspace`
 - auto-prune: idle > 24h OR age > 7d
@@ -2197,7 +2197,7 @@ For package installs, ensure network egress, a writable root FS, and a root user
         mode: "non-main", // off | non-main | all
         scope: "agent", // session | agent | shared (agent is default)
         workspaceAccess: "none", // none | ro | rw
-        workspaceRoot: "~/.clawdbot/sandboxes",
+        workspaceRoot: "~/.openclaw/sandboxes",
         docker: {
           image: "clawdbot-sandbox:bookworm-slim",
           containerPrefix: "clawdbot-sbx-",
@@ -2296,12 +2296,12 @@ Defaults: all allowlists are unset (no restriction). `allowHostControl` defaults
 
 Clawdbot uses the **pi-coding-agent** model catalog. You can add custom providers
 (LiteLLM, local OpenAI-compatible servers, Anthropic proxies, etc.) by writing
-`~/.clawdbot/agents/<agentId>/agent/models.json` or by defining the same schema inside your
+`~/.openclaw/agents/<agentId>/agent/models.json` or by defining the same schema inside your
 Clawdbot config under `models.providers`.
 Provider-by-provider overview + examples: [/concepts/model-providers](/concepts/model-providers).
 
 When `models.providers` is present, Clawdbot writes/merges a `models.json` into
-`~/.clawdbot/agents/<agentId>/agent/` on startup:
+`~/.openclaw/agents/<agentId>/agent/` on startup:
 - default behavior: **merge** (keeps existing providers, overrides on name)
 - set `models.mode: "replace"` to overwrite the file contents
 
@@ -2350,7 +2350,7 @@ the built-in `opencode` provider from pi-ai; set `OPENCODE_API_KEY` (or
 Notes:
 - Model refs use `opencode/<modelId>` (example: `opencode/claude-opus-4-5`).
 - If you enable an allowlist via `agents.defaults.models`, add each model you plan to use.
-- Shortcut: `moltbot-cn onboard --auth-choice opencode-zen`.
+- Shortcut: `openclaw-cn onboard --auth-choice opencode-zen`.
 
 ```json5
 {
@@ -2368,7 +2368,7 @@ Notes:
 Z.AI models are available via the built-in `zai` provider. Set `ZAI_API_KEY`
 in your environment and reference the model by provider/model.
 
-Shortcut: `moltbot-cn onboard --auth-choice zai-api-key`.
+Shortcut: `openclaw-cn onboard --auth-choice zai-api-key`.
 
 ```json5
 {
@@ -2430,7 +2430,7 @@ Use Moonshot's OpenAI-compatible endpoint:
 ```
 
 Notes:
-- Set `MOONSHOT_API_KEY` in the environment or use `moltbot-cn onboard --auth-choice moonshot-api-key`.
+- Set `MOONSHOT_API_KEY` in the environment or use `openclaw-cn onboard --auth-choice moonshot-api-key`.
 - Model ref: `moonshot/kimi-k2-0905-preview`.
 - Use `https://api.moonshot.cn/v1` if you need the China endpoint.
 
@@ -2474,7 +2474,7 @@ Use Kimi Code's dedicated OpenAI-compatible endpoint (separate from Moonshot):
 ```
 
 Notes:
-- Set `KIMICODE_API_KEY` in the environment or use `moltbot-cn onboard --auth-choice kimi-code-api-key`.
+- Set `KIMICODE_API_KEY` in the environment or use `openclaw-cn onboard --auth-choice kimi-code-api-key`.
 - Model ref: `kimi-code/kimi-for-coding`.
 
 ### Synthetic (Anthropic-compatible)
@@ -2515,7 +2515,7 @@ Use Synthetic's Anthropic-compatible endpoint:
 ```
 
 Notes:
-- Set `SYNTHETIC_API_KEY` or use `moltbot-cn onboard --auth-choice synthetic-api-key`.
+- Set `SYNTHETIC_API_KEY` or use `openclaw-cn onboard --auth-choice synthetic-api-key`.
 - Model ref: `synthetic/hf:MiniMaxAI/MiniMax-M2.1`.
 - Base URL should omit `/v1` because the Anthropic client appends it.
 
@@ -2562,7 +2562,7 @@ Use MiniMax M2.1 directly without LM Studio:
 ```
 
 Notes:
-- Set `MINIMAX_API_KEY` environment variable or use `moltbot-cn onboard --auth-choice minimax-api`.
+- Set `MINIMAX_API_KEY` environment variable or use `openclaw-cn onboard --auth-choice minimax-api`.
 - Available model: `MiniMax-M2.1` (default).
 - Update pricing in `models.json` if you need exact cost tracking.
 
@@ -2610,8 +2610,8 @@ Notes:
 - Supported APIs: `openai-completions`, `openai-responses`, `anthropic-messages`,
   `google-generative-ai`
 - Use `authHeader: true` + `headers` for custom auth needs.
-- Override the agent config root with `CLAWDBOT_AGENT_DIR` (or `PI_CODING_AGENT_DIR`)
-  if you want `models.json` stored elsewhere (default: `~/.clawdbot/agents/main/agent`).
+- Override the agent config root with `OPENCLAW_AGENT_DIR` (or `PI_CODING_AGENT_DIR`)
+  if you want `models.json` stored elsewhere (default: `~/.openclaw/agents/main/agent`).
 
 ### `session`
 
@@ -2636,9 +2636,9 @@ Controls session scoping, reset policy, reset triggers, and where the session st
       group: { mode: "idle", idleMinutes: 120 }
     },
     resetTriggers: ["/new", "/reset"],
-    // Default is already per-agent under ~/.clawdbot/agents/<agentId>/sessions/sessions.json
+    // Default is already per-agent under ~/.openclaw/agents/<agentId>/sessions/sessions.json
     // You can override with {agentId} templating:
-    store: "~/.clawdbot/agents/{agentId}/sessions/sessions.json",
+    store: "~/.openclaw/agents/{agentId}/sessions/sessions.json",
     // Direct chats collapse to agent:<agentId>:<mainKey> (default: "main").
     mainKey: "main",
     agentToAgent: {
@@ -2678,7 +2678,7 @@ Fields:
 ### `skills` (skills config)
 
 Controls bundled allowlist, install preferences, extra skill folders, and per-skill
-overrides. Applies to **bundled** skills and `~/.clawdbot/skills` (workspace skills
+overrides. Applies to **bundled** skills and `~/.openclaw/skills` (workspace skills
 still win on name conflicts).
 
 Fields:
@@ -2727,7 +2727,7 @@ Example:
 ### `plugins` (extensions)
 
 Controls plugin discovery, allow/deny, and per-plugin config. Plugins are loaded
-from `~/.clawdbot/extensions`, `<workspace>/.clawdbot/extensions`, plus any
+from `~/.openclaw/extensions`, `<workspace>/.openclaw/extensions`, plus any
 `plugins.load.paths` entries. **Config changes require a gateway restart.**
 See [/plugin](/plugin) for full usage.
 
@@ -2868,7 +2868,7 @@ Notes:
 - `clawdbot gateway` refuses to start unless `gateway.mode` is set to `local` (or you pass the override flag).
 - `gateway.port` controls the single multiplexed port used for WebSocket + HTTP (control UI, hooks, A2UI).
 - OpenAI Chat Completions endpoint: **disabled by default**; enable with `gateway.http.endpoints.chatCompletions.enabled: true`.
-- Precedence: `--port` > `CLAWDBOT_GATEWAY_PORT` > `gateway.port` > default `18789`.
+- Precedence: `--port` > `OPENCLAW_GATEWAY_PORT` > `gateway.port` > default `18789`.
 - Gateway auth is required by default (token/password or Tailscale Serve identity). Non-loopback binds require a shared token/password.
 - The onboarding wizard generates a gateway token by default (even on loopback).
 - `gateway.remote.token` is **only** for remote CLI calls; it does not enable local gateway auth. `gateway.token` is ignored.
@@ -2877,7 +2877,7 @@ Auth and Tailscale:
 - `gateway.auth.mode` sets the handshake requirements (`token` or `password`). When unset, token auth is assumed.
 - `gateway.auth.token` stores the shared token for token auth (used by the CLI on the same machine).
 - When `gateway.auth.mode` is set, only that method is accepted (plus optional Tailscale headers).
-- `gateway.auth.password` can be set here, or via `CLAWDBOT_GATEWAY_PASSWORD` (recommended).
+- `gateway.auth.password` can be set here, or via `OPENCLAW_GATEWAY_PASSWORD` (recommended).
 - `gateway.auth.allowTailscale` allows Tailscale Serve identity headers
   (`tailscale-user-login`) to satisfy auth when the request arrives on loopback
   with `x-forwarded-for`, `x-forwarded-proto`, and `x-forwarded-host`. Clawdbot
@@ -2896,7 +2896,7 @@ Remote client defaults (CLI):
 - `gateway.remote.password` supplies the password for remote calls (leave unset for no auth).
 
 macOS app behavior:
-- Clawdbot.app watches `~/.clawdbot/clawdbot.json` and switches modes live when `gateway.mode` or `gateway.remote.url` changes.
+- Clawdbot.app watches `~/.openclaw/openclaw.json` and switches modes live when `gateway.mode` or `gateway.remote.url` changes.
 - If `gateway.mode` is unset but `gateway.remote.url` is set, the macOS app treats it as remote mode.
 - When you change connection mode in the macOS app, it writes `gateway.mode` (and `gateway.remote.url` + `gateway.remote.transport` in remote mode) back to the config file.
 
@@ -2930,7 +2930,7 @@ Direct transport example (macOS app):
 
 ### `gateway.reload` (Config hot reload)
 
-The Gateway watches `~/.clawdbot/clawdbot.json` (or `CLAWDBOT_CONFIG_PATH`) and applies changes automatically.
+The Gateway watches `~/.openclaw/openclaw.json` (or `OPENCLAW_CONFIG_PATH`) and applies changes automatically.
 
 Modes:
 - `hybrid` (default): hot-apply safe changes; restart the Gateway for critical changes.
@@ -2952,7 +2952,7 @@ Modes:
 #### Hot reload matrix (files + impact)
 
 Files watched:
-- `~/.clawdbot/clawdbot.json` (or `CLAWDBOT_CONFIG_PATH`)
+- `~/.openclaw/openclaw.json` (or `OPENCLAW_CONFIG_PATH`)
 
 Hot-applied (no full gateway restart):
 - `hooks` (webhook auth/path/mappings) + `hooks.gmail` (Gmail watcher restarted)
@@ -2974,22 +2974,22 @@ Requires full Gateway restart:
 ### Multi-instance isolation
 
 To run multiple gateways on one host (for redundancy or a rescue bot), isolate per-instance state + config and use unique ports:
-- `CLAWDBOT_CONFIG_PATH` (per-instance config)
-- `CLAWDBOT_STATE_DIR` (sessions/creds)
+- `OPENCLAW_CONFIG_PATH` (per-instance config)
+- `OPENCLAW_STATE_DIR` (sessions/creds)
 - `agents.defaults.workspace` (memories)
 - `gateway.port` (unique per instance)
 
 Convenience flags (CLI):
-- `clawdbot --dev …` → uses `~/.clawdbot-dev` + shifts ports from base `19001`
-- `clawdbot --profile <name> …` → uses `~/.clawdbot-<name>` (port via config/env/flags)
+- `clawdbot --dev …` → uses `~/.openclaw-dev` + shifts ports from base `19001`
+- `clawdbot --profile <name> …` → uses `~/.openclaw-<name>` (port via config/env/flags)
 
 See [Gateway runbook](/gateway) for the derived port mapping (gateway/browser/canvas).
 See [Multiple gateways](/gateway/multiple-gateways) for browser/CDP port isolation details.
 
 Example:
 ```bash
-CLAWDBOT_CONFIG_PATH=~/.clawdbot/a.json \
-CLAWDBOT_STATE_DIR=~/.clawdbot-a \
+OPENCLAW_CONFIG_PATH=~/.openclaw/a.json \
+OPENCLAW_STATE_DIR=~/.openclaw-a \
 clawdbot gateway --port 19001
 ```
 
@@ -3009,7 +3009,7 @@ Defaults:
     token: "shared-secret",
     path: "/hooks",
     presets: ["gmail"],
-    transformsDir: "~/.clawdbot/hooks",
+    transformsDir: "~/.openclaw/hooks",
     mappings: [
       {
         match: { path: "gmail" },
@@ -3087,7 +3087,7 @@ Model override for Gmail hooks:
 Gateway auto-start:
 - If `hooks.enabled=true` and `hooks.gmail.account` is set, the Gateway starts
   `gog gmail watch serve` on boot and auto-renews the watch.
-- Set `CLAWDBOT_SKIP_GMAIL_WATCHER=1` to disable the auto-start (for manual runs).
+- Set `OPENCLAW_SKIP_GMAIL_WATCHER=1` to disable the auto-start (for manual runs).
 - Avoid running a separate `gog gmail watch serve` alongside the Gateway; it will
   fail with `listen tcp 127.0.0.1:8788: bind: address already in use`.
 
@@ -3100,7 +3100,7 @@ If you need the backend to receive the prefixed path, set
 
 The Gateway serves a directory of HTML/CSS/JS over HTTP so iOS/Android nodes can simply `canvas.navigate` to it.
 
-Default root: `~/clawd/canvas`  
+Default root: `~/clawwork/canvas`  
 Default port: `18793` (chosen to avoid the clawd browser CDP port `18792`)  
 The server listens on the **gateway bind host** (LAN or Tailnet) so nodes can reach it.
 
@@ -3118,7 +3118,7 @@ Disable live reload (and file watching) if the directory is large or you hit `EM
 ```json5
 {
   canvasHost: {
-    root: "~/clawd/canvas",
+    root: "~/clawwork/canvas",
     port: 18793,
     liveReload: true
   }
@@ -3129,7 +3129,7 @@ Changes to `canvasHost.*` require a gateway restart (config reload will restart)
 
 Disable with:
 - config: `canvasHost: { enabled: false }`
-- env: `CLAWDBOT_SKIP_CANVAS_HOST=1`
+- env: `OPENCLAW_SKIP_CANVAS_HOST=1`
 
 ### `bridge` (legacy TCP bridge, removed)
 
@@ -3169,9 +3169,9 @@ Auto-generated certs require `openssl` on PATH; if generation fails, the bridge 
     bind: "tailnet",
     tls: {
       enabled: true,
-      // Uses ~/.clawdbot/bridge/tls/bridge-{cert,key}.pem when omitted.
-      // certPath: "~/.clawdbot/bridge/tls/bridge-cert.pem",
-      // keyPath: "~/.clawdbot/bridge/tls/bridge-key.pem"
+      // Uses ~/.openclaw/bridge/tls/bridge-{cert,key}.pem when omitted.
+      // certPath: "~/.openclaw/bridge/tls/bridge-cert.pem",
+      // keyPath: "~/.openclaw/bridge/tls/bridge-key.pem"
     }
   }
 }
@@ -3193,7 +3193,7 @@ Controls LAN mDNS discovery broadcasts (`_clawdbot-gw._tcp`).
 
 ### `discovery.wideArea` (Wide-Area Bonjour / unicast DNS‑SD)
 
-When enabled, the Gateway writes a unicast DNS-SD zone for `_clawdbot-bridge._tcp` under `~/.clawdbot/dns/` using the standard discovery domain `clawdbot.internal.`
+When enabled, the Gateway writes a unicast DNS-SD zone for `_clawdbot-bridge._tcp` under `~/.openclaw/dns/` using the standard discovery domain `clawdbot.internal.`
 
 To make iOS/Android discover across networks (Vienna ⇄ London), pair this with:
 - a DNS server on the gateway host serving `clawdbot.internal.` (CoreDNS is recommended)

@@ -148,7 +148,7 @@ export type PluginCommandContext = {
   args?: string;
   /** The full normalized command body */
   commandBody: string;
-  /** Current moltbot-cn configuration */
+  /** Current openclaw-cn configuration */
   config: ClawdbotConfig;
 };
 

@@ -75,11 +75,11 @@ export function assertSupportedRuntime(
 
   runtime.error(
     [
-      "moltbot-cn requires Node >=22.0.0.",
+      "openclaw-cn requires Node >=22.0.0.",
       `Detected: ${runtimeLabel} (exec: ${execLabel}).`,
       `PATH searched: ${details.pathEnv}`,
       "Install Node: https://nodejs.org/en/download",
-      "Upgrade Node and re-run moltbot-cn.",
+      "Upgrade Node and re-run openclaw-cn.",
     ].join("\n"),
   );
   runtime.exit(1);

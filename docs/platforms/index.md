@@ -40,11 +40,11 @@ Native companion apps for Windows are also planned; the Gateway is recommended v
 
 Use one of these (all supported):
 
-- Wizard (recommended): `moltbot-cn onboard --install-daemon`
+- Wizard (recommended): `openclaw-cn onboard --install-daemon`
 - Direct: `clawdbot gateway install`
 - Configure flow: `clawdbot configure` → select **Gateway service**
 - Repair/migrate: `clawdbot doctor` (offers to install or fix the service)
 
 The service target depends on OS:
-- macOS: LaunchAgent (`com.clawdbot.gateway` or `com.clawdbot.<profile>`)
+- macOS: LaunchAgent (`com.openclaw.gateway` or `com.openclaw.<profile>`)
 - Linux/WSL2: systemd user service (`clawdbot-gateway[-<profile>].service`)

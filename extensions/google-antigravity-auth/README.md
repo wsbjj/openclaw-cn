@@ -7,7 +7,7 @@ OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-moltbot-cn plugins enable google-antigravity-auth
+openclaw-cn plugins enable google-antigravity-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-moltbot-cn models auth login --provider google-antigravity --set-default
+openclaw-cn models auth login --provider google-antigravity --set-default
 ```
 
 ## Notes

@@ -50,9 +50,9 @@ function formatAuthIssueHint(issue: AuthIssue): string | null {
     return "Run `claude setup-token` on the gateway host.";
   }
   if (issue.provider === "openai-codex" && issue.profileId === CODEX_CLI_PROFILE_ID) {
-    return `Run \`codex login\` (or \`${formatCliCommand("moltbot-cn configure")}\` → OpenAI Codex OAuth).`;
+    return `Run \`codex login\` (or \`${formatCliCommand("openclaw-cn configure")}\` → OpenAI Codex OAuth).`;
   }
-  return `Re-auth via \`${formatCliCommand("moltbot-cn configure")}\` or \`${formatCliCommand("moltbot-cn onboard")}\`.`;
+  return `Re-auth via \`${formatCliCommand("openclaw-cn configure")}\` or \`${formatCliCommand("openclaw-cn onboard")}\`.`;
 }
 
 function formatAuthIssueLine(issue: AuthIssue): string {

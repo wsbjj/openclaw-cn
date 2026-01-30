@@ -8,7 +8,7 @@ import {
   normalizeAccountId,
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 
 import { MattermostConfigSchema } from "./config-schema.js";
 import { resolveMattermostGroupRequireMention } from "./group-mentions.js";

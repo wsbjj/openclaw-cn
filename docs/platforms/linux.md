@@ -15,7 +15,7 @@ Native Linux companion apps are planned. Contributions are welcome if you want t
 
 1) Install Node 22+  
 2) `npm i -g clawdbot@latest`  
-3) `moltbot-cn onboard --install-daemon`  
+3) `openclaw-cn onboard --install-daemon`  
 4) From your laptop: `ssh -N -L 18789:127.0.0.1:18789 <user>@<host>`  
 5) Open `http://127.0.0.1:18789/` and paste your token
 
@@ -35,7 +35,7 @@ Step-by-step VPS guide: [exe.dev](/platforms/exe-dev)
 Use one of these:
 
 ```
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 Or:

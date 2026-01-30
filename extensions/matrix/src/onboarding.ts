@@ -5,7 +5,7 @@ import {
   type ChannelOnboardingAdapter,
   type ChannelOnboardingDmPolicy,
   type WizardPrompter,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 import { listMatrixDirectoryGroupsLive } from "./directory-live.js";
 import { listMatrixDirectoryPeersLive } from "./directory-live.js";
 import { resolveMatrixAccount } from "./matrix/accounts.js";

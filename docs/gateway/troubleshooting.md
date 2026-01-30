@@ -21,11 +21,11 @@ Quick triage commands (in order):
 | `clawdbot status --all` | Full local diagnosis (read-only, pasteable, safe-ish) incl. log tail | When you need to share a debug report |
 | `clawdbot status --deep` | Runs gateway health checks (incl. provider probes; requires reachable gateway) | When “configured” doesn’t mean “working” |
 | `clawdbot gateway probe` | Gateway discovery + reachability (local + remote targets) | When you suspect you’re probing the wrong gateway |
-| `moltbot-cn channels status --probe` | Asks the running gateway for channel status (and optionally probes) | When gateway is reachable but channels misbehave |
+| `openclaw-cn channels status --probe` | Asks the running gateway for channel status (and optionally probes) | When gateway is reachable but channels misbehave |
 | `clawdbot gateway status` | Supervisor state (launchd/systemd/schtasks), runtime PID/exit, last gateway error | When the service “looks loaded” but nothing runs |
 | `clawdbot logs --follow` | Live logs (best signal for runtime issues) | When you need the actual failure reason |
 
-**Sharing output:** prefer `clawdbot status --all` (it redacts tokens). If you paste `clawdbot status`, consider setting `CLAWDBOT_SHOW_SECRETS=0` first (token previews).
+**Sharing output:** prefer `clawdbot status --all` (it redacts tokens). If you paste `clawdbot status`, consider setting `OPENCLAW_SHOW_SECRETS=0` first (token previews).
 
 See also: [Health checks](/gateway/health) and [Logging](/logging).
 
@@ -40,13 +40,13 @@ Fix options:
 - Re-run onboarding and choose **Anthropic** for that agent.
 - Or paste a setup-token on the **gateway host**:
   ```bash
-  moltbot-cn models auth setup-token --provider anthropic
+  openclaw-cn models auth setup-token --provider anthropic
   ```
 - Or copy `auth-profiles.json` from the main agent dir to the new agent dir.
 
 Verify:
 ```bash
-moltbot-cn models status
+openclaw-cn models status
 ```
 
 ### OAuth token refresh failed (Anthropic Claude subscription)
@@ -60,19 +60,19 @@ switch to a **Claude Code setup-token** or re-sync Claude Code CLI OAuth on the
 
 ```bash
 # Run on the gateway host (runs Claude Code CLI)
-moltbot-cn models auth setup-token --provider anthropic
-moltbot-cn models status
+openclaw-cn models auth setup-token --provider anthropic
+openclaw-cn models status
 ```
 
 If you generated the token elsewhere:
 
 ```bash
-moltbot-cn models auth paste-token --provider anthropic
-moltbot-cn models status
+openclaw-cn models auth paste-token --provider anthropic
+openclaw-cn models status
 ```
 
 **If you want to keep OAuth reuse:**
-log in with Claude Code CLI on the gateway host, then run `moltbot-cn models status`
+log in with Claude Code CLI on the gateway host, then run `openclaw-cn models status`
 to sync the refreshed token into Clawdbot’s auth store.
 
 More detail: [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
@@ -111,7 +111,7 @@ Doctor/service will show runtime state (PID/last exit) and log hints.
 **Logs:**
 - Preferred: `clawdbot logs --follow`
 - File logs (always): `/tmp/clawdbot/clawdbot-YYYY-MM-DD.log` (or your configured `logging.file`)
-- macOS LaunchAgent (if installed): `$CLAWDBOT_STATE_DIR/logs/gateway.log` and `gateway.err.log`
+- macOS LaunchAgent (if installed): `$OPENCLAW_STATE_DIR/logs/gateway.log` and `gateway.err.log`
 - Linux systemd (if installed): `journalctl --user -u clawdbot-gateway[-<profile>].service -n 200 --no-pager`
 - Windows: `schtasks /Query /TN "Clawdbot Gateway (<profile>)" /V /FO LIST`
 
@@ -164,7 +164,7 @@ The gateway service runs with a **minimal PATH** to avoid shell/manager cruft:
 
 This intentionally excludes version managers (nvm/fnm/volta/asdf) and package
 managers (pnpm/npm) because the service does not load your shell init. Runtime
-variables like `DISPLAY` should live in `~/.clawdbot/.env` (loaded early by the
+variables like `DISPLAY` should live in `~/.openclaw/.env` (loaded early by the
 gateway).
 Exec runs on `host=gateway` merge your login-shell `PATH` into the exec environment,
 so missing tools usually mean your shell init isn’t exporting them (or set
@@ -200,14 +200,14 @@ the Gateway likely refused to bind.
 - If you set `gateway.mode=remote`, the **CLI defaults** to a remote URL. The service can still be running locally, but your CLI may be probing the wrong place. Use `clawdbot gateway status` to see the service’s resolved port + probe target (or pass `--url`).
 - `clawdbot gateway status` and `clawdbot doctor` surface the **last gateway error** from logs when the service looks running but the port is closed.
 - Non-loopback binds (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) require auth:
-  `gateway.auth.token` (or `CLAWDBOT_GATEWAY_TOKEN`).
+  `gateway.auth.token` (or `OPENCLAW_GATEWAY_TOKEN`).
 - `gateway.remote.token` is for remote CLI calls only; it does **not** enable local auth.
 - `gateway.token` is ignored; use `gateway.auth.token`.
 
 **If `clawdbot gateway status` shows a config mismatch**
 - `Config (cli): ...` and `Config (service): ...` should normally match.
 - If they don’t, you’re almost certainly editing one config while the service is running another.
-- Fix: rerun `clawdbot gateway install --force` from the same `--profile` / `CLAWDBOT_STATE_DIR` you want the service to use.
+- Fix: rerun `clawdbot gateway install --force` from the same `--profile` / `OPENCLAW_STATE_DIR` you want the service to use.
 
 **If `clawdbot gateway status` reports service config issues**
 - The supervisor config (launchd/systemd/schtasks) is missing current defaults.
@@ -215,7 +215,7 @@ the Gateway likely refused to bind.
 
 **If `Last gateway error:` mentions “refusing to bind … without auth”**
 - You set `gateway.bind` to a non-loopback mode (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) but left auth off.
-- Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `CLAWDBOT_GATEWAY_TOKEN`) and restart the service.
+- Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `OPENCLAW_GATEWAY_TOKEN`) and restart the service.
 
 **If `clawdbot gateway status` says `bind=tailnet` but no tailnet interface was found**
 - The gateway tried to bind to a Tailscale IP (100.64.0.0/10) but none were detected on the host.
@@ -239,7 +239,7 @@ If needed, stop the service or pick a different port.
 
 ### Extra Workspace Folders Detected
 
-If you upgraded from older installs, you might still have `~/clawdbot` on disk.
+If you upgraded from older installs, you might still have `~/openclawot` on disk.
 Multiple workspace directories can cause confusing auth or state drift because
 only one workspace is active.
 
@@ -248,7 +248,7 @@ only one workspace is active.
 
 ### Main chat running in a sandbox workspace
 
-Symptoms: `pwd` or file tools show `~/.clawdbot/sandboxes/...` even though you
+Symptoms: `pwd` or file tools show `~/.openclaw/sandboxes/...` even though you
 expected the host workspace.
 
 **Why:** `agents.defaults.sandbox.mode: "non-main"` keys off `session.mainKey` (default `"main"`).
@@ -278,8 +278,8 @@ longer supported.
 
 **Fix:**
 - Pick a **latest** model for the provider and update your config or model alias.
-- If you’re unsure which models are available, run `moltbot-cn models list` or
-  `moltbot-cn models scan` and choose a supported one.
+- If you’re unsure which models are available, run `openclaw-cn models list` or
+  `openclaw-cn models scan` and choose a supported one.
 - Check gateway logs for the detailed failure reason.
 
 See also: [Models CLI](/cli/models) and [Model providers](/concepts/model-providers).
@@ -297,7 +297,7 @@ Look for `AllowFrom: ...` in the output.
 # The message must match mentionPatterns or explicit mentions; defaults live in channel groups/guilds.
 # Multi-agent: `agents.list[].groupChat.mentionPatterns` overrides global patterns.
 grep -n "agents\\|groupChat\\|mentionPatterns\\|channels\\.whatsapp\\.groups\\|channels\\.telegram\\.groups\\|channels\\.imessage\\.groups\\|channels\\.discord\\.guilds" \
-  "${CLAWDBOT_CONFIG_PATH:-$HOME/.clawdbot/clawdbot.json}"
+  "${OPENCLAW_CONFIG_PATH:-$HOME/.openclaw/openclaw.json}"
 ```
 
 **Check 3:** Check the logs
@@ -313,7 +313,7 @@ If `dmPolicy` is `pairing`, unknown senders should receive a code and their mess
 
 **Check 1:** Is a pending request already waiting?
 ```bash
-moltbot-cn pairing list <channel>
+openclaw-cn pairing list <channel>
 ```
 
 Pending DM pairing requests are capped at **3 per channel** by default. If the list is full, new requests won’t generate a code until one is approved or expires.
@@ -337,7 +337,7 @@ Known issue: When you send an image with ONLY a mention (no other text), WhatsAp
 
 **Check 1:** Is the session file there?
 ```bash
-ls -la ~/.clawdbot/agents/<agentId>/sessions/
+ls -la ~/.openclaw/agents/<agentId>/sessions/
 ```
 
 **Check 2:** Is the reset window too short?
@@ -390,9 +390,9 @@ clawdbot gateway --verbose
 If you’re logged out / unlinked:
 
 ```bash
-moltbot-cn channels logout
-trash "${CLAWDBOT_STATE_DIR:-$HOME/.clawdbot}/credentials" # if logout can't cleanly remove everything
-moltbot-cn channels login --verbose       # re-scan QR
+openclaw-cn channels logout
+trash "${OPENCLAW_STATE_DIR:-$HOME/.openclaw}/credentials" # if logout can't cleanly remove everything
+openclaw-cn channels login --verbose       # re-scan QR
 ```
 
 ### Media Send Failing
@@ -448,7 +448,7 @@ Notes:
 - **Credentials** present for the provider(s) being tried (auth profiles + env vars).
 - **Model routing**: confirm `agents.defaults.model.primary` and fallbacks are models you can access.
 - **Gateway logs** in `/tmp/clawdbot/…` for the exact provider error.
-- **Model status**: use `/model status` (chat) or `moltbot-cn models status` (CLI).
+- **Model status**: use `/model status` (chat) or `openclaw-cn models status` (CLI).
 
 ### I’m running on my personal WhatsApp number — why is self-chat weird?
 
@@ -473,7 +473,7 @@ See [WhatsApp setup](/channels/whatsapp).
 Run the login command again and scan the QR code:
 
 ```bash
-moltbot-cn channels login
+openclaw-cn channels login
 ```
 
 ### Build errors on `main` — what’s the standard fix path?
@@ -551,7 +551,7 @@ Fix checklist:
 3) Put `requireMention: false` **under** `channels.discord.guilds` (global or per‑channel).
    Top‑level `channels.discord.requireMention` is not a supported key.
 4) Ensure the bot has **Message Content Intent** and channel permissions.
-5) Run `moltbot-cn channels status --probe` for audit hints.
+5) Run `openclaw-cn channels status --probe` for audit hints.
 
 Docs: [Discord](/channels/discord), [Channels troubleshooting](/channels/troubleshooting).
 
@@ -581,7 +581,7 @@ If the app disappears or shows "Abort trap 6" when you click "Allow" on a privac
 
 **Fix 1: Reset TCC Cache**
 ```bash
-tccutil reset All com.clawdbot.mac.debug
+tccutil reset All com.openclaw.mac.debug
 ```
 
 **Fix 2: Force New Bundle ID**
@@ -596,7 +596,7 @@ If the gateway is supervised by launchd, killing the PID will just respawn it. S
 ```bash
 clawdbot gateway status
 clawdbot gateway stop
-# Or: launchctl bootout gui/$UID/com.clawdbot.gateway (replace with com.clawdbot.<profile> if needed)
+# Or: launchctl bootout gui/$UID/com.openclaw.gateway (replace with com.openclaw.<profile> if needed)
 ```
 
 **Fix 2: Port is busy (find the listener)**
@@ -624,11 +624,11 @@ Get verbose logging:
 
 ```bash
 # Turn on trace logging in config:
-#   ${CLAWDBOT_CONFIG_PATH:-$HOME/.clawdbot/clawdbot.json} -> { logging: { level: "trace" } }
+#   ${OPENCLAW_CONFIG_PATH:-$HOME/.openclaw/openclaw.json} -> { logging: { level: "trace" } }
 #
 # Then run verbose commands to mirror debug output to stdout:
 clawdbot gateway --verbose
-moltbot-cn channels login --verbose
+openclaw-cn channels login --verbose
 ```
 
 ## Log Locations
@@ -636,10 +636,10 @@ moltbot-cn channels login --verbose
 | Log | Location |
 |-----|----------|
 | Gateway file logs (structured) | `/tmp/clawdbot/clawdbot-YYYY-MM-DD.log` (or `logging.file`) |
-| Gateway service logs (supervisor) | macOS: `$CLAWDBOT_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.clawdbot/logs/...`; profiles use `~/.clawdbot-<profile>/logs/...`)<br />Linux: `journalctl --user -u clawdbot-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Clawdbot Gateway (<profile>)" /V /FO LIST` |
-| Session files | `$CLAWDBOT_STATE_DIR/agents/<agentId>/sessions/` |
-| Media cache | `$CLAWDBOT_STATE_DIR/media/` |
-| Credentials | `$CLAWDBOT_STATE_DIR/credentials/` |
+| Gateway service logs (supervisor) | macOS: `$OPENCLAW_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.openclaw/logs/...`; profiles use `~/.openclaw-<profile>/logs/...`)<br />Linux: `journalctl --user -u clawdbot-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Clawdbot Gateway (<profile>)" /V /FO LIST` |
+| Session files | `$OPENCLAW_STATE_DIR/agents/<agentId>/sessions/` |
+| Media cache | `$OPENCLAW_STATE_DIR/media/` |
+| Credentials | `$OPENCLAW_STATE_DIR/credentials/` |
 
 ## Health Check
 
@@ -672,8 +672,8 @@ clawdbot gateway stop
 # If you installed a service and want a clean install:
 # clawdbot gateway uninstall
 
-trash "${CLAWDBOT_STATE_DIR:-$HOME/.clawdbot}"
-moltbot-cn channels login         # re-pair WhatsApp
+trash "${OPENCLAW_STATE_DIR:-$HOME/.openclaw}"
+openclaw-cn channels login         # re-pair WhatsApp
 clawdbot gateway restart           # or: clawdbot gateway
 ```
 

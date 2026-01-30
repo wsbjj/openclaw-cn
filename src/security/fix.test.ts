@@ -23,7 +23,7 @@ describe("security fix", () => {
     await fs.mkdir(stateDir, { recursive: true });
     await fs.chmod(stateDir, 0o755);
 
-    const configPath = path.join(stateDir, "clawdbot.json");
+    const configPath = path.join(stateDir, "openclaw.json");
     await fs.writeFile(
       configPath,
       `${JSON.stringify(
@@ -54,8 +54,8 @@ describe("security fix", () => {
 
     const env = {
       ...process.env,
-      CLAWDBOT_STATE_DIR: stateDir,
-      CLAWDBOT_CONFIG_PATH: "",
+      OPENCLAW_STATE_DIR: stateDir,
+      OPENCLAW_CONFIG_PATH: "",
     };
 
     const res = await fixSecurityFootguns({ env });
@@ -94,7 +94,7 @@ describe("security fix", () => {
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true });
 
-    const configPath = path.join(stateDir, "clawdbot.json");
+    const configPath = path.join(stateDir, "openclaw.json");
     await fs.writeFile(
       configPath,
       `${JSON.stringify(
@@ -123,8 +123,8 @@ describe("security fix", () => {
 
     const env = {
       ...process.env,
-      CLAWDBOT_STATE_DIR: stateDir,
-      CLAWDBOT_CONFIG_PATH: "",
+      OPENCLAW_STATE_DIR: stateDir,
+      OPENCLAW_CONFIG_PATH: "",
     };
 
     const res = await fixSecurityFootguns({ env });
@@ -144,7 +144,7 @@ describe("security fix", () => {
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true });
 
-    const configPath = path.join(stateDir, "clawdbot.json");
+    const configPath = path.join(stateDir, "openclaw.json");
     await fs.writeFile(
       configPath,
       `${JSON.stringify(
@@ -169,8 +169,8 @@ describe("security fix", () => {
 
     const env = {
       ...process.env,
-      CLAWDBOT_STATE_DIR: stateDir,
-      CLAWDBOT_CONFIG_PATH: "",
+      OPENCLAW_STATE_DIR: stateDir,
+      OPENCLAW_CONFIG_PATH: "",
     };
 
     const res = await fixSecurityFootguns({ env });
@@ -188,14 +188,14 @@ describe("security fix", () => {
     await fs.mkdir(stateDir, { recursive: true });
     await fs.chmod(stateDir, 0o755);
 
-    const configPath = path.join(stateDir, "clawdbot.json");
+    const configPath = path.join(stateDir, "openclaw.json");
     await fs.writeFile(configPath, "{ this is not json }\n", "utf-8");
     await fs.chmod(configPath, 0o644);
 
     const env = {
       ...process.env,
-      CLAWDBOT_STATE_DIR: stateDir,
-      CLAWDBOT_CONFIG_PATH: "",
+      OPENCLAW_STATE_DIR: stateDir,
+      OPENCLAW_CONFIG_PATH: "",
     };
 
     const res = await fixSecurityFootguns({ env });
@@ -219,7 +219,7 @@ describe("security fix", () => {
     await fs.writeFile(includePath, "{ logging: { redactSensitive: 'off' } }\n", "utf-8");
     await fs.chmod(includePath, 0o644);
 
-    const configPath = path.join(stateDir, "clawdbot.json");
+    const configPath = path.join(stateDir, "openclaw.json");
     await fs.writeFile(
       configPath,
       `{ "$include": "./includes/extra.json5", channels: { whatsapp: { groupPolicy: "open" } } }\n`,
@@ -251,8 +251,8 @@ describe("security fix", () => {
 
     const env = {
       ...process.env,
-      CLAWDBOT_STATE_DIR: stateDir,
-      CLAWDBOT_CONFIG_PATH: "",
+      OPENCLAW_STATE_DIR: stateDir,
+      OPENCLAW_CONFIG_PATH: "",
     };
 
     const res = await fixSecurityFootguns({ env });

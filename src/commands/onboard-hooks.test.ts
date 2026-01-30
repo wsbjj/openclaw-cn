@@ -42,7 +42,7 @@ describe("onboard-hooks", () => {
 
   const createMockHookReport = (eligible = true): HookStatusReport => ({
     workspaceDir: "/mock/workspace",
-    managedHooksDir: "/mock/.clawdbot/hooks",
+    managedHooksDir: "/mock/.openclaw/hooks",
     hooks: [
       {
         name: "session-memory",
@@ -239,7 +239,7 @@ describe("onboard-hooks", () => {
 
       // Second note should confirm configuration
       expect(noteCalls[1][0]).toContain("Enabled 1 hook: session-memory");
-      expect(noteCalls[1][0]).toContain("moltbot-cn hooks list");
+      expect(noteCalls[1][0]).toContain("openclaw-cn hooks list");
     });
   });
 });

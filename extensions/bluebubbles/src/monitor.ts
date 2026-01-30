@@ -1,13 +1,13 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-import type { ClawdbotConfig } from "moltbot-cn/plugin-sdk";
+import type { ClawdbotConfig } from "openclaw-cn/plugin-sdk";
 import {
   logAckFailure,
   logInboundDrop,
   logTypingFailure,
   resolveAckReaction,
   resolveControlCommandGate,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 import { markBlueBubblesChatRead, sendBlueBubblesTyping } from "./chat.js";
 import { resolveChatGuidForTarget, sendMessageBlueBubbles } from "./send.js";
 import { downloadBlueBubblesAttachment } from "./attachments.js";

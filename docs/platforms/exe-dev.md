@@ -18,7 +18,7 @@ If you’re on any other Linux VPS, the same steps apply — you just won’t us
 ## Beginner quick path
 
 1) Create VM → install Node 22 → install Clawdbot  
-2) Run `moltbot-cn onboard --install-daemon`  
+2) Run `openclaw-cn onboard --install-daemon`  
 3) Tunnel from laptop (`ssh -N -L 18789:127.0.0.1:18789 …`)  
 4) Open `http://127.0.0.1:18789/` and paste your token
 
@@ -43,7 +43,7 @@ Then connect:
 ssh clawdbot.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. Clawdbot stores state under `~/.clawdbot/` and `~/clawd/`.
+Tip: keep this VM **stateful**. Clawdbot stores state under `~/.openclaw/` and `~/clawwork/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -89,12 +89,12 @@ sudo apt-get install -y build-essential python3
 Run the onboarding wizard on the VM:
 
 ```bash
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 It can set up:
 - `~/clawd` workspace bootstrap
-- `~/.clawdbot/clawdbot.json` config
+- `~/.openclaw/openclaw.json` config
 - model auth profiles
 - model provider config/login
 - Linux systemd **user** service (service)
@@ -121,11 +121,11 @@ Runbook: [Remote access](/gateway/remote)
 To let exe.dev proxy traffic to the VM, bind the Gateway to the LAN interface and set a token:
 
 ```bash
-export CLAWDBOT_GATEWAY_TOKEN="$(openssl rand -hex 32)"
-clawdbot gateway --bind lan --port 8080 --token "$CLAWDBOT_GATEWAY_TOKEN"
+export OPENCLAW_GATEWAY_TOKEN="$(openssl rand -hex 32)"
+clawdbot gateway --bind lan --port 8080 --token "$OPENCLAW_GATEWAY_TOKEN"
 ```
 
-For service runs, persist it in `~/.clawdbot/clawdbot.json`:
+For service runs, persist it in `~/.openclaw/openclaw.json`:
 
 ```json5
 {
@@ -139,7 +139,7 @@ For service runs, persist it in `~/.clawdbot/clawdbot.json`:
 ```
 
 Notes:
-- Non-loopback binds require `gateway.auth.token` (or `CLAWDBOT_GATEWAY_TOKEN`).
+- Non-loopback binds require `gateway.auth.token` (or `OPENCLAW_GATEWAY_TOKEN`).
 - `gateway.remote.token` is only for remote CLI calls; it does not enable local auth.
 
 Then point exe.dev’s proxy at `8080` (or whatever port you chose) and open your VM’s HTTPS URL:

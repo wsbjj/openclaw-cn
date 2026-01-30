@@ -21,7 +21,7 @@ export function registerBrowserCli(program: Command) {
   const browser = program
     .command("browser")
     .description("管理 clawd 专用浏览器（Chrome/Chromium）")
-    .option("--url <url>", "覆盖浏览器控制 URL（默认来自 ~/.clawdbot/clawdbot.json）")
+    .option("--url <url>", "覆盖浏览器控制 URL（默认来自 ~/.openclaw/openclaw.json）")
     .option("--browser-profile <name>", "浏览器配置文件名称（默认来自配置）")
     .option("--json", "输出机器可读的 JSON", false)
     .addHelpText(
@@ -38,7 +38,7 @@ export function registerBrowserCli(program: Command) {
     .action(() => {
       browser.outputHelp();
       defaultRuntime.error(
-        danger(`缺少子命令。尝试: "${formatCliCommand("moltbot-cn browser status")}"`),
+        danger(`缺少子命令。尝试: "${formatCliCommand("openclaw-cn browser status")}"`),
       );
       defaultRuntime.exit(1);
     });

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import process from "node:process";
 
-declare const __CLAWDBOT_VERSION__: string | undefined;
+declare const __OPENCLAW_VERSION__: string | undefined;
 
 const BUNDLED_VERSION =
-  (typeof __CLAWDBOT_VERSION__ === "string" && __CLAWDBOT_VERSION__) ||
-  process.env.CLAWDBOT_BUNDLED_VERSION ||
+  (typeof __OPENCLAW_VERSION__ === "string" && __OPENCLAW_VERSION__) ||
+  process.env.OPENCLAW_BUNDLED_VERSION ||
   "0.0.0";
 
 function hasFlag(args: string[], flag: string): boolean {

@@ -24,7 +24,7 @@ By default, the Gateway writes a rolling log file under:
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.clawdbot/clawdbot.json`:
+You can override this in `~/.openclaw/openclaw.json`:
 
 ```json
 {
@@ -75,7 +75,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-moltbot-cn channels logs --channel whatsapp
+openclaw-cn channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -97,7 +97,7 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.clawdbot/clawdbot.json`.
+All logging configuration lives under `logging` in `~/.openclaw/openclaw.json`.
 
 ```json
 {
@@ -208,7 +208,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-CLAWDBOT_DIAGNOSTICS=telegram.http,telegram.payload
+OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -249,7 +249,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 ```
 
 Notes:
-- You can also enable the plugin with `moltbot-cn plugins enable diagnostics-otel`.
+- You can also enable the plugin with `openclaw-cn plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).

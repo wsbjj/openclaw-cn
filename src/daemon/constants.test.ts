@@ -62,7 +62,7 @@ describe("resolveGatewaySystemdServiceName", () => {
   it("returns default service name when no profile is set", () => {
     const result = resolveGatewaySystemdServiceName();
     expect(result).toBe(GATEWAY_SYSTEMD_SERVICE_NAME);
-    expect(result).toBe("clawdbot-gateway");
+    expect(result).toBe("openclaw-gateway");
   });
 
   it("returns default service name when profile is undefined", () => {
@@ -110,7 +110,7 @@ describe("resolveGatewayWindowsTaskName", () => {
   it("returns default task name when no profile is set", () => {
     const result = resolveGatewayWindowsTaskName();
     expect(result).toBe(GATEWAY_WINDOWS_TASK_NAME);
-    expect(result).toBe("Clawdbot Gateway");
+    expect(result).toBe("Openclaw Gateway");
   });
 
   it("returns default task name when profile is undefined", () => {
@@ -175,7 +175,7 @@ describe("resolveGatewayProfileSuffix", () => {
 
 describe("formatGatewayServiceDescription", () => {
   it("returns default description when no profile/version", () => {
-    expect(formatGatewayServiceDescription()).toBe("Clawdbot Gateway");
+    expect(formatGatewayServiceDescription()).toBe("Openclaw Gateway");
   });
 
   it("includes profile when set", () => {

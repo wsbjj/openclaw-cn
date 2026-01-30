@@ -39,7 +39,7 @@ macOS 应用支持 Anthropic OAuth（Claude Pro/Max）。流程：
 
 - 打开浏览器进行 OAuth（PKCE）
 - 要求用户粘贴 `code#state` 值
-- 将凭据写入 `~/.clawdbot/credentials/oauth.json`
+- 将凭据写入 `~/.openclaw/credentials/oauth.json`
 
 其他提供商（OpenAI、自定义 API）目前通过环境变量或配置文件配置。
 ## 3) 设置向导（网关驱动）
@@ -81,7 +81,7 @@ macOS 应用支持 Anthropic OAuth（Claude Pro/Max）。流程：
 Gmail Pub/Sub 设置目前是一个手动步骤。使用：
 
 ```bash
-moltbot-cn webhooks gmail setup --account you@gmail.com
+openclaw-cn webhooks gmail setup --account you@gmail.com
 ```
 
 详情请参见 [/automation/gmail-pubsub](/automation/gmail-pubsub)。
@@ -90,5 +90,5 @@ moltbot-cn webhooks gmail setup --account you@gmail.com
 
 当网关在另一台机器上运行时，凭据和工作空间文件存储在**该主机上**。如果需要在远程模式下使用 OAuth，请在网关主机上创建：
 
-- `~/.clawdbot/credentials/oauth.json`
-- `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`
+- `~/.openclaw/credentials/oauth.json`
+- `~/.openclaw/agents/<agentId>/agent/auth-profiles.json`

@@ -16,7 +16,7 @@ Plugin system: `https://docs.clawd.bot/plugin`
 ### Option A: install via Clawdbot (recommended)
 
 ```bash
-moltbot-cn plugins install @clawdbot/voice-call
+openclaw-cn plugins install @clawdbot/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -24,9 +24,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.clawdbot/extensions
-cp -R extensions/voice-call ~/.clawdbot/extensions/voice-call
-cd ~/.clawdbot/extensions/voice-call && pnpm install
+mkdir -p ~/.openclaw/extensions
+cp -R extensions/voice-call ~/.openclaw/extensions/voice-call
+cd ~/.openclaw/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -99,13 +99,13 @@ Notes:
 ## CLI
 
 ```bash
-moltbot-cn voicecall call --to "+15555550123" --message "Hello from Clawdbot"
-moltbot-cn voicecall continue --call-id <id> --message "Any questions?"
-moltbot-cn voicecall speak --call-id <id> --message "One moment"
-moltbot-cn voicecall end --call-id <id>
-moltbot-cn voicecall status --call-id <id>
-moltbot-cn voicecall tail
-moltbot-cn voicecall expose --mode funnel
+openclaw-cn voicecall call --to "+15555550123" --message "Hello from Clawdbot"
+openclaw-cn voicecall continue --call-id <id> --message "Any questions?"
+openclaw-cn voicecall speak --call-id <id> --message "One moment"
+openclaw-cn voicecall end --call-id <id>
+openclaw-cn voicecall status --call-id <id>
+openclaw-cn voicecall tail
+openclaw-cn voicecall expose --mode funnel
 ```
 
 ## Tool

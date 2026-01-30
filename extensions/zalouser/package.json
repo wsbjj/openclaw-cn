@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Clawdbot Zalo Personal Account plugin via zca-cli",
   "dependencies": {
-    "clawdbot": "workspace:moltbot-cn@*",
+    "clawdbot": "workspace:openclaw-cn@*",
     "@sinclair/typebox": "0.34.47"
   },
   "clawdbot": {

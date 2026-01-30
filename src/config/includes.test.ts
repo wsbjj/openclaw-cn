@@ -11,17 +11,17 @@ import {
 
 const ROOT_DIR = path.parse(process.cwd()).root;
 const CONFIG_DIR = path.join(ROOT_DIR, "config");
-const ETC_CLAWDBOT_DIR = path.join(ROOT_DIR, "etc", "clawdbot");
+const ETC_OPENCLAW_DIR = path.join(ROOT_DIR, "etc", "clawdbot");
 const SHARED_DIR = path.join(ROOT_DIR, "shared");
 
-const DEFAULT_BASE_PATH = path.join(CONFIG_DIR, "clawdbot.json");
+const DEFAULT_BASE_PATH = path.join(CONFIG_DIR, "openclaw.json");
 
 function configPath(...parts: string[]) {
   return path.join(CONFIG_DIR, ...parts);
 }
 
 function etcClawdbotPath(...parts: string[]) {
-  return path.join(ETC_CLAWDBOT_DIR, ...parts);
+  return path.join(ETC_OPENCLAW_DIR, ...parts);
 }
 
 function sharedPath(...parts: string[]) {
@@ -283,7 +283,7 @@ describe("resolveConfigIncludes", () => {
   it("resolves parent directory references", () => {
     const files = { [sharedPath("common.json")]: { shared: true } };
     const obj = { $include: "../../shared/common.json" };
-    expect(resolve(obj, files, configPath("sub", "clawdbot.json"))).toEqual({
+    expect(resolve(obj, files, configPath("sub", "openclaw.json"))).toEqual({
       shared: true,
     });
   });

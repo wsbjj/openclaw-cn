@@ -39,15 +39,15 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("示例：")}\n${formatHelpExamples([
-          ["moltbot-cn status", "显示渠道健康 + 会话摘要。"],
-          ["moltbot-cn status --all", "完整诊断（只读）。"],
-          ["moltbot-cn status --json", "机器可读输出。"],
-          ["moltbot-cn status --usage", "显示模型提供商用量/配额快照。"],
+          ["openclaw-cn status", "显示渠道健康 + 会话摘要。"],
+          ["openclaw-cn status --all", "完整诊断（只读）。"],
+          ["openclaw-cn status --json", "机器可读输出。"],
+          ["openclaw-cn status --usage", "显示模型提供商用量/配额快照。"],
           [
-            "moltbot-cn status --deep",
+            "openclaw-cn status --deep",
             "运行渠道探测（WA + Telegram + Discord + Slack + Signal）。",
           ],
-          ["moltbot-cn status --deep --timeout 5000", "缩短探测超时。"],
+          ["openclaw-cn status --deep --timeout 5000", "缩短探测超时。"],
         ])}`,
     )
     .addHelpText(
@@ -119,10 +119,10 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("示例：")}\n${formatHelpExamples([
-          ["moltbot-cn sessions", "列出所有会话。"],
-          ["moltbot-cn sessions --active 120", "仅显示过去 2 小时内的。"],
-          ["moltbot-cn sessions --json", "机器可读输出。"],
-          ["moltbot-cn sessions --store ./tmp/sessions.json", "使用特定的会话存储。"],
+          ["openclaw-cn sessions", "列出所有会话。"],
+          ["openclaw-cn sessions --active 120", "仅显示过去 2 小时内的。"],
+          ["openclaw-cn sessions --json", "机器可读输出。"],
+          ["openclaw-cn sessions --store ./tmp/sessions.json", "使用特定的会话存储。"],
         ])}\n\n${theme.muted(
           "当智能体报告时显示每个会话的 Token 使用量；设置 agents.defaults.contextTokens 可查看模型窗口的百分比。",
         )}`,

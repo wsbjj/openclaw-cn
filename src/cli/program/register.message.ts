@@ -31,17 +31,17 @@ export function registerMessageCommands(program: Command, ctx: ProgramContext) {
         `
 ${theme.heading("示例：")}
 ${formatHelpExamples([
-  ['moltbot-cn message send --target +15555550123 --message "你好"', "发送文本消息。"],
+  ['openclaw-cn message send --target +15555550123 --message "你好"', "发送文本消息。"],
   [
-    'moltbot-cn message send --target +15555550123 --message "你好" --media photo.jpg',
+    'openclaw-cn message send --target +15555550123 --message "你好" --media photo.jpg',
     "发送带媒体的消息。",
   ],
   [
-    'moltbot-cn message poll --channel discord --target channel:123 --poll-question "吃什么？" --poll-option 披萨 --poll-option 寿司',
+    'openclaw-cn message poll --channel discord --target channel:123 --poll-question "吃什么？" --poll-option 披萨 --poll-option 寿司',
     "创建 Discord 投票。",
   ],
   [
-    'moltbot-cn message react --channel discord --target 123 --message-id 456 --emoji "✅"',
+    'openclaw-cn message react --channel discord --target 123 --message-id 456 --emoji "✅"',
     "对消息添加反应。",
   ],
 ])}

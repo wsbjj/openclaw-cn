@@ -100,7 +100,7 @@ Configure via CLI:
 We have seen strong results with MiniMax M2.1 on powerful hardware (e.g. a
 desktop/server) using LM Studio's local server.
 
-Configure manually via `clawdbot.json`:
+Configure manually via `openclaw.json`:
 
 ```json5
 {
@@ -159,7 +159,7 @@ Use the interactive config wizard to set MiniMax without editing JSON:
 - Update pricing values in `models.json` if you need exact cost tracking.
 - Referral link for MiniMax Coding Plan (10% off): https://platform.minimax.io/subscribe/coding-plan?code=DbXJTRClnb&source=link
 - See [/concepts/model-providers](/concepts/model-providers) for provider rules.
-- Use `moltbot-cn models list` and `moltbot-cn models set minimax/MiniMax-M2.1` to switch.
+- Use `openclaw-cn models list` and `openclaw-cn models set minimax/MiniMax-M2.1` to switch.
 
 ## Troubleshooting
 
@@ -179,5 +179,5 @@ Make sure the model id is **case‑sensitive**:
 
 Then recheck with:
 ```bash
-moltbot-cn models list
+openclaw-cn models list
 ```

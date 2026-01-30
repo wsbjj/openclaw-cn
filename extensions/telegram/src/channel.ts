@@ -25,7 +25,7 @@ import {
   type ChannelPlugin,
   type ClawdbotConfig,
   type ResolvedTelegramAccount,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 
 import { getTelegramRuntime } from "./runtime.js";
 

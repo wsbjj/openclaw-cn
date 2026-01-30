@@ -20,13 +20,13 @@ Fast path:
 1) See what’s already loaded:
 
 ```bash
-moltbot-cn plugins list
+openclaw-cn plugins list
 ```
 
 2) Install an official plugin (example: Voice Call):
 
 ```bash
-moltbot-cn plugins install @clawdbot/voice-call
+openclaw-cn plugins install @clawdbot/voice-call
 ```
 
 3) Restart the Gateway, then configure under `plugins.entries.<id>.config`.
@@ -91,18 +91,18 @@ Clawdbot scans, in order:
 - `plugins.load.paths` (file or directory)
 
 2) Workspace extensions
-- `<workspace>/.clawdbot/extensions/*.ts`
-- `<workspace>/.clawdbot/extensions/*/index.ts`
+- `<workspace>/.openclaw/extensions/*.ts`
+- `<workspace>/.openclaw/extensions/*/index.ts`
 
 3) Global extensions
-- `~/.clawdbot/extensions/*.ts`
-- `~/.clawdbot/extensions/*/index.ts`
+- `~/.openclaw/extensions/*.ts`
+- `~/.openclaw/extensions/*/index.ts`
 
 4) Bundled extensions (shipped with Clawdbot, **disabled by default**)
 - `<clawdbot>/extensions/*`
 
 Bundled plugins must be enabled explicitly via `plugins.entries.<id>.enabled`
-or `moltbot-cn plugins enable <id>`. Installed plugins are enabled by default,
+or `openclaw-cn plugins enable <id>`. Installed plugins are enabled by default,
 but can be disabled the same way.
 
 Each plugin must include a `clawdbot.plugin.json` file in its root. If a path
@@ -164,11 +164,11 @@ Example:
 
 Clawdbot can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
-- `~/.clawdbot/mpm/plugins.json`
-- `~/.clawdbot/mpm/catalog.json`
-- `~/.clawdbot/plugins/catalog.json`
+- `~/.openclaw/mpm/plugins.json`
+- `~/.openclaw/mpm/catalog.json`
+- `~/.openclaw/plugins/catalog.json`
 
-Or point `CLAWDBOT_PLUGIN_CATALOG_PATHS` (or `CLAWDBOT_MPM_CATALOG_PATHS`) at
+Or point `OPENCLAW_PLUGIN_CATALOG_PATHS` (or `OPENCLAW_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
 contain `{ "entries": [ { "name": "@scope/pkg", "clawdbot": { "channel": {...}, "install": {...} } } ] }`.
 
@@ -269,19 +269,19 @@ Example:
 ## CLI
 
 ```bash
-moltbot-cn plugins list
-moltbot-cn plugins info <id>
-moltbot-cn plugins install <path>                 # copy a local file/dir into ~/.clawdbot/extensions/<id>
-moltbot-cn plugins install ./extensions/voice-call # relative path ok
-moltbot-cn plugins install ./plugin.tgz           # install from a local tarball
-moltbot-cn plugins install ./plugin.zip           # install from a local zip
-moltbot-cn plugins install -l ./extensions/voice-call # link (no copy) for dev
-moltbot-cn plugins install @clawdbot/voice-call # install from npm
-moltbot-cn plugins update <id>
-moltbot-cn plugins update --all
-moltbot-cn plugins enable <id>
-moltbot-cn plugins disable <id>
-moltbot-cn plugins doctor
+openclaw-cn plugins list
+openclaw-cn plugins info <id>
+openclaw-cn plugins install <path>                 # copy a local file/dir into ~/.openclaw/extensions/<id>
+openclaw-cn plugins install ./extensions/voice-call # relative path ok
+openclaw-cn plugins install ./plugin.tgz           # install from a local tarball
+openclaw-cn plugins install ./plugin.zip           # install from a local zip
+openclaw-cn plugins install -l ./extensions/voice-call # link (no copy) for dev
+openclaw-cn plugins install @clawdbot/voice-call # install from npm
+openclaw-cn plugins update <id>
+openclaw-cn plugins update --all
+openclaw-cn plugins enable <id>
+openclaw-cn plugins disable <id>
+openclaw-cn plugins doctor
 ```
 
 `plugins update` only works for npm installs tracked under `plugins.installs`.
@@ -324,7 +324,7 @@ API-key setup inside Clawdbot (no external scripts needed).
 Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). These methods power:
 
-- `moltbot-cn models auth login --provider <id> [--method <id>]`
+- `openclaw-cn models auth login --provider <id> [--method <id>]`
 
 Example:
 
@@ -605,7 +605,7 @@ Publishing contract:
 
 - Plugin `package.json` must include `clawdbot.extensions` with one or more entry files.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `moltbot-cn plugins install <npm-spec>` uses `npm pack`, extracts into `~/.clawdbot/extensions/<id>/`, and enables it in config.
+- `openclaw-cn plugins install <npm-spec>` uses `npm pack`, extracts into `~/.openclaw/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call

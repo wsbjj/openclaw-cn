@@ -68,7 +68,7 @@ No additional configuration required. The hook automatically:
 To disable this hook:
 
 ```bash
-moltbot-cn hooks disable session-memory
+openclaw-cn hooks disable session-memory
 ```
 
 Or remove it from your config:

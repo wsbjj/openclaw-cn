@@ -44,13 +44,13 @@ clawdbot dns setup --apply
 
 This installs CoreDNS and configures it to:
 - listen on port 53 only on the gateway’s Tailscale interfaces
-- serve `clawdbot.internal.` from `~/.clawdbot/dns/clawdbot.internal.db`
+- serve `clawdbot.internal.` from `~/.openclaw/dns/clawdbot.internal.db`
 
 Validate from a tailnet‑connected machine:
 
 ```bash
 dns-sd -B _clawdbot-gw._tcp clawdbot.internal.
-dig @<TAILNET_IPV4> -p 53 _clawdbot-gw._tcp.clawdbot.internal PTR +short
+dig @<TAILNET_IPV4> -p 53 _clawdbot-gw._tcp.openclaw.internal PTR +short
 ```
 
 ### Tailscale DNS settings
@@ -69,7 +69,7 @@ The Gateway WS port (default `18789`) binds to loopback by default. For LAN/tail
 access, bind explicitly and keep auth enabled.
 
 For tailnet‑only setups:
-- Set `gateway.bind: "tailnet"` in `~/.clawdbot/clawdbot.json`.
+- Set `gateway.bind: "tailnet"` in `~/.openclaw/openclaw.json`.
 - Restart the Gateway (or restart the macOS menubar app).
 
 ## What advertises
@@ -150,11 +150,11 @@ sequences (e.g. spaces become `\032`).
 
 ## Disabling / configuration
 
-- `CLAWDBOT_DISABLE_BONJOUR=1` disables advertising.
-- `gateway.bind` in `~/.clawdbot/clawdbot.json` controls the Gateway bind mode.
-- `CLAWDBOT_SSH_PORT` overrides the SSH port advertised in TXT.
-- `CLAWDBOT_TAILNET_DNS` publishes a MagicDNS hint in TXT.
-- `CLAWDBOT_CLI_PATH` overrides the advertised CLI path.
+- `OPENCLAW_DISABLE_BONJOUR=1` disables advertising.
+- `gateway.bind` in `~/.openclaw/openclaw.json` controls the Gateway bind mode.
+- `OPENCLAW_SSH_PORT` overrides the SSH port advertised in TXT.
+- `OPENCLAW_TAILNET_DNS` publishes a MagicDNS hint in TXT.
+- `OPENCLAW_CLI_PATH` overrides the advertised CLI path.
 
 ## Related docs
 

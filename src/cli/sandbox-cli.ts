@@ -15,33 +15,33 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["moltbot-cn sandbox list", "List all sandbox containers."],
-    ["moltbot-cn sandbox list --browser", "List only browser containers."],
-    ["moltbot-cn sandbox recreate --all", "Recreate all containers."],
-    ["moltbot-cn sandbox recreate --session main", "Recreate a specific session."],
-    ["moltbot-cn sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["moltbot-cn sandbox explain", "Explain effective sandbox config."],
+    ["openclaw-cn sandbox list", "List all sandbox containers."],
+    ["openclaw-cn sandbox list --browser", "List only browser containers."],
+    ["openclaw-cn sandbox recreate --all", "Recreate all containers."],
+    ["openclaw-cn sandbox recreate --session main", "Recreate a specific session."],
+    ["openclaw-cn sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["openclaw-cn sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["moltbot-cn sandbox list", "List all sandbox containers."],
-    ["moltbot-cn sandbox list --browser", "List only browser containers."],
-    ["moltbot-cn sandbox list --json", "JSON output."],
+    ["openclaw-cn sandbox list", "List all sandbox containers."],
+    ["openclaw-cn sandbox list --browser", "List only browser containers."],
+    ["openclaw-cn sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["moltbot-cn sandbox recreate --all", "Recreate all containers."],
-    ["moltbot-cn sandbox recreate --session main", "Recreate a specific session."],
+    ["openclaw-cn sandbox recreate --all", "Recreate all containers."],
+    ["openclaw-cn sandbox recreate --session main", "Recreate a specific session."],
     [
-      "moltbot-cn sandbox recreate --agent mybot",
+      "openclaw-cn sandbox recreate --agent mybot",
       "Recreate a specific agent (includes sub-agents).",
     ],
-    ["moltbot-cn sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["moltbot-cn sandbox recreate --all --force", "Skip confirmation."],
+    ["openclaw-cn sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["openclaw-cn sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["moltbot-cn sandbox explain", "Show effective sandbox config."],
-    ["moltbot-cn sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["moltbot-cn sandbox explain --agent work", "Explain an agent sandbox."],
-    ["moltbot-cn sandbox explain --json", "JSON output."],
+    ["openclaw-cn sandbox explain", "Show effective sandbox config."],
+    ["openclaw-cn sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["openclaw-cn sandbox explain --agent work", "Explain an agent sandbox."],
+    ["openclaw-cn sandbox explain --json", "JSON output."],
   ],
 } as const;
 

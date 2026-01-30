@@ -92,9 +92,9 @@ Example:
 
 ## Session storage
 
-Session stores live under the state directory (default `~/.clawdbot`):
+Session stores live under the state directory (default `~/.openclaw`):
 
-- `~/.clawdbot/agents/<agentId>/sessions/sessions.json`
+- `~/.openclaw/agents/<agentId>/sessions/sessions.json`
 - JSONL transcripts live alongside the store
 
 You can override the store path via `session.store` and `{agentId}` templating.

@@ -16,7 +16,7 @@ read_when: "Linux 上浏览器控制失败，尤其是 snap 版 Chromium"
 
 ### 原因
 
-在 Ubuntu 和许多 Linux 发行版上，默认的 Chromium 是 **snap 包**。Snap 的 AppArmor 限制会干扰 Moltbot 启动和监控浏览器进程。
+在 Ubuntu 和许多 Linux 发行版上，默认的 Chromium 是 **snap 包**。Snap 的 AppArmor 限制会干扰 Openclaw 启动和监控浏览器进程。
 
 运行 `apt install chromium` 实际上安装的是重定向到 snap 的存根包：
 ```
@@ -41,7 +41,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y
 ```
 
-然后更新配置 (`~/.moltbot/moltbot.json`)：
+然后更新配置 (`~/.openclaw/openclaw.json`)：
 
 ```json
 {
@@ -58,7 +58,7 @@ sudo apt --fix-broken install -y
 
 ## 解决方案 2：使用 Snap Chromium + 仅附加模式
 
-如果必须使用 snap 版 Chromium，配置 Moltbot 附加到手动启动的浏览器：
+如果必须使用 snap 版 Chromium，配置 Openclaw 附加到手动启动的浏览器：
 
 ### 第一步：更新配置
 
@@ -78,21 +78,21 @@ sudo apt --fix-broken install -y
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.moltbot/browser/clawd/user-data \
+  --user-data-dir=$HOME/.openclaw/browser/clawwork/user-data \
   about:blank &
 ```
 
 ### 第三步（可选）：创建 systemd 服务自动启动
 
-创建文件 `~/.config/systemd/user/moltbot-browser.service`：
+创建文件 `~/.config/systemd/user/openclaw-browser.service`：
 
 ```ini
 [Unit]
-Description=Moltbot Browser (Chrome CDP)
+Description=Openclaw Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.moltbot/browser/clawd/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.openclaw/browser/clawwork/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -103,7 +103,7 @@ WantedBy=default.target
 启用服务：
 
 ```bash
-systemctl --user enable --now moltbot-browser.service
+systemctl --user enable --now openclaw-browser.service
 ```
 
 ---
@@ -142,7 +142,7 @@ curl -s http://127.0.0.1:18791/tabs
 
 1. **使用独立管理的浏览器：**
    ```bash
-   moltbot-cn browser start --browser-profile clawd
+   openclaw-cn browser start --browser-profile clawd
    ```
    或设置 `browser.defaultProfile: "clawd"`
 

@@ -326,16 +326,16 @@ export function registerExecApprovalsCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatExample(
-          'moltbot-cn approvals allowlist add "~/Projects/**/bin/rg"',
+          'openclaw-cn approvals allowlist add "~/Projects/**/bin/rg"',
           "Allowlist a local binary pattern for the main agent.",
         )}\n${formatExample(
-          'moltbot-cn approvals allowlist add --agent main --node <id|name|ip> "/usr/bin/uptime"',
+          'openclaw-cn approvals allowlist add --agent main --node <id|name|ip> "/usr/bin/uptime"',
           "Allowlist on a specific node/agent.",
         )}\n${formatExample(
-          'moltbot-cn approvals allowlist add --agent "*" "/usr/bin/uname"',
+          'openclaw-cn approvals allowlist add --agent "*" "/usr/bin/uname"',
           "Allowlist for all agents (wildcard).",
         )}\n${formatExample(
-          'moltbot-cn approvals allowlist remove "~/Projects/**/bin/rg"',
+          'openclaw-cn approvals allowlist remove "~/Projects/**/bin/rg"',
           "Remove an allowlist pattern.",
         )}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/approvals", "docs.clawd.bot/cli/approvals")}\n`,
     );

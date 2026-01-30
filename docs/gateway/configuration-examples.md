@@ -19,7 +19,7 @@ Examples below are aligned with the current config schema. For the exhaustive re
 }
 ```
 
-Save to `~/.clawdbot/clawdbot.json` and you can DM the bot from that number.
+Save to `~/.openclaw/openclaw.json` and you can DM the bot from that number.
 
 ### Recommended starter
 ```json5
@@ -155,7 +155,7 @@ Save to `~/.clawdbot/clawdbot.json` and you can DM the bot from that number.
       discord: { mode: "idle", idleMinutes: 10080 }
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.clawdbot/agents/default/sessions/sessions.json",
+    store: "~/.openclaw/agents/default/sessions/sessions.json",
     typingIntervalSeconds: 5,
     sendPolicy: {
       default: "allow",
@@ -272,7 +272,7 @@ Save to `~/.clawdbot/clawdbot.json` and you can DM the bot from that number.
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.clawdbot/sandboxes",
+        workspaceRoot: "~/.openclaw/sandboxes",
         docker: {
           image: "clawdbot-sandbox:bookworm-slim",
           workdir: "/workspace",
@@ -339,7 +339,7 @@ Save to `~/.clawdbot/clawdbot.json` and you can DM the bot from that number.
   // Cron jobs
   cron: {
     enabled: true,
-    store: "~/.clawdbot/cron/cron.json",
+    store: "~/.openclaw/cron/cron.json",
     maxConcurrentRuns: 2
   },
 
@@ -349,7 +349,7 @@ Save to `~/.clawdbot/clawdbot.json` and you can DM the bot from that number.
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.clawdbot/hooks",
+    transformsDir: "~/.openclaw/hooks",
     mappings: [
       {
         id: "gmail-hook",

@@ -125,7 +125,7 @@ export async function runNonInteractiveOnboardingLocal(params: {
 
   if (!opts.json) {
     runtime.log(
-      `Tip: run \`${formatCliCommand("moltbot-cn configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.clawd.bot/tools/web`,
+      `Tip: run \`${formatCliCommand("openclaw-cn configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.clawd.bot/tools/web`,
     );
   }
 }

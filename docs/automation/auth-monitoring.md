@@ -6,13 +6,13 @@ read_when:
 ---
 # Auth monitoring
 
-Clawdbot exposes OAuth expiry health via `moltbot-cn models status`. Use that for
+Clawdbot exposes OAuth expiry health via `openclaw-cn models status`. Use that for
 automation and alerting; scripts are optional extras for phone workflows.
 
 ## Preferred: CLI check (portable)
 
 ```bash
-moltbot-cn models status --check
+openclaw-cn models status --check
 ```
 
 Exit codes:
@@ -27,7 +27,7 @@ This works in cron/systemd and requires no extra scripts.
 These live under `scripts/` and are **optional**. They assume SSH access to the
 gateway host and are tuned for systemd + Termux.
 
-- `scripts/claude-auth-status.sh` now uses `moltbot-cn models status --json` as the
+- `scripts/claude-auth-status.sh` now uses `openclaw-cn models status --json` as the
   source of truth (falling back to direct file reads if the CLI is unavailable),
   so keep `clawdbot` on `PATH` for timers.
 - `scripts/auth-monitor.sh`: cron/systemd timer target; sends alerts (ntfy or phone).

@@ -8,7 +8,7 @@ export function formatCliCommand(
   command: string,
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string {
-  const profile = normalizeProfileName(env.CLAWDBOT_PROFILE);
+  const profile = normalizeProfileName(env.OPENCLAW_PROFILE);
   if (!profile) return command;
   if (!CLI_PREFIX_RE.test(command)) return command;
   if (PROFILE_FLAG_RE.test(command) || DEV_FLAG_RE.test(command)) return command;

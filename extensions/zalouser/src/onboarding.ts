@@ -3,14 +3,14 @@ import type {
   ChannelOnboardingDmPolicy,
   ClawdbotConfig,
   WizardPrompter,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   promptAccountId,
   promptChannelAccessConfig,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 
 import {
   listZalouserAccountIds,

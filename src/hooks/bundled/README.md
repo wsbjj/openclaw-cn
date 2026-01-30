@@ -15,7 +15,7 @@ Automatically saves session context to memory when you issue `/new`.
 **Enable**:
 
 ```bash
-moltbot-cn hooks enable session-memory
+openclaw-cn hooks enable session-memory
 ```
 
 ### 📝 command-logger
@@ -24,12 +24,12 @@ Logs all command events to a centralized audit file.
 
 **Events**: `command` (all commands)
 **What it does**: Appends JSONL entries to command log file.
-**Output**: `~/.clawdbot/logs/commands.log`
+**Output**: `~/.openclaw/logs/commands.log`
 
 **Enable**:
 
 ```bash
-moltbot-cn hooks enable command-logger
+openclaw-cn hooks enable command-logger
 ```
 
 ### 😈 soul-evil
@@ -44,7 +44,7 @@ Swaps injected `SOUL.md` content with `SOUL_EVIL.md` during a purge window or by
 **Enable**:
 
 ```bash
-moltbot-cn hooks enable soul-evil
+openclaw-cn hooks enable soul-evil
 ```
 
 ### 🚀 boot-md
@@ -58,7 +58,7 @@ Runs `BOOT.md` whenever the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-moltbot-cn hooks enable boot-md
+openclaw-cn hooks enable boot-md
 ```
 
 ## Hook Structure
@@ -108,7 +108,7 @@ Documentation goes here...
 To create your own hooks, place them in:
 
 - **Workspace hooks**: `<workspace>/hooks/` (highest precedence)
-- **Managed hooks**: `~/.clawdbot/hooks/` (shared across workspaces)
+- **Managed hooks**: `~/.openclaw/hooks/` (shared across workspaces)
 
 Custom hooks follow the same structure as bundled hooks.
 
@@ -117,31 +117,31 @@ Custom hooks follow the same structure as bundled hooks.
 List all hooks:
 
 ```bash
-moltbot-cn hooks list
+openclaw-cn hooks list
 ```
 
 Show hook details:
 
 ```bash
-moltbot-cn hooks info session-memory
+openclaw-cn hooks info session-memory
 ```
 
 Check hook status:
 
 ```bash
-moltbot-cn hooks check
+openclaw-cn hooks check
 ```
 
 Enable/disable:
 
 ```bash
-moltbot-cn hooks enable session-memory
-moltbot-cn hooks disable command-logger
+openclaw-cn hooks enable session-memory
+openclaw-cn hooks disable command-logger
 ```
 
 ## Configuration
 
-Hooks can be configured in `~/.clawdbot/clawdbot.json`:
+Hooks can be configured in `~/.openclaw/openclaw.json`:
 
 ```json
 {
@@ -214,8 +214,8 @@ export default myHandler;
 Test your hooks by:
 
 1. Place hook in workspace hooks directory
-2. Restart gateway: `pkill -9 -f 'clawdbot.*gateway' && pnpm moltbot-cn gateway`
-3. Enable the hook: `moltbot-cn hooks enable my-hook`
+2. Restart gateway: `pkill -9 -f 'clawdbot.*gateway' && pnpm openclaw-cn gateway`
+3. Enable the hook: `openclaw-cn hooks enable my-hook`
 4. Trigger the event (e.g., send `/new` command)
 5. Check gateway logs for hook execution
 

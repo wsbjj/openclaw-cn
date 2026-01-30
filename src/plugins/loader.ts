@@ -208,8 +208,15 @@ export function loadClawdbotPlugins(options: PluginLoadOptions = {}): PluginRegi
     extensions: [".ts", ".tsx", ".mts", ".cts", ".mtsx", ".ctsx", ".js", ".mjs", ".cjs", ".json"],
     // Disable cache in development to ensure latest code is loaded, especially when
     // plugin SDK exports change but jiti cache remains stale.
-    cache: process.env.NODE_ENV !== "development" && !process.env.CLAWDBOT_NO_PLUGIN_CACHE,
-    ...(pluginSdkAlias ? { alias: { "clawdbot/plugin-sdk": pluginSdkAlias } } : {}),
+    cache: process.env.NODE_ENV !== "development" && !process.env.OPENCLAW_NO_PLUGIN_CACHE,
+    ...(pluginSdkAlias
+      ? {
+          alias: {
+            "clawdbot/plugin-sdk": pluginSdkAlias,
+            "openclaw-cn/plugin-sdk": pluginSdkAlias,
+          },
+        }
+      : {}),
   });
 
   const manifestByRoot = new Map(

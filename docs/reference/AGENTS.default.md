@@ -19,15 +19,15 @@ mkdir -p ~/clawd
 2) Copy the default workspace templates into the workspace:
 
 ```bash
-cp docs/reference/templates/AGENTS.md ~/clawd/AGENTS.md
-cp docs/reference/templates/SOUL.md ~/clawd/SOUL.md
-cp docs/reference/templates/TOOLS.md ~/clawd/TOOLS.md
+cp docs/reference/templates/AGENTS.md ~/clawwork/AGENTS.md
+cp docs/reference/templates/SOUL.md ~/clawwork/SOUL.md
+cp docs/reference/templates/TOOLS.md ~/clawwork/TOOLS.md
 ```
 
 3) Optional: if you want the personal assistant skill roster, replace AGENTS.md with this file:
 
 ```bash
-cp docs/reference/AGENTS.default.md ~/clawd/AGENTS.md
+cp docs/reference/AGENTS.default.md ~/clawwork/AGENTS.md
 ```
 
 4) Optional: choose a different workspace by setting `agents.defaults.workspace` (supports `~`):

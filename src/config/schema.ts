@@ -390,7 +390,7 @@ const FIELD_HELP: Record<string, string> = {
     '按标志启用针对性诊断日志(例如["telegram.http"])。支持通配符如"telegram.*"或"*"。',
   "diagnostics.cacheTrace.enabled": "为嵌入式代理运行记录缓存跟踪快照(默认: false)。",
   "diagnostics.cacheTrace.filePath":
-    "缓存跟踪日志的JSONL输出路径(默认: $CLAWDBOT_STATE_DIR/logs/cache-trace.jsonl)。",
+    "缓存跟踪日志的JSONL输出路径(默认: $OPENCLAW_STATE_DIR/logs/cache-trace.jsonl)。",
   "diagnostics.cacheTrace.includeMessages": "在跟踪输出中包含完整消息负载(默认: true)。",
   "diagnostics.cacheTrace.includePrompt": "在跟踪输出中包含提示文本(默认: true)。",
   "diagnostics.cacheTrace.includeSystem": "在跟踪输出中包含系统提示(默认: true)。",
@@ -478,7 +478,7 @@ const FIELD_HELP: Record<string, string> = {
   "agents.defaults.memorySearch.fallback":
     '嵌入失败时的备用提供商("openai"、"gemini"、"local"或"none")。',
   "agents.defaults.memorySearch.store.path":
-    "SQLite索引路径(默认: ~/.clawdbot/memory/{agentId}.sqlite)。",
+    "SQLite索引路径(默认: ~/.openclaw/memory/{agentId}.sqlite)。",
   "agents.defaults.memorySearch.store.vector.enabled": "为向量搜索启用sqlite-vec扩展(默认: true)。",
   "agents.defaults.memorySearch.store.vector.extensionPath":
     "sqlite-vec扩展库的可选覆盖路径(.dylib/.so/.dll)。",
@@ -505,11 +505,11 @@ const FIELD_HELP: Record<string, string> = {
   "plugins.entries": "按插件ID键入的每个插件设置(启用/禁用+配置负载)。",
   "plugins.entries.*.enabled": "覆盖此条目的插件启用/禁用(需要重启)。",
   "plugins.entries.*.config": "插件定义的配置负载(模式由插件提供)。",
-  "plugins.installs": "CLI管理的安装元数据(由`moltbot-cn plugins update`用于定位安装源)。",
+  "plugins.installs": "CLI管理的安装元数据(由`openclaw-cn plugins update`用于定位安装源)。",
   "plugins.installs.*.source": '安装源("npm"、"archive"或"path")。',
   "plugins.installs.*.spec": "用于安装的原始npm规范(如果源是npm)。",
   "plugins.installs.*.sourcePath": "用于安装的原始归档/路径(如果有)。",
-  "plugins.installs.*.installPath": "解析的安装目录(通常为 ~/.clawdbot/extensions/<id>)。",
+  "plugins.installs.*.installPath": "解析的安装目录(通常为 ~/.openclaw/extensions/<id>)。",
   "plugins.installs.*.version": "安装时记录的版本(如果可用)。",
   "plugins.installs.*.installedAt": "最后一次安装/更新的ISO时间戳。",
   "agents.list.*.identity.avatar": "代理头像(工作区相对路径、http(s) URL或data URI)。",
@@ -599,7 +599,7 @@ const FIELD_PLACEHOLDERS: Record<string, string> = {
   "gateway.remote.url": "ws://主机:18789",
   "gateway.remote.tlsFingerprint": "sha256:ab12cd34…",
   "gateway.remote.sshTarget": "用户@主机",
-  "gateway.controlUi.basePath": "/clawdbot",
+  "gateway.controlUi.basePath": "/openclawot",
   "channels.mattermost.baseUrl": "https://chat.example.com",
   "agents.list[].identity.avatar": "avatars/clawd.png",
 };

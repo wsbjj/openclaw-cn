@@ -128,7 +128,7 @@ The hackable install gives you direct access to logs and code — useful for deb
 ## 7) Run Onboarding
 
 ```bash
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 Follow the wizard:
@@ -304,7 +304,7 @@ free -h
 journalctl -u clawdbot --no-pager -n 100
 
 # Common fix: rebuild
-cd ~/clawdbot  # if using hackable install
+cd ~/openclawot  # if using hackable install
 npm run build
 sudo systemctl restart clawdbot
 ```

@@ -220,13 +220,13 @@ async function readContainerConfigHash(containerName: string): Promise<string | 
 
 function formatSandboxRecreateHint(params: { scope: SandboxConfig["scope"]; sessionKey: string }) {
   if (params.scope === "session") {
-    return formatCliCommand(`moltbot-cn sandbox recreate --session ${params.sessionKey}`);
+    return formatCliCommand(`openclaw-cn sandbox recreate --session ${params.sessionKey}`);
   }
   if (params.scope === "agent") {
     const agentId = resolveSandboxAgentId(params.sessionKey) ?? "main";
-    return formatCliCommand(`moltbot-cn sandbox recreate --agent ${agentId}`);
+    return formatCliCommand(`openclaw-cn sandbox recreate --agent ${agentId}`);
   }
-  return formatCliCommand("moltbot-cn sandbox recreate --all");
+  return formatCliCommand("openclaw-cn sandbox recreate --all");
 }
 
 export async function ensureSandboxContainer(params: {

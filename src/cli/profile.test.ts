@@ -55,84 +55,84 @@ describe("applyCliProfileEnv", () => {
       env,
       homedir: () => "/home/peter",
     });
-    const expectedStateDir = path.join("/home/peter", ".clawdbot-dev");
-    expect(env.CLAWDBOT_PROFILE).toBe("dev");
-    expect(env.CLAWDBOT_STATE_DIR).toBe(expectedStateDir);
-    expect(env.CLAWDBOT_CONFIG_PATH).toBe(path.join(expectedStateDir, "clawdbot.json"));
-    expect(env.CLAWDBOT_GATEWAY_PORT).toBe("19001");
+    const expectedStateDir = path.join("/home/peter", ".openclaw-dev");
+    expect(env.OPENCLAW_PROFILE).toBe("dev");
+    expect(env.OPENCLAW_STATE_DIR).toBe(expectedStateDir);
+    expect(env.OPENCLAW_CONFIG_PATH).toBe(path.join(expectedStateDir, "openclaw.json"));
+    expect(env.OPENCLAW_GATEWAY_PORT).toBe("19001");
   });
 
   it("does not override explicit env values", () => {
     const env: Record<string, string | undefined> = {
-      CLAWDBOT_STATE_DIR: "/custom",
-      CLAWDBOT_GATEWAY_PORT: "19099",
+      OPENCLAW_STATE_DIR: "/custom",
+      OPENCLAW_GATEWAY_PORT: "19099",
     };
     applyCliProfileEnv({
       profile: "dev",
       env,
       homedir: () => "/home/peter",
     });
-    expect(env.CLAWDBOT_STATE_DIR).toBe("/custom");
-    expect(env.CLAWDBOT_GATEWAY_PORT).toBe("19099");
-    expect(env.CLAWDBOT_CONFIG_PATH).toBe(path.join("/custom", "clawdbot.json"));
+    expect(env.OPENCLAW_STATE_DIR).toBe("/custom");
+    expect(env.OPENCLAW_GATEWAY_PORT).toBe("19099");
+    expect(env.OPENCLAW_CONFIG_PATH).toBe(path.join("/custom", "openclaw.json"));
   });
 });
 
 describe("formatCliCommand", () => {
   it("returns command unchanged when no profile is set", () => {
-    expect(formatCliCommand("moltbot-cn doctor --fix", {})).toBe("moltbot-cn doctor --fix");
+    expect(formatCliCommand("openclaw-cn doctor --fix", {})).toBe("openclaw-cn doctor --fix");
   });
 
   it("returns command unchanged when profile is default", () => {
-    expect(formatCliCommand("moltbot-cn doctor --fix", { CLAWDBOT_PROFILE: "default" })).toBe(
-      "moltbot-cn doctor --fix",
+    expect(formatCliCommand("openclaw-cn doctor --fix", { OPENCLAW_PROFILE: "default" })).toBe(
+      "openclaw-cn doctor --fix",
     );
   });
 
   it("returns command unchanged when profile is Default (case-insensitive)", () => {
-    expect(formatCliCommand("moltbot-cn doctor --fix", { CLAWDBOT_PROFILE: "Default" })).toBe(
-      "moltbot-cn doctor --fix",
+    expect(formatCliCommand("openclaw-cn doctor --fix", { OPENCLAW_PROFILE: "Default" })).toBe(
+      "openclaw-cn doctor --fix",
     );
   });
 
   it("returns command unchanged when profile is invalid", () => {
-    expect(formatCliCommand("moltbot-cn doctor --fix", { CLAWDBOT_PROFILE: "bad profile" })).toBe(
-      "moltbot-cn doctor --fix",
+    expect(formatCliCommand("openclaw-cn doctor --fix", { OPENCLAW_PROFILE: "bad profile" })).toBe(
+      "openclaw-cn doctor --fix",
     );
   });
 
   it("returns command unchanged when --profile is already present", () => {
     expect(
-      formatCliCommand("clawdbot --profile work doctor --fix", { CLAWDBOT_PROFILE: "work" }),
+      formatCliCommand("clawdbot --profile work doctor --fix", { OPENCLAW_PROFILE: "work" }),
     ).toBe("clawdbot --profile work doctor --fix");
   });
 
   it("returns command unchanged when --dev is already present", () => {
-    expect(formatCliCommand("clawdbot --dev doctor", { CLAWDBOT_PROFILE: "dev" })).toBe(
+    expect(formatCliCommand("clawdbot --dev doctor", { OPENCLAW_PROFILE: "dev" })).toBe(
       "clawdbot --dev doctor",
     );
   });
 
   it("inserts --profile flag when profile is set", () => {
-    expect(formatCliCommand("moltbot-cn doctor --fix", { CLAWDBOT_PROFILE: "work" })).toBe(
+    expect(formatCliCommand("openclaw-cn doctor --fix", { OPENCLAW_PROFILE: "work" })).toBe(
       "clawdbot --profile work doctor --fix",
     );
   });
 
   it("trims whitespace from profile", () => {
-    expect(formatCliCommand("moltbot-cn doctor --fix", { CLAWDBOT_PROFILE: "  jbclawd  " })).toBe(
+    expect(formatCliCommand("openclaw-cn doctor --fix", { OPENCLAW_PROFILE: "  jbclawd  " })).toBe(
       "clawdbot --profile jbclawd doctor --fix",
     );
   });
 
   it("handles command with no args after clawdbot", () => {
-    expect(formatCliCommand("clawdbot", { CLAWDBOT_PROFILE: "test" })).toBe(
+    expect(formatCliCommand("clawdbot", { OPENCLAW_PROFILE: "test" })).toBe(
       "clawdbot --profile test",
     );
   });
 
   it("handles pnpm wrapper", () => {
-    expect(formatCliCommand("pnpm moltbot-cn doctor", { CLAWDBOT_PROFILE: "work" })).toBe(
+    expect(formatCliCommand("pnpm openclaw-cn doctor", { OPENCLAW_PROFILE: "work" })).toBe(
       "pnpm clawdbot --profile work doctor",
     );
   });

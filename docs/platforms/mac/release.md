@@ -29,7 +29,7 @@ Notes:
 ```bash
 # From repo root; set release IDs so Sparkle feed is enabled.
 # APP_BUILD must be numeric + monotonic for Sparkle compare.
-BUNDLE_ID=com.clawdbot.mac \
+BUNDLE_ID=com.openclaw.mac \
 APP_VERSION=2026.1.25 \
 APP_BUILD="$(git rev-list --count HEAD)" \
 BUILD_CONFIG=release \
@@ -47,7 +47,7 @@ scripts/create-dmg.sh dist/Clawdbot.app dist/Clawdbot-2026.1.25.dmg
 #   xcrun notarytool store-credentials "clawdbot-notary" \
 #     --apple-id "<apple-id>" --team-id "<team-id>" --password "<app-specific-password>"
 NOTARIZE=1 NOTARYTOOL_PROFILE=clawdbot-notary \
-BUNDLE_ID=com.clawdbot.mac \
+BUNDLE_ID=com.openclaw.mac \
 APP_VERSION=2026.1.25 \
 APP_BUILD="$(git rev-list --count HEAD)" \
 BUILD_CONFIG=release \

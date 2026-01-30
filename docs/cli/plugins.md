@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `moltbot-cn plugins` (list, install, enable/disable, doctor)"
+summary: "CLI reference for `openclaw-cn plugins` (list, install, enable/disable, doctor)"
 read_when:
   - You want to install or manage in-process Gateway plugins
   - You want to debug plugin load failures
 ---
 
-# `moltbot-cn plugins`
+# `openclaw-cn plugins`
 
 Manage Gateway plugins/extensions (loaded in-process).
 
@@ -17,13 +17,13 @@ Related:
 ## Commands
 
 ```bash
-moltbot-cn plugins list
-moltbot-cn plugins info <id>
-moltbot-cn plugins enable <id>
-moltbot-cn plugins disable <id>
-moltbot-cn plugins doctor
-moltbot-cn plugins update <id>
-moltbot-cn plugins update --all
+openclaw-cn plugins list
+openclaw-cn plugins info <id>
+openclaw-cn plugins enable <id>
+openclaw-cn plugins disable <id>
+openclaw-cn plugins doctor
+openclaw-cn plugins update <id>
+openclaw-cn plugins update --all
 ```
 
 Bundled plugins ship with Clawdbot but start disabled. Use `plugins enable` to
@@ -36,7 +36,7 @@ the plugin from loading and fail config validation.
 ### Install
 
 ```bash
-moltbot-cn plugins install <path-or-spec>
+openclaw-cn plugins install <path-or-spec>
 ```
 
 Security note: treat plugin installs like running code. Prefer pinned versions.
@@ -46,15 +46,15 @@ Supported archives: `.zip`, `.tgz`, `.tar.gz`, `.tar`.
 Use `--link` to avoid copying a local directory (adds to `plugins.load.paths`):
 
 ```bash
-moltbot-cn plugins install -l ./my-plugin
+openclaw-cn plugins install -l ./my-plugin
 ```
 
 ### Update
 
 ```bash
-moltbot-cn plugins update <id>
-moltbot-cn plugins update --all
-moltbot-cn plugins update <id> --dry-run
+openclaw-cn plugins update <id>
+openclaw-cn plugins update --all
+openclaw-cn plugins update <id> --dry-run
 ```
 
 Updates only apply to plugins installed from npm (tracked in `plugins.installs`).

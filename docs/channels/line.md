@@ -21,13 +21,13 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-moltbot-cn plugins install @clawdbot/line
+openclaw-cn plugins install @clawdbot/line
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-moltbot-cn plugins install ./extensions/line
+openclaw-cn plugins install ./extensions/line
 ```
 
 ## Setup
@@ -106,8 +106,8 @@ Direct messages default to pairing. Unknown senders get a pairing code and their
 messages are ignored until approved.
 
 ```bash
-moltbot-cn pairing list line
-moltbot-cn pairing approve line <CODE>
+openclaw-cn pairing list line
+openclaw-cn pairing approve line <CODE>
 ```
 
 Allowlists and policies:

@@ -31,7 +31,7 @@ const execFileAsync = promisify(execFile);
 export function renderGatewayServiceCleanupHints(
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string[] {
-  const profile = env.CLAWDBOT_PROFILE;
+  const profile = env.OPENCLAW_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);
@@ -83,7 +83,7 @@ function isClawdbotGatewayLaunchdService(label: string, contents: string): boole
 
 function isClawdbotGatewaySystemdService(name: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) return true;
-  if (!name.startsWith("clawdbot-gateway")) return false;
+  if (!name.startsWith("openclaw-gateway")) return false;
   return contents.toLowerCase().includes("gateway");
 }
 
@@ -91,7 +91,7 @@ function isClawdbotGatewayTaskName(name: string): boolean {
   const normalized = name.trim().toLowerCase();
   if (!normalized) return false;
   const defaultName = resolveGatewayWindowsTaskName().toLowerCase();
-  return normalized === defaultName || normalized.startsWith("moltbot-cn gateway");
+  return normalized === defaultName || normalized.startsWith("openclaw-cn gateway");
 }
 
 function tryExtractPlistLabel(contents: string): string | null {

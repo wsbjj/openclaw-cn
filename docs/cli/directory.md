@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `moltbot-cn directory` (self, peers, groups)"
+summary: "CLI reference for `openclaw-cn directory` (self, peers, groups)"
 read_when:
   - You want to look up contacts/groups/self ids for a channel
   - You are developing a channel directory adapter
 ---
 
-# `moltbot-cn directory`
+# `openclaw-cn directory`
 
 Directory lookups for channels that support it (contacts/peers, groups, and “me”).
 
@@ -15,15 +15,15 @@ Directory lookups for channels that support it (contacts/peers, groups, and “m
 - `--json`: output JSON
 
 ## Notes
-- `directory` is meant to help you find IDs you can paste into other commands (especially `moltbot-cn message send --target ...`).
+- `directory` is meant to help you find IDs you can paste into other commands (especially `openclaw-cn message send --target ...`).
 - For many channels, results are config-backed (allowlists / configured groups) rather than a live provider directory.
 - Default output is `id` (and sometimes `name`) separated by a tab; use `--json` for scripting.
 
 ## Using results with `message send`
 
 ```bash
-moltbot-cn directory peers list --channel slack --query "U0"
-moltbot-cn message send --channel slack --target user:U012ABCDEF --message "hello"
+openclaw-cn directory peers list --channel slack --query "U0"
+openclaw-cn message send --channel slack --target user:U012ABCDEF --message "hello"
 ```
 
 ## ID formats (by channel)
@@ -40,21 +40,21 @@ moltbot-cn message send --channel slack --target user:U012ABCDEF --message "hell
 ## Self (“me”)
 
 ```bash
-moltbot-cn directory self --channel zalouser
+openclaw-cn directory self --channel zalouser
 ```
 
 ## Peers (contacts/users)
 
 ```bash
-moltbot-cn directory peers list --channel zalouser
-moltbot-cn directory peers list --channel zalouser --query "name"
-moltbot-cn directory peers list --channel zalouser --limit 50
+openclaw-cn directory peers list --channel zalouser
+openclaw-cn directory peers list --channel zalouser --query "name"
+openclaw-cn directory peers list --channel zalouser --limit 50
 ```
 
 ## Groups
 
 ```bash
-moltbot-cn directory groups list --channel zalouser
-moltbot-cn directory groups list --channel zalouser --query "work"
-moltbot-cn directory groups members --channel zalouser --group-id <id>
+openclaw-cn directory groups list --channel zalouser
+openclaw-cn directory groups list --channel zalouser --query "work"
+openclaw-cn directory groups members --channel zalouser --group-id <id>
 ```

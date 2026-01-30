@@ -324,7 +324,7 @@ function collectBrowserControlFindings(cfg: ClawdbotConfig): SecurityAuditFindin
       severity: "warn",
       title: "Browser control config looks invalid",
       detail: String(err),
-      remediation: `Fix browser.controlUrl/browser.cdpUrl in ${resolveConfigPath()} and re-run "${formatCliCommand("moltbot-cn security audit --deep")}".`,
+      remediation: `Fix browser.controlUrl/browser.cdpUrl in ${resolveConfigPath()} and re-run "${formatCliCommand("openclaw-cn security audit --deep")}".`,
     });
     return findings;
   }
@@ -333,7 +333,7 @@ function collectBrowserControlFindings(cfg: ClawdbotConfig): SecurityAuditFindin
 
   const url = new URL(resolved.controlUrl);
   const isLoopback = isLoopbackClientHost(url.hostname);
-  const envToken = process.env.CLAWDBOT_BROWSER_CONTROL_TOKEN?.trim();
+  const envToken = process.env.OPENCLAW_BROWSER_CONTROL_TOKEN?.trim();
   const controlToken = (envToken || resolved.controlToken)?.trim() || null;
 
   if (!isLoopback) {
@@ -342,9 +342,9 @@ function collectBrowserControlFindings(cfg: ClawdbotConfig): SecurityAuditFindin
         checkId: "browser.control_remote_no_token",
         severity: "critical",
         title: "Remote browser control is missing an auth token",
-        detail: `browser.controlUrl is non-loopback (${resolved.controlUrl}) but no browser.controlToken (or CLAWDBOT_BROWSER_CONTROL_TOKEN) is configured.`,
+        detail: `browser.controlUrl is non-loopback (${resolved.controlUrl}) but no browser.controlToken (or OPENCLAW_BROWSER_CONTROL_TOKEN) is configured.`,
         remediation:
-          "Set browser.controlToken (or export CLAWDBOT_BROWSER_CONTROL_TOKEN) and prefer serving over Tailscale Serve or HTTPS reverse proxy.",
+          "Set browser.controlToken (or export OPENCLAW_BROWSER_CONTROL_TOKEN) and prefer serving over Tailscale Serve or HTTPS reverse proxy.",
       });
     }
 
@@ -809,10 +809,10 @@ async function maybeProbeGateway(params: {
         ? typeof remote?.token === "string" && remote.token.trim()
           ? remote.token.trim()
           : undefined
-        : process.env.CLAWDBOT_GATEWAY_TOKEN?.trim() ||
+        : process.env.OPENCLAW_GATEWAY_TOKEN?.trim() ||
           (typeof authToken === "string" && authToken.trim() ? authToken.trim() : undefined);
     const password =
-      process.env.CLAWDBOT_GATEWAY_PASSWORD?.trim() ||
+      process.env.OPENCLAW_GATEWAY_PASSWORD?.trim() ||
       (mode === "remote"
         ? typeof remote?.password === "string" && remote.password.trim()
           ? remote.password.trim()
@@ -901,7 +901,7 @@ export async function runSecurityAudit(opts: SecurityAuditOptions): Promise<Secu
       severity: "warn",
       title: "Gateway probe failed (deep)",
       detail: deep.gateway.error ?? "gateway unreachable",
-      remediation: `Run "${formatCliCommand("moltbot-cn status --all")}" to debug connectivity/auth, then re-run "${formatCliCommand("moltbot-cn security audit --deep")}".`,
+      remediation: `Run "${formatCliCommand("openclaw-cn status --all")}" to debug connectivity/auth, then re-run "${formatCliCommand("openclaw-cn security audit --deep")}".`,
     });
   }
 

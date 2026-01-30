@@ -58,7 +58,7 @@ Keep `~/clawd` as canonical human-readable memory.
 Suggested workspace layout:
 
 ```
-~/clawd/
+~/clawwork/
   memory.md                    # small: durable facts + preferences (core-ish)
   memory/
     YYYY-MM-DD.md              # daily log (append; narrative)
@@ -83,7 +83,7 @@ Notes:
 Add a derived index under the workspace (not necessarily git tracked):
 
 ```
-~/clawd/.memory/index.sqlite
+~/clawwork/.memory/index.sqlite
 ```
 
 Back it with:

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import { bluebubblesMessageActions } from "./actions.js";
-import type { ClawdbotConfig } from "moltbot-cn/plugin-sdk";
+import type { ClawdbotConfig } from "openclaw-cn/plugin-sdk";
 
 vi.mock("./accounts.js", () => ({
   resolveBlueBubblesAccount: vi.fn(({ cfg, accountId }) => {

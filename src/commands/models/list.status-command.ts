@@ -17,7 +17,7 @@ import {
   resolveConfiguredModelRef,
   resolveModelRefFromString,
 } from "../../agents/model-selection.js";
-import { CONFIG_PATH_CLAWDBOT, loadConfig } from "../../config/config.js";
+import { CONFIG_PATH_OPENCLAW, loadConfig } from "../../config/config.js";
 import { getShellEnvAppliedKeys, shouldEnableShellEnvFallback } from "../../infra/shell-env.js";
 import { withProgressTotals } from "../../cli/progress.js";
 import {
@@ -294,7 +294,7 @@ export async function modelsStatusCommand(
     runtime.log(
       JSON.stringify(
         {
-          configPath: CONFIG_PATH_CLAWDBOT,
+          configPath: CONFIG_PATH_OPENCLAW,
           agentDir,
           defaultModel: defaultLabel,
           resolvedDefault: resolvedLabel,
@@ -341,7 +341,7 @@ export async function modelsStatusCommand(
     rawModel && rawModel !== resolvedLabel ? `${resolvedLabel} (from ${rawModel})` : resolvedLabel;
 
   runtime.log(
-    `${label("Config")}${colorize(rich, theme.muted, ":")} ${colorize(rich, theme.info, shortenHomePath(CONFIG_PATH_CLAWDBOT))}`,
+    `${label("Config")}${colorize(rich, theme.muted, ":")} ${colorize(rich, theme.info, shortenHomePath(CONFIG_PATH_OPENCLAW))}`,
   );
   runtime.log(
     `${label("Agent dir")}${colorize(rich, theme.muted, ":")} ${colorize(
@@ -487,8 +487,8 @@ export async function modelsStatusCommand(
     for (const provider of missingProvidersInUse) {
       const hint =
         provider === "anthropic"
-          ? `Run \`claude setup-token\` or \`${formatCliCommand("moltbot-cn configure")}\`.`
-          : `Run \`${formatCliCommand("moltbot-cn configure")}\` or set an API key env var.`;
+          ? `Run \`claude setup-token\` or \`${formatCliCommand("openclaw-cn configure")}\`.`
+          : `Run \`${formatCliCommand("openclaw-cn configure")}\` or set an API key env var.`;
       runtime.log(`- ${theme.heading(provider)} ${hint}`);
     }
   }

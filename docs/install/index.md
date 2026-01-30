@@ -24,7 +24,7 @@ iwr -useb https://clawd.org.cn/install.ps1 | iex
 下一步（如果跳过了引导配置）：
 
 ```bash
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 ## 系统要求
@@ -37,7 +37,7 @@ moltbot-cn onboard --install-daemon
 
 ### 1) 安装脚本（推荐）
 
-通过 npm 全局安装 `moltbot-cn` 并运行引导配置。
+通过 npm 全局安装 `openclaw-cn` 并运行引导配置。
 
 ```bash
 curl -fsSL https://clawd.org.cn/install.sh | bash
@@ -62,13 +62,13 @@ curl -fsSL https://clawd.org.cn/install.sh | bash -s -- --no-onboard
 如果已安装 Node：
 
 ```bash
-npm install -g moltbot-cn@latest
+npm install -g openclaw-cn@latest
 ```
 
 如果全局安装了 libvips（macOS 上通过 Homebrew 安装很常见）且 `sharp` 安装失败，强制使用预构建二进制文件：
 
 ```bash
-SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g moltbot-cn@latest
+SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g openclaw-cn@latest
 ```
 
 如果看到 `sharp: Please add node-gyp to your dependencies`，可以安装构建工具（macOS：Xcode CLT + `npm install -g node-gyp`）或使用上面的 `SHARP_IGNORE_GLOBAL_LIBVIPS=1` 变通方案跳过原生构建。
@@ -76,27 +76,27 @@ SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g moltbot-cn@latest
 或者：
 
 ```bash
-pnpm add -g moltbot-cn@latest
+pnpm add -g openclaw-cn@latest
 ```
 
 然后：
 
 ```bash
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 ### 3) 从源码构建（贡献者/开发）
 
 ```bash
-git clone https://github.com/jiulingyun/moltbot-cn.git
+git clone https://github.com/jiulingyun/openclaw-cn.git
 cd clawdbot-chinese
 pnpm install
 pnpm ui:build # 首次运行会自动安装 UI 依赖
 pnpm build
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
-提示：如果还没有全局安装，可以通过 `pnpm moltbot-cn ...` 运行仓库命令。
+提示：如果还没有全局安装，可以通过 `pnpm openclaw-cn ...` 运行仓库命令。
 
 ### 4) 其他安装选项
 
@@ -107,16 +107,16 @@ moltbot-cn onboard --install-daemon
 
 ## 安装后
 
-- 运行引导配置：`moltbot-cn onboard --install-daemon`
-- 快速检查：`moltbot-cn doctor`
-- 检查网关健康状态：`moltbot-cn status` + `moltbot-cn health`
-- 打开仪表盘：`moltbot-cn dashboard`
+- 运行引导配置：`openclaw-cn onboard --install-daemon`
+- 快速检查：`openclaw-cn doctor`
+- 检查网关健康状态：`openclaw-cn status` + `openclaw-cn health`
+- 打开仪表盘：`openclaw-cn dashboard`
 
 ## 安装方式：npm vs git（安装器）
 
 安装器支持两种方式：
 
-- `npm`（默认）：`npm install -g moltbot-cn@latest`
+- `npm`（默认）：`npm install -g openclaw-cn@latest`
 - `git`：从 GitHub 克隆/构建并从源码检出运行
 
 ### CLI 参数
@@ -132,7 +132,7 @@ curl -fsSL https://clawd.org.cn/install.sh | bash -s -- --install-method git
 常用参数：
 
 - `--install-method npm|git`
-- `--git-dir <path>`（默认：`~/clawdbot`）
+- `--git-dir <path>`（默认：`~/openclawot`）
 - `--no-git-update`（使用现有检出时跳过 `git pull`）
 - `--no-prompt`（禁用提示；CI/自动化必需）
 - `--dry-run`（打印将执行的操作；不做任何更改）
@@ -142,15 +142,15 @@ curl -fsSL https://clawd.org.cn/install.sh | bash -s -- --install-method git
 
 等效的环境变量（适用于自动化）：
 
-- `CLAWDBOT_INSTALL_METHOD=git|npm`
-- `CLAWDBOT_GIT_DIR=...`
-- `CLAWDBOT_GIT_UPDATE=0|1`
-- `CLAWDBOT_NO_PROMPT=1`
-- `CLAWDBOT_DRY_RUN=1`
-- `CLAWDBOT_NO_ONBOARD=1`
+- `OPENCLAW_INSTALL_METHOD=git|npm`
+- `OPENCLAW_GIT_DIR=...`
+- `OPENCLAW_GIT_UPDATE=0|1`
+- `OPENCLAW_NO_PROMPT=1`
+- `OPENCLAW_DRY_RUN=1`
+- `OPENCLAW_NO_ONBOARD=1`
 - `SHARP_IGNORE_GLOBAL_LIBVIPS=0|1`（默认：`1`；避免 `sharp` 针对系统 libvips 构建）
 
-## 故障排除：找不到 `moltbot-cn`（PATH）
+## 故障排除：找不到 `openclaw-cn`（PATH）
 
 快速诊断：
 
@@ -161,7 +161,7 @@ npm prefix -g
 echo "$PATH"
 ```
 
-如果 `$(npm prefix -g)/bin`（macOS/Linux）或 `$(npm prefix -g)`（Windows）**不在** `echo "$PATH"` 输出中，你的 shell 找不到全局 npm 二进制文件（包括 `moltbot-cn`）。
+如果 `$(npm prefix -g)/bin`（macOS/Linux）或 `$(npm prefix -g)`（Windows）**不在** `echo "$PATH"` 输出中，你的 shell 找不到全局 npm 二进制文件（包括 `openclaw-cn`）。
 
 修复：将其添加到 shell 启动文件（zsh：`~/.zshrc`，bash：`~/.bashrc`）：
 

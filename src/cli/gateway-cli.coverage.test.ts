@@ -314,11 +314,11 @@ describe("gateway-cli coverage", () => {
 
     expect(startGatewayServer).toHaveBeenCalled();
     expect(runtimeErrors.join("\n")).toContain("Gateway failed to start:");
-    expect(runtimeErrors.join("\n")).toContain("moltbot-cn gateway stop");
+    expect(runtimeErrors.join("\n")).toContain("openclaw-cn gateway stop");
   });
 
   it("uses env/config port when --port is omitted", async () => {
-    await withEnvOverride({ CLAWDBOT_GATEWAY_PORT: "19001" }, async () => {
+    await withEnvOverride({ OPENCLAW_GATEWAY_PORT: "19001" }, async () => {
       runtimeLogs.length = 0;
       runtimeErrors.length = 0;
       startGatewayServer.mockClear();

@@ -23,9 +23,9 @@ Clawdbot 发布三个更新渠道：
 Git 检出：
 
 ```bash
-moltbot-cn update --channel stable
-moltbot-cn update --channel beta
-moltbot-cn update --channel dev
+openclaw-cn update --channel stable
+openclaw-cn update --channel beta
+openclaw-cn update --channel dev
 ```
 
 - `stable`/`beta` 检出最新的匹配标签（通常是相同标签）。
@@ -34,9 +34,9 @@ moltbot-cn update --channel dev
 npm/pnpm 全局安装：
 
 ```bash
-moltbot-cn update --channel stable
-moltbot-cn update --channel beta
-moltbot-cn update --channel dev
+openclaw-cn update --channel stable
+openclaw-cn update --channel beta
+openclaw-cn update --channel dev
 ```
 
 这通过相应的 npm 分发标签（`latest`，`beta`，`dev`）进行更新。
@@ -44,7 +44,7 @@ moltbot-cn update --channel dev
 当您使用 `--channel` **显式**切换渠道时，Clawdbot 还会调整
 安装方法：
 
-- `dev` 确保 git 检出（默认 `~/clawdbot`，用 `CLAWDBOT_GIT_DIR` 覆盖），
+- `dev` 确保 git 检出（默认 `~/openclawot`，用 `OPENCLAW_GIT_DIR` 覆盖），
   更新它，并从该检出安装全局 CLI。
 - `stable`/`beta` 使用匹配的分发标签从 npm 安装。
 

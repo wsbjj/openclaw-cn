@@ -13,7 +13,7 @@ and the agent should rely on them directly.
 
 ## Disabling tools
 
-You can globally allow/deny tools via `tools.allow` / `tools.deny` in `clawdbot.json`
+You can globally allow/deny tools via `tools.allow` / `tools.deny` in `openclaw.json`
 (deny wins). This prevents disallowed tools from being sent to model providers.
 
 ```json5

@@ -7,8 +7,8 @@ import { afterEach, describe, expect, it } from "vitest";
 import { resolveClawdbotAgentDir } from "./agent-paths.js";
 
 describe("resolveClawdbotAgentDir", () => {
-  const previousStateDir = process.env.CLAWDBOT_STATE_DIR;
-  const previousAgentDir = process.env.CLAWDBOT_AGENT_DIR;
+  const previousStateDir = process.env.OPENCLAW_STATE_DIR;
+  const previousAgentDir = process.env.OPENCLAW_AGENT_DIR;
   const previousPiAgentDir = process.env.PI_CODING_AGENT_DIR;
   let tempStateDir: string | null = null;
 
@@ -18,14 +18,14 @@ describe("resolveClawdbotAgentDir", () => {
       tempStateDir = null;
     }
     if (previousStateDir === undefined) {
-      delete process.env.CLAWDBOT_STATE_DIR;
+      delete process.env.OPENCLAW_STATE_DIR;
     } else {
-      process.env.CLAWDBOT_STATE_DIR = previousStateDir;
+      process.env.OPENCLAW_STATE_DIR = previousStateDir;
     }
     if (previousAgentDir === undefined) {
-      delete process.env.CLAWDBOT_AGENT_DIR;
+      delete process.env.OPENCLAW_AGENT_DIR;
     } else {
-      process.env.CLAWDBOT_AGENT_DIR = previousAgentDir;
+      process.env.OPENCLAW_AGENT_DIR = previousAgentDir;
     }
     if (previousPiAgentDir === undefined) {
       delete process.env.PI_CODING_AGENT_DIR;
@@ -36,8 +36,8 @@ describe("resolveClawdbotAgentDir", () => {
 
   it("defaults to the multi-agent path when no overrides are set", async () => {
     tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "clawdbot-agent-"));
-    process.env.CLAWDBOT_STATE_DIR = tempStateDir;
-    delete process.env.CLAWDBOT_AGENT_DIR;
+    process.env.OPENCLAW_STATE_DIR = tempStateDir;
+    delete process.env.OPENCLAW_AGENT_DIR;
     delete process.env.PI_CODING_AGENT_DIR;
 
     const resolved = resolveClawdbotAgentDir();
@@ -45,10 +45,10 @@ describe("resolveClawdbotAgentDir", () => {
     expect(resolved).toBe(path.join(tempStateDir, "agents", "main", "agent"));
   });
 
-  it("honors CLAWDBOT_AGENT_DIR overrides", async () => {
+  it("honors OPENCLAW_AGENT_DIR overrides", async () => {
     tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "clawdbot-agent-"));
     const override = path.join(tempStateDir, "agent");
-    process.env.CLAWDBOT_AGENT_DIR = override;
+    process.env.OPENCLAW_AGENT_DIR = override;
     delete process.env.PI_CODING_AGENT_DIR;
 
     const resolved = resolveClawdbotAgentDir();

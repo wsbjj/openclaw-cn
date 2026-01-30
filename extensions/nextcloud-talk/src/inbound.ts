@@ -3,7 +3,7 @@ import {
   resolveControlCommandGate,
   type ClawdbotConfig,
   type RuntimeEnv,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 import {

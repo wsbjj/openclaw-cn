@@ -11,7 +11,7 @@ Clawdbot runs a single embedded agent runtime derived from **p-mono**.
 
 Clawdbot uses a single agent workspace directory (`agents.defaults.workspace`) as the agent’s **only** working directory (`cwd`) for tools and context.
 
-Recommended: use `clawdbot setup` to create `~/.moltbot-cn/moltbot-cn.json` if missing and initialize the workspace files.
+Recommended: use `clawdbot setup` to create `~/.openclaw-cn/openclaw-cn.json` if missing and initialize the workspace files.
 
 Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
 
@@ -54,7 +54,7 @@ guidance for how *you* want them used.
 
 Clawdbot loads skills from three locations (workspace wins on name conflict):
 - Bundled (shipped with the install)
-- Managed/local: `~/.clawdbot/skills`
+- Managed/local: `~/.openclaw/skills`
 - Workspace: `<workspace>/skills`
 
 Skills can be gated by config/env (see `skills` in [Gateway configuration](/gateway/configuration)).
@@ -69,7 +69,7 @@ Clawdbot reuses pieces of the p-mono codebase (models/tools), but **session mana
 ## Sessions
 
 Session transcripts are stored as JSONL at:
-- `~/.clawdbot/agents/<agentId>/sessions/<SessionId>.jsonl`
+- `~/.openclaw/agents/<agentId>/sessions/<SessionId>.jsonl`
 
 The session ID is stable and chosen by Clawdbot.
 Legacy Pi/Tau session folders are **not** read.

@@ -1,7 +1,7 @@
 import { getChannelPlugin, listChannelPlugins } from "../channels/plugins/index.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import type { ClawdbotConfig } from "../config/config.js";
-import { CONFIG_PATH_CLAWDBOT } from "../config/config.js";
+import { CONFIG_PATH_OPENCLAW } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { note } from "../terminal/note.js";
 import { shortenHomePath } from "../utils.js";
@@ -24,8 +24,8 @@ export async function removeChannelConfigWizard(
     if (configured.length === 0) {
       note(
         [
-          "No channel config found in clawdbot.json.",
-          `Tip: \`${formatCliCommand("moltbot-cn channels status")}\` shows what is configured and enabled.`,
+          "No channel config found in openclaw.json.",
+          `Tip: \`${formatCliCommand("openclaw-cn channels status")}\` shows what is configured and enabled.`,
         ].join("\n"),
         "Remove channel",
       );
@@ -52,7 +52,7 @@ export async function removeChannelConfigWizard(
     const label = getChannelPlugin(channel)?.meta.label ?? channel;
     const confirmed = guardCancel(
       await confirm({
-        message: `Delete ${label} configuration from ${shortenHomePath(CONFIG_PATH_CLAWDBOT)}?`,
+        message: `Delete ${label} configuration from ${shortenHomePath(CONFIG_PATH_OPENCLAW)}?`,
         initialValue: false,
       }),
       runtime,

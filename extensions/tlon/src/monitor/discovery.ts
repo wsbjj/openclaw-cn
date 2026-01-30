@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "moltbot-cn/plugin-sdk";
+import type { RuntimeEnv } from "openclaw-cn/plugin-sdk";
 
 import { formatChangesDate } from "./utils.js";
 

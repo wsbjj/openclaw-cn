@@ -149,7 +149,7 @@ Concrete config example (Tailscale hostname):
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.clawdbot/scripts/imsg-ssh",
+      cliPath: "~/.openclaw/scripts/imsg-ssh",
       remoteHost: "bot@mac-mini.tailnet-1234.ts.net",
       includeAttachments: true,
       dbPath: "/Users/bot/Library/Messages/chat.db"
@@ -158,7 +158,7 @@ Concrete config example (Tailscale hostname):
 }
 ```
 
-Example wrapper (`~/.clawdbot/scripts/imsg-ssh`):
+Example wrapper (`~/.openclaw/scripts/imsg-ssh`):
 ```bash
 #!/usr/bin/env bash
 exec ssh -T bot@mac-mini.tailnet-1234.ts.net imsg "$@"
@@ -169,15 +169,15 @@ Notes:
 - Use SSH keys so `ssh bot@mac-mini.tailnet-1234.ts.net` works without prompts.
 - `remoteHost` should match the SSH target so SCP can fetch attachments.
 
-Multi-account support: use `channels.imessage.accounts` with per-account config and optional `name`. See [`gateway/configuration`](/gateway/configuration#telegramaccounts--discordaccounts--slackaccounts--signalaccounts--imessageaccounts) for the shared pattern. Don't commit `~/.moltbot-cn/moltbot-cn.json` (it often contains tokens).
+Multi-account support: use `channels.imessage.accounts` with per-account config and optional `name`. See [`gateway/configuration`](/gateway/configuration#telegramaccounts--discordaccounts--slackaccounts--signalaccounts--imessageaccounts) for the shared pattern. Don't commit `~/.openclaw-cn/openclaw-cn.json` (it often contains tokens).
 
 ## Access control (DMs + groups)
 DMs:
 - Default: `channels.imessage.dmPolicy = "pairing"`.
 - Unknown senders receive a pairing code; messages are ignored until approved (codes expire after 1 hour).
 - Approve via:
-  - `moltbot-cn pairing list imessage`
-  - `moltbot-cn pairing approve imessage <CODE>`
+  - `openclaw-cn pairing list imessage`
+  - `openclaw-cn pairing approve imessage <CODE>`
 - Pairing is the default token exchange for iMessage DMs. Details: [Pairing](/start/pairing)
 
 Groups:

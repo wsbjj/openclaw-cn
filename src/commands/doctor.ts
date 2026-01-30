@@ -11,7 +11,7 @@ import {
 } from "../agents/model-selection.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import type { ClawdbotConfig } from "../config/config.js";
-import { CONFIG_PATH_CLAWDBOT, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
+import { CONFIG_PATH_OPENCLAW, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
 import { logConfigUpdated } from "../config/logging.js";
 import { resolveGatewayService } from "../daemon/service.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
@@ -90,15 +90,15 @@ export async function doctorCommand(
   });
   let cfg: ClawdbotConfig = configResult.cfg;
 
-  const configPath = configResult.path ?? CONFIG_PATH_CLAWDBOT;
+  const configPath = configResult.path ?? CONFIG_PATH_OPENCLAW;
   if (!cfg.gateway?.mode) {
     const lines = [
       "gateway.mode is unset; gateway start will be blocked.",
-      `Fix: run ${formatCliCommand("moltbot-cn configure")} and set Gateway mode (local/remote).`,
-      `Or set directly: ${formatCliCommand("moltbot-cn config set gateway.mode local")}`,
+      `Fix: run ${formatCliCommand("openclaw-cn configure")} and set Gateway mode (local/remote).`,
+      `Or set directly: ${formatCliCommand("openclaw-cn config set gateway.mode local")}`,
     ];
     if (!fs.existsSync(configPath)) {
-      lines.push(`Missing config: run ${formatCliCommand("moltbot-cn setup")} first.`);
+      lines.push(`Missing config: run ${formatCliCommand("openclaw-cn setup")} first.`);
     }
     note(lines.join("\n"), "Gateway");
   }
@@ -174,7 +174,7 @@ export async function doctorCommand(
     }
   }
 
-  await noteStateIntegrity(cfg, prompter, configResult.path ?? CONFIG_PATH_CLAWDBOT);
+  await noteStateIntegrity(cfg, prompter, configResult.path ?? CONFIG_PATH_OPENCLAW);
 
   cfg = await maybeRepairSandboxImages(cfg, runtime, prompter);
   noteSandboxScopeWarnings(cfg);
@@ -272,12 +272,12 @@ export async function doctorCommand(
     cfg = applyWizardMetadata(cfg, { command: "doctor", mode: resolveMode(cfg) });
     await writeConfigFile(cfg);
     logConfigUpdated(runtime);
-    const backupPath = `${CONFIG_PATH_CLAWDBOT}.bak`;
+    const backupPath = `${CONFIG_PATH_OPENCLAW}.bak`;
     if (fs.existsSync(backupPath)) {
       runtime.log(`Backup: ${shortenHomePath(backupPath)}`);
     }
   } else {
-    runtime.log(`Run "${formatCliCommand("moltbot-cn doctor --fix")}" to apply changes.`);
+    runtime.log(`Run "${formatCliCommand("openclaw-cn doctor --fix")}" to apply changes.`);
   }
 
   if (options.workspaceSuggestions !== false) {

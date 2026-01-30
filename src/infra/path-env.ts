@@ -95,8 +95,8 @@ function candidateBinDirs(opts: EnsureClawdbotPathOpts): string[] {
  * under launchd/minimal environments (and inside the macOS app bundle).
  */
 export function ensureClawdbotCliOnPath(opts: EnsureClawdbotPathOpts = {}) {
-  if (isTruthyEnvValue(process.env.CLAWDBOT_PATH_BOOTSTRAPPED)) return;
-  process.env.CLAWDBOT_PATH_BOOTSTRAPPED = "1";
+  if (isTruthyEnvValue(process.env.OPENCLAW_PATH_BOOTSTRAPPED)) return;
+  process.env.OPENCLAW_PATH_BOOTSTRAPPED = "1";
 
   const existing = opts.pathEnv ?? process.env.PATH ?? "";
   const prepend = candidateBinDirs(opts);

@@ -4,13 +4,13 @@ import type {
   ClawdbotConfig,
   DmPolicy,
   WizardPrompter,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
   promptChannelAccessConfig,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 
 import { resolveMSTeamsCredentials } from "./token.js";
 import {

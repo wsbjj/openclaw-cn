@@ -1,5 +1,5 @@
-import type { ChannelOnboardingAdapter, ClawdbotConfig, WizardPrompter } from "moltbot-cn/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltbot-cn/plugin-sdk";
+import type { ChannelOnboardingAdapter, ClawdbotConfig, WizardPrompter } from "openclaw-cn/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw-cn/plugin-sdk";
 
 import {
   listMattermostAccountIds,

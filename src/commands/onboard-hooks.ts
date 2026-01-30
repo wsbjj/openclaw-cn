@@ -71,9 +71,9 @@ export async function setupInternalHooks(
       `启用了 ${selected.length} 个钩子：${selected.join(", ")}`,
       "",
       "您可以稍后使用以下命令管理钩子：",
-      `  ${formatCliCommand("moltbot-cn hooks list")}`,
-      `  ${formatCliCommand("moltbot-cn hooks enable <name>")}`,
-      `  ${formatCliCommand("moltbot-cn hooks disable <name>")}`,
+      `  ${formatCliCommand("openclaw-cn hooks list")}`,
+      `  ${formatCliCommand("openclaw-cn hooks enable <name>")}`,
+      `  ${formatCliCommand("openclaw-cn hooks disable <name>")}`,
     ].join("\n"),
     "钩子已配置",
   );

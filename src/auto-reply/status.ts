@@ -164,7 +164,7 @@ const readUsageFromSessionLog = (
       model?: string;
     }
   | undefined => {
-  // Transcripts are stored at the session file path (fallback: ~/.clawdbot/sessions/<SessionId>.jsonl)
+  // Transcripts are stored at the session file path (fallback: ~/.openclaw/sessions/<SessionId>.jsonl)
   if (!sessionId) return undefined;
   const logPath = resolveSessionFilePath(sessionId, sessionEntry);
   if (!fs.existsSync(logPath)) return undefined;

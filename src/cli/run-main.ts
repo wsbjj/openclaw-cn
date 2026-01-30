@@ -45,7 +45,7 @@ export async function runCli(argv: string[] = process.argv) {
   installUnhandledRejectionHandler();
 
   process.on("uncaughtException", (error) => {
-    console.error("[moltbot-cn] Uncaught exception:", formatUncaughtError(error));
+    console.error("[openclaw-cn] Uncaught exception:", formatUncaughtError(error));
     process.exit(1);
   });
 

@@ -1,7 +1,7 @@
 {
-  "name": "moltbot-cn",
+  "name": "openclaw-cn",
   "version": "2026.1.30-beta.4",
-  "description": "Moltbot 中文版 - WhatsApp gateway CLI (Baileys web) with Pi RPC agent",
+  "description": "Openclaw 中文版 - WhatsApp gateway CLI (Baileys web) with Pi RPC agent",
   "type": "module",
   "main": "dist/index.js",
   "exports": {
@@ -10,7 +10,7 @@
     "./plugin-sdk/*": "./dist/plugin-sdk/*"
   },
   "bin": {
-    "moltbot-cn": "dist/entry.js",
+    "openclaw-cn": "dist/entry.js",
     "clawdbot-cn": "dist/entry.js"
   },
   "files": [
@@ -91,7 +91,7 @@
     "ui:dev": "node scripts/ui.js dev",
     "ui:build": "node scripts/ui.js build",
     "start": "node scripts/run-node.mjs",
-    "moltbot-cn": "node scripts/run-node.mjs",
+    "openclaw-cn": "node scripts/run-node.mjs",
     "gateway:watch": "node scripts/watch-node.mjs gateway --force",
     "gateway:dev": "CLAWDBOT_SKIP_CHANNELS=1 node scripts/run-node.mjs --dev gateway",
     "gateway:dev:reset": "CLAWDBOT_SKIP_CHANNELS=1 node scripts/run-node.mjs --dev gateway --reset",

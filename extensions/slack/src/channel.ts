@@ -29,7 +29,7 @@ import {
   type ChannelMessageActionName,
   type ChannelPlugin,
   type ResolvedSlackAccount,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 
 import { getSlackRuntime } from "./runtime.js";
 

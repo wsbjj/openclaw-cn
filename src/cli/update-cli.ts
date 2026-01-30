@@ -80,7 +80,7 @@ const STEP_LABELS: Record<string, string> = {
   "deps install": "Installing dependencies",
   build: "Building",
   "ui:build": "Building UI",
-  "moltbot-cn doctor": "Running doctor checks",
+  "openclaw-cn doctor": "Running doctor checks",
   "git rev-parse HEAD (after)": "Verifying update",
   "global update": "Updating via package manager",
   "global install": "Installing global package",
@@ -110,7 +110,7 @@ const UPDATE_QUIPS = [
 ];
 
 const MAX_LOG_CHARS = 8000;
-const CLAWDBOT_REPO_URL = "https://github.com/clawdbot/clawdbot.git";
+const OPENCLAW_REPO_URL = "https://github.com/clawdbot/clawdbot.git";
 const DEFAULT_GIT_DIR = path.join(os.homedir(), "clawdbot");
 
 function normalizeTag(value?: string | null): string | null {
@@ -186,7 +186,7 @@ async function isEmptyDir(targetPath: string): Promise<boolean> {
 }
 
 function resolveGitInstallDir(): string {
-  const override = process.env.CLAWDBOT_GIT_DIR?.trim();
+  const override = process.env.OPENCLAW_GIT_DIR?.trim();
   if (override) return path.resolve(override);
   return DEFAULT_GIT_DIR;
 }
@@ -247,7 +247,7 @@ async function ensureGitCheckout(params: {
   if (!dirExists) {
     return await runUpdateStep({
       name: "git clone",
-      argv: ["git", "clone", CLAWDBOT_REPO_URL, params.dir],
+      argv: ["git", "clone", OPENCLAW_REPO_URL, params.dir],
       timeoutMs: params.timeoutMs,
       progress: params.progress,
     });
@@ -257,12 +257,12 @@ async function ensureGitCheckout(params: {
     const empty = await isEmptyDir(params.dir);
     if (!empty) {
       throw new Error(
-        `CLAWDBOT_GIT_DIR points at a non-git directory: ${params.dir}. Set CLAWDBOT_GIT_DIR to an empty folder or a clawdbot checkout.`,
+        `OPENCLAW_GIT_DIR points at a non-git directory: ${params.dir}. Set OPENCLAW_GIT_DIR to an empty folder or a clawdbot checkout.`,
       );
     }
     return await runUpdateStep({
       name: "git clone",
-      argv: ["git", "clone", CLAWDBOT_REPO_URL, params.dir],
+      argv: ["git", "clone", OPENCLAW_REPO_URL, params.dir],
       cwd: params.dir,
       timeoutMs: params.timeoutMs,
       progress: params.progress,
@@ -270,7 +270,7 @@ async function ensureGitCheckout(params: {
   }
 
   if (!(await isClawdbotPackage(params.dir))) {
-    throw new Error(`CLAWDBOT_GIT_DIR does not look like a clawdbot checkout: ${params.dir}.`);
+    throw new Error(`OPENCLAW_GIT_DIR does not look like a clawdbot checkout: ${params.dir}.`);
   }
 
   return null;
@@ -705,7 +705,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
       const entryPath = path.join(pkgRoot, "dist", "entry.js");
       if (await pathExists(entryPath)) {
         const doctorStep = await runUpdateStep({
-          name: "moltbot-cn doctor",
+          name: "openclaw-cn doctor",
           argv: [resolveNodeRunner(), entryPath, "doctor", "--non-interactive"],
           timeoutMs: timeoutMs ?? 20 * 60_000,
           progress,
@@ -806,7 +806,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.reason === "not-git-install") {
       defaultRuntime.log(
         theme.warn(
-          `Skipped: this Clawdbot install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${formatCliCommand("moltbot-cn doctor")}\` and \`${formatCliCommand("moltbot-cn gateway restart")}\`.`,
+          `Skipped: this Clawdbot install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${formatCliCommand("openclaw-cn doctor")}\` and \`${formatCliCommand("openclaw-cn gateway restart")}\`.`,
         ),
       );
       defaultRuntime.log(
@@ -910,7 +910,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
       if (!opts.json && restarted) {
         defaultRuntime.log(theme.success("Daemon restarted successfully."));
         defaultRuntime.log("");
-        process.env.CLAWDBOT_UPDATE_IN_PROGRESS = "1";
+        process.env.OPENCLAW_UPDATE_IN_PROGRESS = "1";
         try {
           const { doctorCommand } = await import("../commands/doctor.js");
           const interactiveDoctor = Boolean(process.stdin.isTTY) && !opts.json && opts.yes !== true;
@@ -918,7 +918,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
         } catch (err) {
           defaultRuntime.log(theme.warn(`Doctor failed: ${String(err)}`));
         } finally {
-          delete process.env.CLAWDBOT_UPDATE_IN_PROGRESS;
+          delete process.env.OPENCLAW_UPDATE_IN_PROGRESS;
         }
       }
     } catch (err) {
@@ -926,7 +926,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
         defaultRuntime.log(theme.warn(`Daemon restart failed: ${String(err)}`));
         defaultRuntime.log(
           theme.muted(
-            `You may need to restart the service manually: ${formatCliCommand("moltbot-cn gateway restart")}`,
+            `You may need to restart the service manually: ${formatCliCommand("openclaw-cn gateway restart")}`,
           ),
         );
       }
@@ -936,13 +936,13 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.mode === "npm" || result.mode === "pnpm") {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${formatCliCommand("moltbot-cn doctor")}\`, then \`${formatCliCommand("moltbot-cn gateway restart")}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${formatCliCommand("openclaw-cn doctor")}\`, then \`${formatCliCommand("openclaw-cn gateway restart")}\` to apply updates to a running gateway.`,
         ),
       );
     } else {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${formatCliCommand("moltbot-cn gateway restart")}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${formatCliCommand("openclaw-cn gateway restart")}\` to apply updates to a running gateway.`,
         ),
       );
     }
@@ -956,7 +956,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
 export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promise<void> {
   if (!process.stdin.isTTY) {
     defaultRuntime.error(
-      "Update wizard requires a TTY. Use `moltbot-cn update --channel <stable|beta|dev>` instead.",
+      "Update wizard requires a TTY. Use `openclaw-cn update --channel <stable|beta|dev>` instead.",
     );
     defaultRuntime.exit(1);
     return;
@@ -1047,7 +1047,7 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
         const empty = await isEmptyDir(gitDir);
         if (!empty) {
           defaultRuntime.error(
-            `CLAWDBOT_GIT_DIR points at a non-git directory: ${gitDir}. Set CLAWDBOT_GIT_DIR to an empty folder or a clawdbot checkout.`,
+            `OPENCLAW_GIT_DIR points at a non-git directory: ${gitDir}. Set OPENCLAW_GIT_DIR to an empty folder or a clawdbot checkout.`,
           );
           defaultRuntime.exit(1);
           return;
@@ -1055,7 +1055,7 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
       }
       const ok = await confirm({
         message: stylePromptMessage(
-          `Create a git checkout at ${gitDir}? (override via CLAWDBOT_GIT_DIR)`,
+          `Create a git checkout at ${gitDir}? (override via OPENCLAW_GIT_DIR)`,
         ),
         initialValue: true,
       });
@@ -1101,15 +1101,15 @@ export function registerUpdateCli(program: Command) {
     .option("--yes", "Skip confirmation prompts (non-interactive)", false)
     .addHelpText("after", () => {
       const examples = [
-        ["moltbot-cn update", "Update a source checkout (git)"],
-        ["moltbot-cn update --channel beta", "Switch to beta channel (git + npm)"],
-        ["moltbot-cn update --channel dev", "Switch to dev channel (git + npm)"],
-        ["moltbot-cn update --tag beta", "One-off update to a dist-tag or version"],
-        ["moltbot-cn update --no-restart", "Update without restarting the service"],
-        ["moltbot-cn update --json", "Output result as JSON"],
-        ["moltbot-cn update --yes", "Non-interactive (accept downgrade prompts)"],
-        ["moltbot-cn update wizard", "Interactive update wizard"],
-        ["clawdbot --update", "Shorthand for moltbot-cn update"],
+        ["openclaw-cn update", "Update a source checkout (git)"],
+        ["openclaw-cn update --channel beta", "Switch to beta channel (git + npm)"],
+        ["openclaw-cn update --channel dev", "Switch to dev channel (git + npm)"],
+        ["openclaw-cn update --tag beta", "One-off update to a dist-tag or version"],
+        ["openclaw-cn update --no-restart", "Update without restarting the service"],
+        ["openclaw-cn update --json", "Output result as JSON"],
+        ["openclaw-cn update --yes", "Non-interactive (accept downgrade prompts)"],
+        ["openclaw-cn update wizard", "Interactive update wizard"],
+        ["clawdbot --update", "Shorthand for openclaw-cn update"],
       ] as const;
       const fmtExamples = examples
         .map(([cmd, desc]) => `  ${theme.command(cmd)} ${theme.muted(`# ${desc}`)}`)
@@ -1121,7 +1121,7 @@ ${theme.heading("What this does:")}
 
 ${theme.heading("Switch channels:")}
   - Use --channel stable|beta|dev to persist the update channel in config
-  - Run moltbot-cn update status to see the active channel and source
+  - Run openclaw-cn update status to see the active channel and source
   - Use --tag <dist-tag|version> for a one-off npm update without persisting
 
 ${theme.heading("Non-interactive:")}
@@ -1181,9 +1181,9 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.clawd.bot/cli/upda
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["moltbot-cn update status", "Show channel + version status."],
-          ["moltbot-cn update status --json", "JSON output."],
-          ["moltbot-cn update status --timeout 10", "Custom timeout."],
+          ["openclaw-cn update status", "Show channel + version status."],
+          ["openclaw-cn update status --json", "JSON output."],
+          ["openclaw-cn update status --timeout 10", "Custom timeout."],
         ])}\n\n${theme.heading("Notes:")}\n${theme.muted(
           "- Shows current update channel (stable/beta/dev) and source",
         )}\n${theme.muted("- Includes git tag/branch/SHA for source checkouts")}\n\n${theme.muted(

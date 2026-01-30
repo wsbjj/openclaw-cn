@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "moltbot-cn/plugin-sdk";
+import type { PluginRuntime } from "openclaw-cn/plugin-sdk";
 
 let runtime: PluginRuntime | null = null;
 

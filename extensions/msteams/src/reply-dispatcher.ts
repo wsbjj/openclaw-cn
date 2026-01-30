@@ -6,7 +6,7 @@ import {
   type ClawdbotConfig,
   type MSTeamsReplyStyle,
   type RuntimeEnv,
-} from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type { StoredConversationReference } from "./conversation-store.js";
 import {

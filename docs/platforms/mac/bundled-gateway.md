@@ -26,11 +26,11 @@ The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun no
 ## Launchd (Gateway as LaunchAgent)
 
 Label:
-- `com.clawdbot.gateway` (or `com.clawdbot.<profile>`)
+- `com.openclaw.gateway` (or `com.openclaw.<profile>`)
 
 Plist location (per‑user):
-- `~/Library/LaunchAgents/com.clawdbot.gateway.plist`
-  (or `~/Library/LaunchAgents/com.clawdbot.<profile>.plist`)
+- `~/Library/LaunchAgents/com.openclaw.gateway.plist`
+  (or `~/Library/LaunchAgents/com.openclaw.<profile>.plist`)
 
 Manager:
 - The macOS app owns LaunchAgent install/update in Local mode.
@@ -55,8 +55,8 @@ incompatible, update the global CLI to match the app version.
 ```bash
 clawdbot --version
 
-CLAWDBOT_SKIP_CHANNELS=1 \
-CLAWDBOT_SKIP_CANVAS_HOST=1 \
+OPENCLAW_SKIP_CHANNELS=1 \
+OPENCLAW_SKIP_CANVAS_HOST=1 \
 clawdbot gateway --port 18999 --bind loopback
 ```
 

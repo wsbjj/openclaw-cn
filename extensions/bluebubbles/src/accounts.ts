@@ -1,5 +1,5 @@
-import type { ClawdbotConfig } from "moltbot-cn/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltbot-cn/plugin-sdk";
+import type { ClawdbotConfig } from "openclaw-cn/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw-cn/plugin-sdk";
 import { normalizeBlueBubblesServerUrl, type BlueBubblesAccountConfig } from "./types.js";
 
 export type ResolvedBlueBubblesAccount = {

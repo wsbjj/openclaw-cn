@@ -130,7 +130,7 @@ export function registerDnsCli(program: Command) {
         }).trimEnd(),
       );
       defaultRuntime.log("");
-      defaultRuntime.log(theme.heading("Recommended ~/.clawdbot/clawdbot.json:"));
+      defaultRuntime.log(theme.heading("Recommended ~/.openclaw/openclaw.json:"));
       defaultRuntime.log(
         JSON.stringify(
           {
@@ -206,7 +206,7 @@ export function registerDnsCli(program: Command) {
         const serial = `${y}${m}${d}01`;
 
         const zoneLines = [
-          `; created by moltbot-cn dns setup (will be overwritten by the gateway when wide-area discovery is enabled)`,
+          `; created by openclaw-cn dns setup (will be overwritten by the gateway when wide-area discovery is enabled)`,
           `$ORIGIN ${WIDE_AREA_DISCOVERY_DOMAIN}`,
           `$TTL 60`,
           `@ IN SOA ns1 hostmaster ${serial} 7200 3600 1209600 60`,
@@ -229,7 +229,7 @@ export function registerDnsCli(program: Command) {
         defaultRuntime.log("");
         defaultRuntime.log(
           theme.muted(
-            "Note: enable discovery.wideArea.enabled in ~/.clawdbot/clawdbot.json on the gateway and restart the gateway so it writes the DNS-SD zone.",
+            "Note: enable discovery.wideArea.enabled in ~/.openclaw/openclaw.json on the gateway and restart the gateway so it writes the DNS-SD zone.",
           ),
         );
       }

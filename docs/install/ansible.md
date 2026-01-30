@@ -8,7 +8,7 @@ read_when:
 
 # Ansible 安装
 
-将 Clawdbot 部署到生产服务器的推荐方式是通过 **[clawdbot-ansible](https://github.com/jiulingyun/moltbot-cn-ansible)** — 一个安全优先架构的自动化安装器。
+将 Clawdbot 部署到生产服务器的推荐方式是通过 **[clawdbot-ansible](https://github.com/jiulingyun/openclaw-cn-ansible)** — 一个安全优先架构的自动化安装器。
 
 ## 快速开始
 
@@ -18,7 +18,7 @@ read_when:
 curl -fsSL https://raw.githubusercontent.com/clawdbot/clawdbot-ansible/main/install.sh | bash
 ```
 
-> **📦 完整指南：[github.com/jiulingyun/moltbot-cn-ansible](https://github.com/jiulingyun/moltbot-cn-ansible)**
+> **📦 完整指南：[github.com/jiulingyun/openclaw-cn-ansible](https://github.com/jiulingyun/openclaw-cn-ansible)**
 >
 > clawdbot-ansible 仓库是 Ansible 部署的权威来源。本页面只是快速概述。
 
@@ -80,7 +80,7 @@ sudo systemctl restart clawdbot
 
 # 提供商登录（以 clawdbot 用户运行）
 sudo -i -u clawdbot
-moltbot-cn channels login
+openclaw-cn channels login
 ```
 
 ## 安全架构
@@ -117,7 +117,7 @@ Docker 是为 **代理沙箱**（隔离的工具执行）安装的，而不是�
 sudo apt update && sudo apt install -y ansible git
 
 # 2. 克隆仓库
-git clone https://github.com/jiulingyun/moltbot-cn-ansible.git
+git clone https://github.com/jiulingyun/openclaw-cn-ansible.git
 cd clawdbot-ansible
 
 # 3. 安装 Ansible collections
@@ -163,7 +163,7 @@ sudo ls -la /opt/clawdbot
 
 # 测试手动启动
 sudo -i -u clawdbot
-cd ~/clawdbot
+cd ~/openclawot
 pnpm start
 ```
 
@@ -187,19 +187,19 @@ sudo -u clawdbot ./scripts/sandbox-setup.sh
 
 ```bash
 sudo -i -u clawdbot
-moltbot-cn channels login
+openclaw-cn channels login
 ```
 
 ## 高级配置
 
 详细的安全架构和故障排除：
-- [安全架构](https://github.com/jiulingyun/moltbot-cn-ansible/blob/main/docs/security.md)
-- [技术细节](https://github.com/jiulingyun/moltbot-cn-ansible/blob/main/docs/architecture.md)
-- [故障排除指南](https://github.com/jiulingyun/moltbot-cn-ansible/blob/main/docs/troubleshooting.md)
+- [安全架构](https://github.com/jiulingyun/openclaw-cn-ansible/blob/main/docs/security.md)
+- [技术细节](https://github.com/jiulingyun/openclaw-cn-ansible/blob/main/docs/architecture.md)
+- [故障排除指南](https://github.com/jiulingyun/openclaw-cn-ansible/blob/main/docs/troubleshooting.md)
 
 ## 相关
 
-- [clawdbot-ansible](https://github.com/jiulingyun/moltbot-cn-ansible) — 完整部署指南
+- [clawdbot-ansible](https://github.com/jiulingyun/openclaw-cn-ansible) — 完整部署指南
 - [Docker](/install/docker) — 容器化网关设置
 - [沙箱](/gateway/sandboxing) — 代理沙箱配置
 - [多代理沙箱与工具](/multi-agent-sandbox-tools) — 每代理隔离

@@ -33,7 +33,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-moltbot-cn plugins install @clawdbot/voice-call
+openclaw-cn plugins install @clawdbot/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -41,7 +41,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev, no copying)
 
 ```bash
-moltbot-cn plugins install ./extensions/voice-call
+openclaw-cn plugins install ./extensions/voice-call
 cd ./extensions/voice-call && pnpm install
 ```
 

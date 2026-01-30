@@ -22,7 +22,7 @@ clawdbot gateway --force
 # dev loop (auto-reload on TS changes):
 pnpm gateway:watch
 ```
-- Config hot reload watches `~/.clawdbot/clawdbot.json` (or `CLAWDBOT_CONFIG_PATH`).
+- Config hot reload watches `~/.openclaw/openclaw.json` (or `OPENCLAW_CONFIG_PATH`).
   - Default mode: `gateway.reload.mode="hybrid"` (hot-apply safe changes, restart on critical).
   - Hot reload uses in-process restart via **SIGUSR1** when needed.
   - Disable with `gateway.reload.mode="off"`.
@@ -31,15 +31,15 @@ pnpm gateway:watch
   - OpenAI Chat Completions (HTTP): [`/v1/chat/completions`](/gateway/openai-http-api).
   - OpenResponses (HTTP): [`/v1/responses`](/gateway/openresponses-http-api).
   - Tools Invoke (HTTP): [`/tools/invoke`](/gateway/tools-invoke-http-api).
-- Starts a Canvas file server by default on `canvasHost.port` (default `18793`), serving `http://<gateway-host>:18793/__clawdbot__/canvas/` from `~/clawd/canvas`. Disable with `canvasHost.enabled=false` or `CLAWDBOT_SKIP_CANVAS_HOST=1`.
+- Starts a Canvas file server by default on `canvasHost.port` (default `18793`), serving `http://<gateway-host>:18793/__clawdbot__/canvas/` from `~/clawwork/canvas`. Disable with `canvasHost.enabled=false` or `OPENCLAW_SKIP_CANVAS_HOST=1`.
 - Logs to stdout; use launchd/systemd to keep it alive and rotate logs.
 - Pass `--verbose` to mirror debug logging (handshakes, req/res, events) from the log file into stdio when troubleshooting.
 - `--force` uses `lsof` to find listeners on the chosen port, sends SIGTERM, logs what it killed, then starts the gateway (fails fast if `lsof` is missing).
 - If you run under a supervisor (launchd/systemd/mac app child-process mode), a stop/restart typically sends **SIGTERM**; older builds may surface this as `pnpm` `ELIFECYCLE` exit code **143** (SIGTERM), which is a normal shutdown, not a crash.
 - **SIGUSR1** triggers an in-process restart when authorized (gateway tool/config apply/update, or enable `commands.restart` for manual restarts).
-- Gateway auth is required by default: set `gateway.auth.token` (or `CLAWDBOT_GATEWAY_TOKEN`) or `gateway.auth.password`. Clients must send `connect.params.auth.token/password` unless using Tailscale Serve identity.
+- Gateway auth is required by default: set `gateway.auth.token` (or `OPENCLAW_GATEWAY_TOKEN`) or `gateway.auth.password`. Clients must send `connect.params.auth.token/password` unless using Tailscale Serve identity.
 - The wizard now generates a token by default, even on loopback.
-- Port precedence: `--port` > `CLAWDBOT_GATEWAY_PORT` > `gateway.port` > default `18789`.
+- Port precedence: `--port` > `OPENCLAW_GATEWAY_PORT` > `gateway.port` > default `18789`.
 
 ## Remote access
 - Tailscale/VPN preferred; otherwise SSH tunnel:
@@ -56,14 +56,14 @@ Usually unnecessary: one Gateway can serve multiple messaging channels and agent
 Supported if you isolate state + config and use unique ports. Full guide: [Multiple gateways](/gateway/multiple-gateways).
 
 Service names are profile-aware:
-- macOS: `com.clawdbot.<profile>`
+- macOS: `com.openclaw.<profile>`
 - Linux: `clawdbot-gateway-<profile>.service`
 - Windows: `Clawdbot Gateway (<profile>)`
 
 Install metadata is embedded in the service config:
-- `CLAWDBOT_SERVICE_MARKER=clawdbot`
-- `CLAWDBOT_SERVICE_KIND=gateway`
-- `CLAWDBOT_SERVICE_VERSION=<version>`
+- `OPENCLAW_SERVICE_MARKER=clawdbot`
+- `OPENCLAW_SERVICE_KIND=gateway`
+- `OPENCLAW_SERVICE_VERSION=<version>`
 
 Rescue-Bot Pattern: keep a second Gateway isolated with its own profile, state dir, workspace, and base port spacing. Full guide: [Rescue-bot guide](/gateway/multiple-gateways#rescue-bot-guide).
 
@@ -80,23 +80,23 @@ clawdbot --dev health
 ```
 
 Defaults (can be overridden via env/flags/config):
-- `CLAWDBOT_STATE_DIR=~/.clawdbot-dev`
-- `CLAWDBOT_CONFIG_PATH=~/.clawdbot-dev/clawdbot.json`
-- `CLAWDBOT_GATEWAY_PORT=19001` (Gateway WS + HTTP)
+- `OPENCLAW_STATE_DIR=~/.openclaw-dev`
+- `OPENCLAW_CONFIG_PATH=~/.openclaw-dev/openclaw.json`
+- `OPENCLAW_GATEWAY_PORT=19001` (Gateway WS + HTTP)
 - `browser.controlUrl=http://127.0.0.1:19003` (derived: `gateway.port+2`)
 - `canvasHost.port=19005` (derived: `gateway.port+4`)
 - `agents.defaults.workspace` default becomes `~/clawd-dev` when you run `setup`/`onboard` under `--dev`.
 
 Derived ports (rules of thumb):
-- Base port = `gateway.port` (or `CLAWDBOT_GATEWAY_PORT` / `--port`)
-- `browser.controlUrl port = base + 2` (or `CLAWDBOT_BROWSER_CONTROL_URL` / config override)
-- `canvasHost.port = base + 4` (or `CLAWDBOT_CANVAS_HOST_PORT` / config override)
+- Base port = `gateway.port` (or `OPENCLAW_GATEWAY_PORT` / `--port`)
+- `browser.controlUrl port = base + 2` (or `OPENCLAW_BROWSER_CONTROL_URL` / config override)
+- `canvasHost.port = base + 4` (or `OPENCLAW_CANVAS_HOST_PORT` / config override)
 - Browser profile CDP ports auto-allocate from `browser.controlPort + 9 .. + 108` (persisted per profile).
 
 Checklist per instance:
 - unique `gateway.port`
-- unique `CLAWDBOT_CONFIG_PATH`
-- unique `CLAWDBOT_STATE_DIR`
+- unique `OPENCLAW_CONFIG_PATH`
+- unique `OPENCLAW_STATE_DIR`
 - unique `agents.defaults.workspace`
 - separate WhatsApp numbers (if using WA)
 
@@ -108,8 +108,8 @@ clawdbot --profile rescue gateway install
 
 Example:
 ```bash
-CLAWDBOT_CONFIG_PATH=~/.clawdbot/a.json CLAWDBOT_STATE_DIR=~/.clawdbot-a clawdbot gateway --port 19001
-CLAWDBOT_CONFIG_PATH=~/.clawdbot/b.json CLAWDBOT_STATE_DIR=~/.clawdbot-b clawdbot gateway --port 19002
+OPENCLAW_CONFIG_PATH=~/.openclaw/a.json OPENCLAW_STATE_DIR=~/.openclaw-a clawdbot gateway --port 19001
+OPENCLAW_CONFIG_PATH=~/.openclaw/b.json OPENCLAW_STATE_DIR=~/.openclaw-b clawdbot gateway --port 19002
 ```
 
 ## Protocol (operator view)
@@ -181,8 +181,8 @@ See also: [Presence](/concepts/presence) for how presence is produced/deduped an
   - StandardOut/Err: file paths or `syslog`
 - On failure, launchd restarts; fatal misconfig should keep exiting so the operator notices.
 - LaunchAgents are per-user and require a logged-in session; for headless setups use a custom LaunchDaemon (not shipped).
-  - `clawdbot gateway install` writes `~/Library/LaunchAgents/com.clawdbot.gateway.plist`
-    (or `com.clawdbot.<profile>.plist`).
+  - `clawdbot gateway install` writes `~/Library/LaunchAgents/com.openclaw.gateway.plist`
+    (or `com.openclaw.<profile>.plist`).
   - `clawdbot doctor` audits the LaunchAgent config and can update it to current defaults.
 
 ## Gateway service management (CLI)
@@ -213,11 +213,11 @@ Notes:
 
 Bundled mac app:
 - Clawdbot.app can bundle a Node-based gateway relay and install a per-user LaunchAgent labeled
-  `com.clawdbot.gateway` (or `com.clawdbot.<profile>`).
-- To stop it cleanly, use `clawdbot gateway stop` (or `launchctl bootout gui/$UID/com.clawdbot.gateway`).
-- To restart, use `clawdbot gateway restart` (or `launchctl kickstart -k gui/$UID/com.clawdbot.gateway`).
+  `com.openclaw.gateway` (or `com.openclaw.<profile>`).
+- To stop it cleanly, use `clawdbot gateway stop` (or `launchctl bootout gui/$UID/com.openclaw.gateway`).
+- To restart, use `clawdbot gateway restart` (or `launchctl kickstart -k gui/$UID/com.openclaw.gateway`).
   - `launchctl` only works if the LaunchAgent is installed; otherwise use `clawdbot gateway install` first.
-  - Replace the label with `com.clawdbot.<profile>` when running a named profile.
+  - Replace the label with `com.openclaw.<profile>` when running a named profile.
 
 ## Supervision (systemd user unit)
 Clawdbot installs a **systemd user service** by default on Linux/WSL2. We
@@ -239,7 +239,7 @@ Wants=network-online.target
 ExecStart=/usr/local/bin/clawdbot gateway --port 18789
 Restart=always
 RestartSec=5
-Environment=CLAWDBOT_GATEWAY_TOKEN=
+Environment=OPENCLAW_GATEWAY_TOKEN=
 WorkingDirectory=/home/youruser
 
 [Install]
@@ -281,7 +281,7 @@ Windows installs should use **WSL2** and follow the Linux systemd section above.
 
 ## CLI helpers
 - `clawdbot gateway health|status` — request health/status over the Gateway WS.
-- `moltbot-cn message send --target <num> --message "hi" [--media ...]` — send via Gateway (idempotent for WhatsApp).
+- `openclaw-cn message send --target <num> --message "hi" [--media ...]` — send via Gateway (idempotent for WhatsApp).
 - `clawdbot agent --message "hi" --to <num>` — run an agent turn (waits for final by default).
 - `clawdbot gateway call <method> --params '{"k":"v"}'` — raw method invoker for debugging.
 - `clawdbot gateway stop|restart` — stop/restart the supervised gateway service (launchd/systemd).

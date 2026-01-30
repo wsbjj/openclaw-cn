@@ -671,10 +671,10 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
 
     const doctorStep = await runStep(
       step(
-        "moltbot-cn doctor",
+        "openclaw-cn doctor",
         managerScriptArgs(manager, "clawdbot", ["doctor", "--non-interactive"]),
         gitRoot,
-        { CLAWDBOT_UPDATE_IN_PROGRESS: "1" },
+        { OPENCLAW_UPDATE_IN_PROGRESS: "1" },
       ),
     );
     steps.push(doctorStep);

@@ -97,9 +97,9 @@ function defaultIndexHTML() {
   const statusEl = document.getElementById("status");
   const log = (msg) => { logEl.textContent = String(msg); };
 
-  const hasIOS = () => !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.clawdbotCanvasA2UIAction);
-  const hasAndroid = () => !!(window.clawdbotCanvasA2UIAction && typeof window.clawdbotCanvasA2UIAction.postMessage === "function");
-  const hasHelper = () => typeof window.clawdbotSendUserAction === "function";
+  const hasIOS = () => !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.openclawCanvasA2UIAction);
+  const hasAndroid = () => !!(window.openclawCanvasA2UIAction && typeof window.openclawCanvasA2UIAction.postMessage === "function");
+  const hasHelper = () => typeof window.openclawSendUserAction === "function";
   statusEl.innerHTML =
     "Bridge: " +
     (hasHelper() ? "<span class='ok'>ready</span>" : "<span class='bad'>missing</span>") +
@@ -116,7 +116,7 @@ function defaultIndexHTML() {
       log("No action bridge found. Ensure you're viewing this on an iOS/Android Clawdbot node canvas.");
       return;
     }
-    const ok = window.clawdbotSendUserAction({
+    const ok = window.openclawSendUserAction({
       name,
       surfaceId: "main",
       sourceComponentId,
@@ -172,7 +172,7 @@ async function resolveFilePath(rootReal: string, urlPath: string) {
 }
 
 function isDisabledByEnv() {
-  if (isTruthyEnvValue(process.env.CLAWDBOT_SKIP_CANVAS_HOST)) return true;
+  if (isTruthyEnvValue(process.env.OPENCLAW_SKIP_CANVAS_HOST)) return true;
   if (process.env.NODE_ENV === "test") return true;
   if (process.env.VITEST) return true;
   return false;

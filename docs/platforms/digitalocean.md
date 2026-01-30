@@ -74,7 +74,7 @@ clawdbot --version
 ## 4) Run Onboarding
 
 ```bash
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -137,13 +137,13 @@ Open: `http://<tailscale-ip>:18789` (token required).
 
 ### Telegram
 ```bash
-moltbot-cn pairing list telegram
-moltbot-cn pairing approve telegram <CODE>
+openclaw-cn pairing list telegram
+openclaw-cn pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 ```bash
-moltbot-cn channels login whatsapp
+openclaw-cn channels login whatsapp
 # Scan QR code
 ```
 
@@ -180,12 +180,12 @@ htop
 ## Persistence
 
 All state lives in:
-- `~/.clawdbot/` — config, credentials, session data
-- `~/clawd/` — workspace (SOUL.md, memory, etc.)
+- `~/.openclaw/` — config, credentials, session data
+- `~/clawwork/` — workspace (SOUL.md, memory, etc.)
 
 These survive reboots. Back them up periodically:
 ```bash
-tar -czvf clawdbot-backup.tar.gz ~/.clawdbot ~/clawd
+tar -czvf clawdbot-backup.tar.gz ~/.openclaw ~/clawd
 ```
 
 ---

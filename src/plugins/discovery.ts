@@ -302,7 +302,7 @@ export function discoverClawdbotPlugins(params: {
   }
   if (workspaceDir) {
     const workspaceRoot = resolveUserPath(workspaceDir);
-    const workspaceExt = path.join(workspaceRoot, ".clawdbot", "extensions");
+    const workspaceExt = path.join(workspaceRoot, ".openclaw", "extensions");
     discoverInDirectory({
       dir: workspaceExt,
       origin: "workspace",

@@ -130,7 +130,7 @@ describe("sandboxListCommand", () => {
 
       expectLogContains(runtime, "⚠️");
       expectLogContains(runtime, "image mismatch");
-      expectLogContains(runtime, "moltbot-cn sandbox recreate --all");
+      expectLogContains(runtime, "openclaw-cn sandbox recreate --all");
     });
 
     it("should display message when no containers found", async () => {

@@ -74,7 +74,7 @@ With the tunnel up:
 - `clawdbot health` and `clawdbot status --deep` now reach the remote gateway via `ws://127.0.0.1:18789`.
 - `clawdbot gateway {status,health,send,agent,call}` can also target the forwarded URL via `--url` when needed.
 
-Note: replace `18789` with your configured `gateway.port` (or `--port`/`CLAWDBOT_GATEWAY_PORT`).
+Note: replace `18789` with your configured `gateway.port` (or `--port`/`OPENCLAW_GATEWAY_PORT`).
 
 ## CLI remote defaults
 

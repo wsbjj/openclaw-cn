@@ -67,8 +67,8 @@ async function requireRiskAcknowledgement(params: {
       "- 对于使用工具或不受信任收件箱的机器人，请使用最强大的可用模型。",
       "",
       "定期运行：",
-      "moltbot-cn security audit --deep",
-      "moltbot-cn security audit --fix",
+      "openclaw-cn security audit --deep",
+      "openclaw-cn security audit --fix",
       "",
       "必读：https://docs.clawd.bot/gateway/security",
     ].join("\n"),
@@ -109,13 +109,13 @@ export async function runOnboardingWizard(
       );
     }
     await prompter.outro(
-      `配置无效。运行 \${formatCliCommand("moltbot-cn doctor")} 修复它，然后重新运行安装引导。`,
+      `配置无效。运行 \${formatCliCommand("openclaw-cn doctor")} 修复它，然后重新运行安装引导。`,
     );
     runtime.exit(1);
     return;
   }
 
-  const quickstartHint = `稍后通过 ${formatCliCommand("moltbot-cn configure")} 配置详细信息。`;
+  const quickstartHint = `稍后通过 ${formatCliCommand("openclaw-cn configure")} 配置详细信息。`;
   const manualHint = "配置端口、网络、Tailscale 和认证选项。";
   const explicitFlowRaw = opts.flow?.trim();
   const normalizedExplicitFlow = explicitFlowRaw === "manual" ? "advanced" : explicitFlowRaw;
@@ -276,8 +276,8 @@ export async function runOnboardingWizard(
   const localUrl = `ws://127.0.0.1:${localPort}`;
   const localProbe = await probeGatewayReachable({
     url: localUrl,
-    token: baseConfig.gateway?.auth?.token ?? process.env.CLAWDBOT_GATEWAY_TOKEN,
-    password: baseConfig.gateway?.auth?.password ?? process.env.CLAWDBOT_GATEWAY_PASSWORD,
+    token: baseConfig.gateway?.auth?.token ?? process.env.OPENCLAW_GATEWAY_TOKEN,
+    password: baseConfig.gateway?.auth?.password ?? process.env.OPENCLAW_GATEWAY_PASSWORD,
   });
   const remoteUrl = baseConfig.gateway?.remote?.url?.trim() ?? "";
   const remoteProbe = remoteUrl

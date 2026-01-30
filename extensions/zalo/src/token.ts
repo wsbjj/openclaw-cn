@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { DEFAULT_ACCOUNT_ID } from "moltbot-cn/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID } from "openclaw-cn/plugin-sdk";
 
 import type { ZaloConfig } from "./types.js";
 

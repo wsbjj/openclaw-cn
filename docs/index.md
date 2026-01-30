@@ -30,7 +30,7 @@ Clawdbot also powers [Clawd](https://clawd.me), the space‑lobster assistant.
 ## Start here
 
 - **New install from zero:** [Getting Started](/start/getting-started)
-- **Guided setup (recommended):** [Wizard](/start/wizard) (`moltbot-cn onboard`)
+- **Guided setup (recommended):** [Wizard](/start/wizard) (`openclaw-cn onboard`)
 - **Open the dashboard (local Gateway):** http://127.0.0.1:18789/ (or http://localhost:18789/)
 
 If the Gateway is running on the same computer, that link opens the browser Control UI
@@ -106,10 +106,10 @@ npm install -g clawdbot@latest
 # or: pnpm add -g clawdbot@latest
 
 # Onboard + install the service (launchd/systemd user service)
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 
 # Pair WhatsApp Web (shows QR)
-moltbot-cn channels login
+openclaw-cn channels login
 
 # Gateway runs via the service after onboarding; manual run is still possible:
 clawdbot gateway --port 18789
@@ -125,7 +125,7 @@ cd clawdbot
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-moltbot-cn onboard --install-daemon
+openclaw-cn onboard --install-daemon
 ```
 
 If you don’t have a global install yet, run the onboarding step via `pnpm clawdbot ...` from the repo.
@@ -133,20 +133,20 @@ If you don’t have a global install yet, run the onboarding step via `pnpm claw
 Multi-instance quickstart (optional):
 
 ```bash
-CLAWDBOT_CONFIG_PATH=~/.clawdbot/a.json \
-CLAWDBOT_STATE_DIR=~/.clawdbot-a \
+OPENCLAW_CONFIG_PATH=~/.openclaw/a.json \
+OPENCLAW_STATE_DIR=~/.openclaw-a \
 clawdbot gateway --port 19001
 ```
 
 Send a test message (requires a running Gateway):
 
 ```bash
-moltbot-cn message send --target +15555550123 --message "Hello from Clawdbot"
+openclaw-cn message send --target +15555550123 --message "Hello from Clawdbot"
 ```
 
 ## Configuration (optional)
 
-Config lives at `~/.clawdbot/clawdbot.json`.
+Config lives at `~/.openclaw/openclaw.json`.
 
 - If you **do nothing**, Clawdbot uses the bundled Pi binary in RPC mode with per-sender sessions.
 - If you want to lock it down, start with `channels.whatsapp.allowFrom` and (for groups) mention rules.

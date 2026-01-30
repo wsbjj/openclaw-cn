@@ -6,7 +6,7 @@ import { type ChannelId, listChannelPlugins } from "../channels/plugins/index.js
 import { createDefaultDeps } from "../cli/deps.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import {
-  CONFIG_PATH_CLAWDBOT,
+  CONFIG_PATH_OPENCLAW,
   isNixMode,
   loadConfig,
   migrateLegacyConfig,
@@ -149,13 +149,13 @@ export async function startGatewayServer(
   opts: GatewayServerOptions = {},
 ): Promise<GatewayServer> {
   // Ensure all default port derivations (browser/canvas) see the actual runtime port.
-  process.env.CLAWDBOT_GATEWAY_PORT = String(port);
+  process.env.OPENCLAW_GATEWAY_PORT = String(port);
   logAcceptedEnvOption({
-    key: "CLAWDBOT_RAW_STREAM",
+    key: "OPENCLAW_RAW_STREAM",
     description: "raw stream logging enabled",
   });
   logAcceptedEnvOption({
-    key: "CLAWDBOT_RAW_STREAM_PATH",
+    key: "OPENCLAW_RAW_STREAM_PATH",
     description: "raw stream log path override",
   });
 
@@ -169,7 +169,7 @@ export async function startGatewayServer(
     const { config: migrated, changes } = migrateLegacyConfig(configSnapshot.parsed);
     if (!migrated) {
       throw new Error(
-        `Legacy config entries detected but auto-migration failed. Run "${formatCliCommand("moltbot-cn doctor")}" to migrate.`,
+        `Legacy config entries detected but auto-migration failed. Run "${formatCliCommand("openclaw-cn doctor")}" to migrate.`,
       );
     }
     await writeConfigFile(migrated);
@@ -191,7 +191,7 @@ export async function startGatewayServer(
             .join("\n")
         : "Unknown validation issue.";
     throw new Error(
-      `Invalid config at ${configSnapshot.path}.\n${issues}\nRun "${formatCliCommand("moltbot-cn doctor")}" to repair, then retry.`,
+      `Invalid config at ${configSnapshot.path}.\n${issues}\nRun "${formatCliCommand("openclaw-cn doctor")}" to repair, then retry.`,
     );
   }
 
@@ -541,7 +541,7 @@ export async function startGatewayServer(
       warn: (msg) => logReload.warn(msg),
       error: (msg) => logReload.error(msg),
     },
-    watchPath: CONFIG_PATH_CLAWDBOT,
+    watchPath: CONFIG_PATH_OPENCLAW,
   });
 
   const close = createGatewayCloseHandler({

@@ -67,7 +67,7 @@ export function installUnhandledRejectionHandler(): void {
     // when HTTP requests/connections are terminated during gateway restart
     if (reason instanceof Error && reason.name === "AbortError") {
       console.warn(
-        "[moltbot] AbortError during operation (expected during restart):",
+        "[openclaw] AbortError during operation (expected during restart):",
         reason.message,
       );
       return;
@@ -78,14 +78,14 @@ export function installUnhandledRejectionHandler(): void {
     // (common in regions where Telegram is blocked)
     if (isNetworkFetchError(reason)) {
       console.error(
-        "[moltbot] Network error (non-fatal):",
+        "[openclaw] Network error (non-fatal):",
         formatUncaughtError(reason),
         "\nHint: If you're in a region where Telegram is blocked, configure a proxy in channels.telegram.proxy",
       );
       return;
     }
 
-    console.error("[moltbot] Unhandled promise rejection:", formatUncaughtError(reason));
+    console.error("[openclaw] Unhandled promise rejection:", formatUncaughtError(reason));
     process.exit(1);
   });
 }

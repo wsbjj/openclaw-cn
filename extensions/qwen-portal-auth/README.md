@@ -7,7 +7,7 @@ OAuth provider plugin for **Qwen** (free-tier OAuth).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-moltbot-cn plugins enable qwen-portal-auth
+openclaw-cn plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-moltbot-cn models auth login --provider qwen-portal --set-default
+openclaw-cn models auth login --provider qwen-portal --set-default
 ```
 
 ## Notes

@@ -16,7 +16,7 @@ Clawdbot treats **wake words as a single global list** owned by the **Gateway**.
 
 Wake words are stored on the gateway machine at:
 
-- `~/.clawdbot/settings/voicewake.json`
+- `~/.openclaw/settings/voicewake.json`
 
 Shape:
 

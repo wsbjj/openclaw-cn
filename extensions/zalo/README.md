@@ -5,13 +5,13 @@ Zalo channel plugin for Clawdbot (Bot API).
 ## Install (local checkout)
 
 ```bash
-moltbot-cn plugins install ./extensions/zalo
+openclaw-cn plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-moltbot-cn plugins install @clawdbot/zalo
+openclaw-cn plugins install @clawdbot/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

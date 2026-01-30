@@ -34,7 +34,7 @@ beforeEach(() => {
     durationMs: 0,
   });
   legacyReadConfigFileSnapshot.mockReset().mockResolvedValue({
-    path: "/tmp/clawdbot.json",
+    path: "/tmp/openclaw.json",
     exists: false,
     raw: null,
     parsed: {},
@@ -76,11 +76,11 @@ beforeEach(() => {
 
   originalIsTTY = process.stdin.isTTY;
   setStdinTty(true);
-  originalStateDir = process.env.CLAWDBOT_STATE_DIR;
-  originalUpdateInProgress = process.env.CLAWDBOT_UPDATE_IN_PROGRESS;
-  process.env.CLAWDBOT_UPDATE_IN_PROGRESS = "1";
+  originalStateDir = process.env.OPENCLAW_STATE_DIR;
+  originalUpdateInProgress = process.env.OPENCLAW_UPDATE_IN_PROGRESS;
+  process.env.OPENCLAW_UPDATE_IN_PROGRESS = "1";
   tempStateDir = fs.mkdtempSync(path.join(os.tmpdir(), "clawdbot-doctor-state-"));
-  process.env.CLAWDBOT_STATE_DIR = tempStateDir;
+  process.env.OPENCLAW_STATE_DIR = tempStateDir;
   fs.mkdirSync(path.join(tempStateDir, "agents", "main", "sessions"), {
     recursive: true,
   });
@@ -90,14 +90,14 @@ beforeEach(() => {
 afterEach(() => {
   setStdinTty(originalIsTTY);
   if (originalStateDir === undefined) {
-    delete process.env.CLAWDBOT_STATE_DIR;
+    delete process.env.OPENCLAW_STATE_DIR;
   } else {
-    process.env.CLAWDBOT_STATE_DIR = originalStateDir;
+    process.env.OPENCLAW_STATE_DIR = originalStateDir;
   }
   if (originalUpdateInProgress === undefined) {
-    delete process.env.CLAWDBOT_UPDATE_IN_PROGRESS;
+    delete process.env.OPENCLAW_UPDATE_IN_PROGRESS;
   } else {
-    process.env.CLAWDBOT_UPDATE_IN_PROGRESS = originalUpdateInProgress;
+    process.env.OPENCLAW_UPDATE_IN_PROGRESS = originalUpdateInProgress;
   }
   if (tempStateDir) {
     fs.rmSync(tempStateDir, { recursive: true, force: true });
@@ -135,7 +135,7 @@ const ensureAuthProfileStore = vi.fn().mockReturnValue({ version: 1, profiles: {
 const loadClawdbotPlugins = vi.fn().mockReturnValue({ plugins: [], diagnostics: [] });
 
 const legacyReadConfigFileSnapshot = vi.fn().mockResolvedValue({
-  path: "/tmp/clawdbot.json",
+  path: "/tmp/openclaw.json",
   exists: false,
   raw: null,
   parsed: {},
@@ -181,7 +181,7 @@ vi.mock("../config/config.js", async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    CONFIG_PATH_CLAWDBOT: "/tmp/clawdbot.json",
+    CONFIG_PATH_OPENCLAW: "/tmp/openclaw.json",
     createConfigIO,
     readConfigFileSnapshot,
     writeConfigFile,
@@ -327,7 +327,7 @@ vi.mock("./doctor-state-migrations.js", () => ({
 describe("doctor command", () => {
   it("runs legacy state migrations in non-interactive mode without prompting", async () => {
     readConfigFileSnapshot.mockResolvedValue({
-      path: "/tmp/clawdbot.json",
+      path: "/tmp/openclaw.json",
       exists: true,
       raw: "{}",
       parsed: {},

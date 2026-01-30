@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import type { Command } from "commander";
 
-import { STATE_DIR_CLAWDBOT } from "../config/paths.js";
+import { STATE_DIR_OPENCLAW } from "../config/paths.js";
 import { danger, info } from "../globals.js";
 import { copyToClipboard } from "../infra/clipboard.js";
 import { defaultRuntime } from "../runtime.js";
@@ -20,7 +20,7 @@ function bundledExtensionRootDir() {
 }
 
 function installedExtensionRootDir() {
-  return path.join(STATE_DIR_CLAWDBOT, "browser", "chrome-extension");
+  return path.join(STATE_DIR_OPENCLAW, "browser", "chrome-extension");
 }
 
 function hasManifest(dir: string) {
@@ -36,7 +36,7 @@ export async function installChromeExtension(opts?: {
     throw new Error("捆绑的 Chrome 扩展缺失。请重新安装 Clawdbot 并重试。");
   }
 
-  const stateDir = opts?.stateDir ?? STATE_DIR_CLAWDBOT;
+  const stateDir = opts?.stateDir ?? STATE_DIR_OPENCLAW;
   const dest = path.join(stateDir, "browser", "chrome-extension");
   fs.mkdirSync(path.dirname(dest), { recursive: true });
 
@@ -106,7 +106,7 @@ export function registerBrowserExtensionCommands(
         defaultRuntime.error(
           danger(
             [
-              `Chrome 扩展未安装。运行："${formatCliCommand("moltbot-cn browser extension install")}"`,
+              `Chrome 扩展未安装。运行："${formatCliCommand("openclaw-cn browser extension install")}"`,
               `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.clawd.bot/tools/chrome-extension")}`,
             ].join("\n"),
           ),

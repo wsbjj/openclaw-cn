@@ -39,8 +39,8 @@ The hooks system allows you to:
 
 Clawdbot ships with four bundled hooks that are automatically discovered:
 
-- **💾 session-memory**: Saves session context to your agent workspace (default `~/clawd/memory/`) when you issue `/new`
-- **📝 command-logger**: Logs all command events to `~/.clawdbot/logs/commands.log`
+- **💾 session-memory**: Saves session context to your agent workspace (default `~/clawwork/memory/`) when you issue `/new`
+- **📝 command-logger**: Logs all command events to `~/.openclaw/logs/commands.log`
 - **🚀 boot-md**: Runs `BOOT.md` when the gateway starts (requires internal hooks enabled)
 - **😈 soul-evil**: Swaps injected `SOUL.md` content with `SOUL_EVIL.md` during a purge window or by random chance
 
@@ -70,14 +70,14 @@ clawdbot hooks info session-memory
 
 ### Onboarding
 
-During onboarding (`moltbot-cn onboard`), you'll be prompted to enable recommended hooks. The wizard automatically discovers eligible hooks and presents them for selection.
+During onboarding (`openclaw-cn onboard`), you'll be prompted to enable recommended hooks. The wizard automatically discovers eligible hooks and presents them for selection.
 
 ## Hook Discovery
 
 Hooks are automatically discovered from three directories (in order of precedence):
 
 1. **Workspace hooks**: `<workspace>/hooks/` (per-agent, highest precedence)
-2. **Managed hooks**: `~/.clawdbot/hooks/` (user-installed, shared across workspaces)
+2. **Managed hooks**: `~/.openclaw/hooks/` (user-installed, shared across workspaces)
 3. **Bundled hooks**: `<clawdbot>/dist/hooks/bundled/` (shipped with Clawdbot)
 
 Managed hook directories can be either a **single hook** or a **hook pack** (package directory).
@@ -112,7 +112,7 @@ Example `package.json`:
 ```
 
 Each entry points to a hook directory containing `HOOK.md` and `handler.ts` (or `index.ts`).
-Hook packs can ship dependencies; they will be installed under `~/.clawdbot/hooks/<id>`.
+Hook packs can ship dependencies; they will be installed under `~/.openclaw/hooks/<id>`.
 
 ## Hook Structure
 
@@ -149,7 +149,7 @@ No configuration needed.
 
 ### Metadata Fields
 
-The `metadata.clawdbot` object supports:
+The `metadata.openclaw` object supports:
 
 - **`emoji`**: Display emoji for CLI (e.g., `"💾"`)
 - **`events`**: Array of events to listen for (e.g., `["command:new", "command:reset"]`)
@@ -256,13 +256,13 @@ Planned event types:
 ### 1. Choose Location
 
 - **Workspace hooks** (`<workspace>/hooks/`): Per-agent, highest precedence
-- **Managed hooks** (`~/.clawdbot/hooks/`): Shared across workspaces
+- **Managed hooks** (`~/.openclaw/hooks/`): Shared across workspaces
 
 ### 2. Create Directory Structure
 
 ```bash
-mkdir -p ~/.clawdbot/hooks/my-hook
-cd ~/.clawdbot/hooks/my-hook
+mkdir -p ~/.openclaw/hooks/my-hook
+cd ~/.openclaw/hooks/my-hook
 ```
 
 ### 3. Create HOOK.md
@@ -486,7 +486,7 @@ Logs all command events to a centralized audit file.
 
 **Requirements**: None
 
-**Output**: `~/.clawdbot/logs/commands.log`
+**Output**: `~/.openclaw/logs/commands.log`
 
 **What it does**:
 1. Captures event details (command action, timestamp, session key, sender ID, source)
@@ -504,13 +504,13 @@ Logs all command events to a centralized audit file.
 
 ```bash
 # View recent commands
-tail -n 20 ~/.clawdbot/logs/commands.log
+tail -n 20 ~/.openclaw/logs/commands.log
 
 # Pretty-print with jq
-cat ~/.clawdbot/logs/commands.log | jq .
+cat ~/.openclaw/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.clawdbot/logs/commands.log | jq .
+grep '"action":"new"' ~/.openclaw/logs/commands.log | jq .
 ```
 
 **Enable**:
@@ -690,7 +690,7 @@ Monitor gateway logs to see hook execution:
 ./scripts/clawlog.sh -f
 
 # Other platforms
-tail -f ~/.clawdbot/gateway.log
+tail -f ~/.openclaw/gateway.log
 ```
 
 ### Test Hooks Directly
@@ -765,13 +765,13 @@ Session reset
 
 1. Check directory structure:
    ```bash
-   ls -la ~/.clawdbot/hooks/my-hook/
+   ls -la ~/.openclaw/hooks/my-hook/
    # Should show: HOOK.md, handler.ts
    ```
 
 2. Verify HOOK.md format:
    ```bash
-   cat ~/.clawdbot/hooks/my-hook/HOOK.md
+   cat ~/.openclaw/hooks/my-hook/HOOK.md
    # Should have YAML frontmatter with name and metadata
    ```
 
@@ -844,8 +844,8 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 
 1. Create hook directory:
    ```bash
-   mkdir -p ~/.clawdbot/hooks/my-hook
-   mv ./hooks/handlers/my-handler.ts ~/.clawdbot/hooks/my-hook/handler.ts
+   mkdir -p ~/.openclaw/hooks/my-hook
+   mv ./hooks/handlers/my-handler.ts ~/.openclaw/hooks/my-hook/handler.ts
    ```
 
 2. Create HOOK.md:

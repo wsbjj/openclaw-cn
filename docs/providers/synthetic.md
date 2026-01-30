@@ -15,7 +15,7 @@ Synthetic exposes Anthropic-compatible endpoints. Clawdbot registers it as the
 2) Run onboarding:
 
 ```bash
-moltbot-cn onboard --auth-choice synthetic-api-key
+openclaw-cn onboard --auth-choice synthetic-api-key
 ```
 
 The default model is set to:

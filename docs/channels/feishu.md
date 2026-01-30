@@ -17,10 +17,10 @@ read_when:
 
 ### 方式一：通过安装向导添加（推荐）
 
-如果您刚安装完 Moltbot，可以直接运行向导，根据提示添加飞书：
+如果您刚安装完 Openclaw，可以直接运行向导，根据提示添加飞书：
 
 ```bash
-moltbot-cn onboard
+openclaw-cn onboard
 ```
 
 向导会引导您完成：
@@ -33,7 +33,7 @@ moltbot-cn onboard
 如果您已经完成了初始安装，可以用以下命令添加飞书渠道：
 
 ```bash
-moltbot-cn channels add
+openclaw-cn channels add
 ```
 
 然后根据交互式提示选择 Feishu，输入 App ID 和 App Secret 即可。
@@ -124,21 +124,21 @@ moltbot-cn channels add
 
 ---
 
-## 第二步：配置 Moltbot
+## 第二步：配置 Openclaw
 
 ### 通过向导配置（推荐）
 
 运行以下命令，根据提示粘贴 App ID 和 App Secret：
 
 ```bash
-moltbot-cn channels add
+openclaw-cn channels add
 ```
 
 选择 **Feishu**，然后输入您在第一步获取的凭证即可。
 
 ### 通过配置文件配置
 
-编辑 `~/.moltbot/moltbot.json`：
+编辑 `~/.openclaw/openclaw.json`：
 
 ```json5
 {
@@ -172,7 +172,7 @@ export FEISHU_APP_SECRET="xxx"
 ### 1. 启动网关
 
 ```bash
-moltbot-cn gateway
+openclaw-cn gateway
 ```
 
 ### 2. 发送测试消息
@@ -184,7 +184,7 @@ moltbot-cn gateway
 默认情况下，机器人会回复一个 **配对码**。您需要批准此代码：
 
 ```bash
-moltbot-cn pairing approve feishu <配对码>
+openclaw-cn pairing approve feishu <配对码>
 ```
 
 批准后即可正常对话。
@@ -207,8 +207,8 @@ moltbot-cn pairing approve feishu <配对码>
 - **默认**：`dmPolicy: "pairing"`，陌生用户会收到配对码
 - **批准配对**：
   ```bash
-  moltbot-cn pairing list feishu      # 查看待审批列表
-  moltbot-cn pairing approve feishu <CODE>  # 批准
+  openclaw-cn pairing list feishu      # 查看待审批列表
+  openclaw-cn pairing approve feishu <CODE>  # 批准
   ```
 - **白名单模式**：通过 `channels.feishu.allowFrom` 配置允许的用户 Open ID
 
@@ -279,7 +279,7 @@ moltbot-cn pairing approve feishu <配对码>
 
 **方法一**（推荐）：
 1. 启动网关并在群组中 @机器人发消息
-2. 运行 `moltbot-cn logs --follow` 查看日志中的 `chat_id`
+2. 运行 `openclaw-cn logs --follow` 查看日志中的 `chat_id`
 
 **方法二**：
 使用飞书 API 调试工具获取机器人所在群组列表。
@@ -290,12 +290,12 @@ moltbot-cn pairing approve feishu <配对码>
 
 **方法一**（推荐）：
 1. 启动网关并给机器人发消息
-2. 运行 `moltbot-cn logs --follow` 查看日志中的 `open_id`
+2. 运行 `openclaw-cn logs --follow` 查看日志中的 `open_id`
 
 **方法二**：
 查看配对请求列表，其中包含用户的 Open ID：
 ```bash
-moltbot-cn pairing list feishu
+openclaw-cn pairing list feishu
 ```
 
 ---
@@ -319,7 +319,7 @@ moltbot-cn pairing list feishu
 1. 检查机器人是否已添加到群组
 2. 检查是否 @了机器人（默认需要 @提及）
 3. 检查 `groupPolicy` 是否为 `"disabled"`
-4. 查看日志：`moltbot-cn logs --follow`
+4. 查看日志：`openclaw-cn logs --follow`
 
 ### 机器人收不到消息
 

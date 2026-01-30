@@ -10,7 +10,7 @@ read_when:
 最后更新：2026-01-01
 
 ## 概述
-- **定制化存在于仓库之外：** `~/clawd`（工作区）+ `~/.clawdbot/clawdbot.json`（配置）。
+- **定制化存在于仓库之外：** `~/clawd`（工作区）+ `~/.openclaw/openclaw.json`（配置）。
 - **稳定工作流程：** 安装 macOS 应用；让它运行捆绑的网关。
 - **前沿工作流程：** 通过 `pnpm gateway:watch` 自己运行网关，然后让 macOS 应用以本地模式附加。
 
@@ -23,22 +23,22 @@ read_when:
 
 如果您想要 "100% 适合我" *并且* 易于更新，请将您的自定义保存在：
 
-- **配置：** `~/.clawdbot/clawdbot.json`（JSON/JSON5 类似）
+- **配置：** `~/.openclaw/openclaw.json`（JSON/JSON5 类似）
 - **工作区：** `~/clawd`（技能、提示、记忆；将其设为私有 git 仓库）
 
 引导一次：
 
 ```bash
-moltbot-cn setup
+openclaw-cn setup
 ```
 
 在此仓库内部，使用本地 CLI 入口：
 
 ```bash
-moltbot-cn setup
+openclaw-cn setup
 ```
 
-如果您还没有全局安装，请通过 `pnpm moltbot-cn setup` 运行它。
+如果您还没有全局安装，请通过 `pnpm openclaw-cn setup` 运行它。
 ## 稳定工作流程（先用 macOS 应用）
 
 1) 安装 + 启动 **Clawdbot.app**（菜单栏）。
@@ -47,17 +47,17 @@ moltbot-cn setup
 4) 链接界面（示例：WhatsApp）：
 
 ```bash
-moltbot-cn channels login
+openclaw-cn channels login
 ```
 
 5) 健康检查：
 
 ```bash
-moltbot-cn health
+openclaw-cn health
 ```
 
 如果您的构建中不可用入门：
-- 运行 `moltbot-cn setup`，然后 `moltbot-cn channels login`，然后手动启动网关（`moltbot-cn gateway`）。
+- 运行 `openclaw-cn setup`，然后 `openclaw-cn channels login`，然后手动启动网关（`openclaw-cn gateway`）。
 
 ## 前沿工作流程（网关在终端中）
 
@@ -93,18 +93,18 @@ pnpm gateway:watch
 - 或通过 CLI：
 
 ```bash
-moltbot-cn health
+openclaw-cn health
 ```
 
 ### 常见错误
 - **错误端口：** 网关 WS 默认为 `ws://127.0.0.1:18789`；保持应用 + CLI 在同一端口。
 - **状态存储位置：**
-  - 凭据：`~/.clawdbot/credentials/`
-  - 会话：`~/.clawdbot/agents/<agentId>/sessions/`
+  - 凭据：`~/.openclaw/credentials/`
+  - 会话：`~/.openclaw/agents/<agentId>/sessions/`
   - 日志：`/tmp/clawdbot/`
 ## 更新（不破坏您的设置）
 
-- 将 `~/clawd` 和 `~/.clawdbot/` 保留为 "您的内容"；不要将个人提示/配置放入 `clawdbot` 仓库。
+- 将 `~/clawd` 和 `~/.openclaw/` 保留为 "您的内容"；不要将个人提示/配置放入 `clawdbot` 仓库。
 - 更新源码：`git pull` + `pnpm install`（当锁文件更改时）+ 继续使用 `pnpm gateway:watch`。
 
 ## Linux（systemd 用户服务）

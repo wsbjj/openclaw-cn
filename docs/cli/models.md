@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `moltbot-cn models` (status/list/set/scan, aliases, fallbacks, auth)"
+summary: "CLI reference for `openclaw-cn models` (status/list/set/scan, aliases, fallbacks, auth)"
 read_when:
   - You want to change default models or view provider auth status
   - You want to scan available models/providers and debug auth profiles
 ---
 
-# `moltbot-cn models`
+# `openclaw-cn models`
 
 Model discovery, scanning, and configuration (default model, fallbacks, auth profiles).
 
@@ -16,13 +16,13 @@ Related:
 ## Common commands
 
 ```bash
-moltbot-cn models status
-moltbot-cn models list
-moltbot-cn models set <model-or-alias>
-moltbot-cn models scan
+openclaw-cn models status
+openclaw-cn models list
+openclaw-cn models set <model-or-alias>
+openclaw-cn models scan
 ```
 
-`moltbot-cn models status` shows the resolved default/fallbacks plus an auth overview.
+`openclaw-cn models status` shows the resolved default/fallbacks plus an auth overview.
 When provider usage snapshots are available, the OAuth/token status section includes
 provider usage headers.
 Add `--probe` to run live auth probes against each configured provider profile.
@@ -48,20 +48,20 @@ Options:
 ## Aliases + fallbacks
 
 ```bash
-moltbot-cn models aliases list
-moltbot-cn models fallbacks list
+openclaw-cn models aliases list
+openclaw-cn models fallbacks list
 ```
 
 ## Auth profiles
 
 ```bash
-moltbot-cn models auth add
-moltbot-cn models auth login --provider <id>
-moltbot-cn models auth setup-token
-moltbot-cn models auth paste-token
+openclaw-cn models auth add
+openclaw-cn models auth login --provider <id>
+openclaw-cn models auth setup-token
+openclaw-cn models auth paste-token
 ```
 `models auth login` runs a provider plugin’s auth flow (OAuth/API key). Use
-`moltbot-cn plugins list` to see which providers are installed.
+`openclaw-cn plugins list` to see which providers are installed.
 
 Notes:
 - `setup-token` runs `claude setup-token` on the current machine (requires the Claude Code CLI).

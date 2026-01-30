@@ -7,7 +7,7 @@ read_when:
 
 # `clawdbot setup`
 
-Initialize `~/.moltbot-cn/moltbot-cn.json` and the agent workspace.
+Initialize `~/.openclaw-cn/openclaw-cn.json` and the agent workspace.
 
 Related:
 - Getting started: [Getting started](/start/getting-started)

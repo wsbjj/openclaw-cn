@@ -19,7 +19,7 @@ Clawdbot also supports **provider plugins** that ship their own OAuth or API‑k
 flows. Run them via:
 
 ```bash
-moltbot-cn models auth login --provider <id>
+openclaw-cn models auth login --provider <id>
 ```
 
 ## The token sink (why it exists)
@@ -38,13 +38,13 @@ To reduce that, Clawdbot treats `auth-profiles.json` as a **token sink**:
 
 Secrets are stored **per-agent**:
 
-- Auth profiles (OAuth + API keys): `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`
-- Runtime cache (managed automatically; don’t edit): `~/.clawdbot/agents/<agentId>/agent/auth.json`
+- Auth profiles (OAuth + API keys): `~/.openclaw/agents/<agentId>/agent/auth-profiles.json`
+- Runtime cache (managed automatically; don’t edit): `~/.openclaw/agents/<agentId>/agent/auth.json`
 
 Legacy import-only file (still supported, but not the main store):
-- `~/.clawdbot/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
+- `~/.openclaw/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
 
-All of the above also respect `$CLAWDBOT_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
+All of the above also respect `$OPENCLAW_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
 
 ## Reusing Claude Code / Codex CLI OAuth tokens (recommended)
 
@@ -56,20 +56,20 @@ If you already signed in with the external CLIs *on the gateway host*, Clawdbot 
 - Codex CLI: reads `~/.codex/auth.json` → profile `openai-codex:codex-cli`
 
 Sync happens when Clawdbot loads the auth store (so it stays up-to-date when the CLIs refresh tokens).
-On macOS, the first read may trigger a Keychain prompt; run `moltbot-cn models status`
+On macOS, the first read may trigger a Keychain prompt; run `openclaw-cn models status`
 in a terminal once if the Gateway runs headless and can’t access the entry.
 
 How to verify:
 
 ```bash
-moltbot-cn models status
-moltbot-cn channels list
+openclaw-cn models status
+openclaw-cn channels list
 ```
 
 Or JSON:
 
 ```bash
-moltbot-cn channels list --json
+openclaw-cn channels list --json
 ```
 
 ## OAuth exchange (how login works)
@@ -86,7 +86,7 @@ Flow shape (PKCE):
 4) exchange at `https://console.anthropic.com/v1/oauth/token`
 5) store `{ access, refresh, expires }` under an auth profile
 
-The wizard path is `moltbot-cn onboard` → auth choice `oauth` (Anthropic).
+The wizard path is `openclaw-cn onboard` → auth choice `oauth` (Anthropic).
 
 ### OpenAI Codex (ChatGPT OAuth)
 
@@ -99,7 +99,7 @@ Flow shape (PKCE):
 5) exchange at `https://auth.openai.com/oauth/token`
 6) extract `accountId` from the access token and store `{ access, refresh, expires, accountId }`
 
-Wizard path is `moltbot-cn onboard` → auth choice `openai-codex` (or `codex-cli` to reuse an existing Codex CLI login).
+Wizard path is `openclaw-cn onboard` → auth choice `openai-codex` (or `codex-cli` to reuse an existing Codex CLI login).
 
 ## Refresh + expiry
 
@@ -155,7 +155,7 @@ Example (session override):
 - `/model Opus@anthropic:work`
 
 How to see what profile IDs exist:
-- `moltbot-cn channels list --json` (shows `auth[]`)
+- `openclaw-cn channels list --json` (shows `auth[]`)
 
 Related docs:
 - [/concepts/model-failover](/concepts/model-failover) (rotation + cooldown rules)

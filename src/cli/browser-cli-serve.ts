@@ -41,12 +41,12 @@ export function registerBrowserServeCommands(
       const host = (opts.bind ?? "127.0.0.1").trim();
       const port = parsePort(opts.port) ?? resolved.controlPort;
 
-      const envToken = process.env.CLAWDBOT_BROWSER_CONTROL_TOKEN?.trim();
+      const envToken = process.env.OPENCLAW_BROWSER_CONTROL_TOKEN?.trim();
       const authToken = (opts.token ?? envToken ?? resolved.controlToken)?.trim();
       if (!isLoopbackBindHost(host) && !authToken) {
         defaultRuntime.error(
           danger(
-            `拒绝在 ${host} 上绑定浏览器控制，缺少 --token（或 CLAWDBOT_BROWSER_CONTROL_TOKEN，或 browser.controlToken）。`,
+            `拒绝在 ${host} 上绑定浏览器控制，缺少 --token（或 OPENCLAW_BROWSER_CONTROL_TOKEN，或 browser.controlToken）。`,
           ),
         );
         defaultRuntime.exit(1);
@@ -77,7 +77,7 @@ export function registerBrowserServeCommands(
             `🦞 Browser control listening on ${bridge.baseUrl}/`,
             authToken ? "认证：需要 Bearer 令牌。" : "认证：关闭（仅限环回）。",
             "",
-            "粘贴到网关（clawdbot.json）：",
+            "粘贴到网关（openclaw.json）：",
             JSON.stringify(
               {
                 browser: {
@@ -93,7 +93,7 @@ export function registerBrowserServeCommands(
               ? [
                   "",
                   "或在网关上使用环境变量（代替配置中的 controlToken）：",
-                  `export CLAWDBOT_BROWSER_CONTROL_TOKEN=${JSON.stringify(authToken)}`,
+                  `export OPENCLAW_BROWSER_CONTROL_TOKEN=${JSON.stringify(authToken)}`,
                 ]
               : []),
           ].join("\n"),

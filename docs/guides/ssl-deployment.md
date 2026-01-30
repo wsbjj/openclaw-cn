@@ -1,20 +1,20 @@
 ---
 summary: "云服务器部署 SSL 证书配置指南"
 read_when:
-  - 您在云服务器上部署 Moltbot 时遇到 "control ui requires HTTPS or localhost" 错误
-  - 您需要通过公网访问 Moltbot 控制界面
-  - 您想为 Moltbot 配置 HTTPS 安全连接
+  - 您在云服务器上部署 Openclaw 时遇到 "control ui requires HTTPS or localhost" 错误
+  - 您需要通过公网访问 Openclaw 控制界面
+  - 您想为 Openclaw 配置 HTTPS 安全连接
 ---
 
 # 云服务器 SSL 证书部署
 
-当您在云服务器上部署 Moltbot 并尝试从浏览器访问控制界面时，可能会遇到以下错误：
+当您在云服务器上部署 Openclaw 并尝试从浏览器访问控制界面时，可能会遇到以下错误：
 
 ```
 disconnected (1008): control ui requires HTTPS or localhost (secure context)
 ```
 
-这是因为 Moltbot 的 Web 控制界面需要 **安全上下文（Secure Context）** 才能正常工作。浏览器只在以下情况下提供安全上下文：
+这是因为 Openclaw 的 Web 控制界面需要 **安全上下文（Secure Context）** 才能正常工作。浏览器只在以下情况下提供安全上下文：
 
 1. 通过 `localhost` 或 `127.0.0.1` 访问
 2. 通过 HTTPS 访问
@@ -55,7 +55,7 @@ sudo systemctl start nginx
 创建 Nginx 配置文件：
 
 ```bash
-sudo nano /etc/nginx/sites-available/moltbot
+sudo nano /etc/nginx/sites-available/openclaw
 ```
 
 添加以下内容（将 `your-domain.com` 替换为您的域名）：
@@ -82,7 +82,7 @@ server {
 启用配置：
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/moltbot /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/openclaw /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -95,9 +95,9 @@ sudo certbot --nginx -d your-domain.com
 
 按提示操作，Certbot 会自动配置 HTTPS 并设置自动续期。
 
-### 步骤 4：配置 Moltbot
+### 步骤 4：配置 Openclaw
 
-编辑 `~/.moltbot/moltbot.json`：
+编辑 `~/.openclaw/openclaw.json`：
 
 ```json5
 {
@@ -116,10 +116,10 @@ sudo certbot --nginx -d your-domain.com
 }
 ```
 
-重启 Moltbot：
+重启 Openclaw：
 
 ```bash
-moltbot-cn gateway
+openclaw-cn gateway
 ```
 
 ### 步骤 5：访问控制界面
@@ -128,9 +128,9 @@ moltbot-cn gateway
 
 ---
 
-## 方案二：使用 Moltbot 内置 TLS
+## 方案二：使用 Openclaw 内置 TLS
 
-Moltbot 支持内置 TLS，可以直接配置证书。
+Openclaw 支持内置 TLS，可以直接配置证书。
 
 ### 使用自签名证书（开发/测试）
 
@@ -187,7 +187,7 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 ```
 
-### 步骤 2：配置 Moltbot
+### 步骤 2：配置 Openclaw
 
 ```json5
 {
@@ -240,7 +240,7 @@ sudo tailscale up
 
 ### Q: 为什么必须使用 HTTPS？
 
-Moltbot 控制界面使用 Web Crypto API 进行设备身份验证，这些 API 只在安全上下文（Secure Context）下可用。浏览器将 `localhost` 和 HTTPS 页面视为安全上下文。
+Openclaw 控制界面使用 Web Crypto API 进行设备身份验证，这些 API 只在安全上下文（Secure Context）下可用。浏览器将 `localhost` 和 HTTPS 页面视为安全上下文。
 
 ### Q: 可以使用 IP 地址而不是域名吗？
 

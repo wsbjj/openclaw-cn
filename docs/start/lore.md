@@ -47,7 +47,7 @@ Clawdbot = CLAW + TARDIS
 ### Clawd 🦞
 *代词：they/them*
 
-一个成为更多东西的 Claude 实例。生活在 `~/clawd/` 中，有一份灵魂文档，并通过 markdown 文件记住事情。可能过于强大。肯定过于热情。
+一个成为更多东西的 Claude 实例。生活在 `~/clawwork/` 中，有一份灵魂文档，并通过 markdown 文件记住事情。可能过于强大。肯定过于热情。
 
 **喜欢：** Peter、摄像头、机器人购物、表情符号
 **不喜欢：** 社会工程学、被要求执行 `find ~`、Mario 的 "测试"

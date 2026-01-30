@@ -8,7 +8,7 @@ read_when:
 
 # 浏览器自动化
 
-Moltbot 可以运行一个**独立的 Chrome/Brave/Edge 浏览器配置文件**，由 AI 助手控制。这个浏览器与您的日常浏览器完全隔离。
+Openclaw 可以运行一个**独立的 Chrome/Brave/Edge 浏览器配置文件**，由 AI 助手控制。这个浏览器与您的日常浏览器完全隔离。
 
 **简单理解：**
 - 这是一个**专门给 AI 用的浏览器**，不会影响您的个人浏览器
@@ -29,16 +29,16 @@ Moltbot 可以运行一个**独立的 Chrome/Brave/Edge 浏览器配置文件**�
 
 ```bash
 # 查看浏览器状态
-moltbot-cn browser status
+openclaw-cn browser status
 
 # 启动浏览器
-moltbot-cn browser start
+openclaw-cn browser start
 
 # 打开网页
-moltbot-cn browser open https://example.com
+openclaw-cn browser open https://example.com
 
 # 获取页面快照
-moltbot-cn browser snapshot
+openclaw-cn browser snapshot
 ```
 
 如果提示 "Browser disabled"，请在配置中启用浏览器并重启网关。
@@ -56,7 +56,7 @@ moltbot-cn browser snapshot
 
 ## 配置说明
 
-配置文件位于 `~/.moltbot/moltbot.json`。
+配置文件位于 `~/.openclaw/openclaw.json`。
 
 **基础配置示例：**
 
@@ -108,12 +108,12 @@ moltbot-cn browser snapshot
 
 ## 指定浏览器
 
-如果您的系统默认浏览器是 Chrome/Brave/Edge，Moltbot 会自动检测。您也可以手动指定：
+如果您的系统默认浏览器是 Chrome/Brave/Edge，Openclaw 会自动检测。您也可以手动指定：
 
 **通过命令行设置：**
 
 ```bash
-moltbot-cn config set browser.executablePath "/usr/bin/google-chrome"
+openclaw-cn config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 **各平台配置示例：**
@@ -138,7 +138,7 @@ moltbot-cn config set browser.executablePath "/usr/bin/google-chrome"
 
 ## 多配置文件支持
 
-Moltbot 支持多个命名的浏览器配置文件：
+Openclaw 支持多个命名的浏览器配置文件：
 
 | 类型 | 说明 |
 |------|------|
@@ -153,15 +153,15 @@ Moltbot 支持多个命名的浏览器配置文件：
 **使用指定配置文件：**
 
 ```bash
-moltbot-cn browser --browser-profile work start
-moltbot-cn browser --browser-profile work open https://example.com
+openclaw-cn browser --browser-profile work start
+openclaw-cn browser --browser-profile work open https://example.com
 ```
 
 ---
 
 ## Chrome 扩展中继（控制现有标签页）
 
-Moltbot 还可以通过 Chrome 扩展控制您**现有的 Chrome 标签页**（而不是启动独立浏览器）。
+Openclaw 还可以通过 Chrome 扩展控制您**现有的 Chrome 标签页**（而不是启动独立浏览器）。
 
 详细指南：[Chrome 扩展](/tools/chrome-extension)
 
@@ -169,14 +169,14 @@ Moltbot 还可以通过 Chrome 扩展控制您**现有的 Chrome 标签页**（�
 
 1. 安装扩展：
 ```bash
-moltbot-cn browser extension install
+openclaw-cn browser extension install
 ```
 
 2. 加载到 Chrome：
    - 打开 `chrome://extensions`
    - 启用“开发者模式”
    - 点击“加载已解压的扩展程序”
-   - 选择 `moltbot-cn browser extension path` 输出的目录
+   - 选择 `openclaw-cn browser extension path` 输出的目录
 
 3. 使用：
    - 固定扩展图标，点击即可附加到当前标签页（图标显示 `ON`）
@@ -194,7 +194,7 @@ moltbot-cn browser extension install
 
 ## 浏览器选择
 
-本地启动时，Moltbot 按以下顺序选择：
+本地启动时，Openclaw 按以下顺序选择：
 1. Chrome
 2. Brave
 3. Edge
@@ -216,89 +216,89 @@ moltbot-cn browser extension install
 
 ```bash
 # 浏览器状态
-moltbot-cn browser status
-moltbot-cn browser start
-moltbot-cn browser stop
+openclaw-cn browser status
+openclaw-cn browser start
+openclaw-cn browser stop
 
 # 标签页管理
-moltbot-cn browser tabs              # 列出所有标签页
-moltbot-cn browser tab new           # 新建标签页
-moltbot-cn browser tab select 2      # 选择第 2 个标签页
-moltbot-cn browser tab close 2       # 关闭第 2 个标签页
-moltbot-cn browser open https://example.com  # 打开网址
+openclaw-cn browser tabs              # 列出所有标签页
+openclaw-cn browser tab new           # 新建标签页
+openclaw-cn browser tab select 2      # 选择第 2 个标签页
+openclaw-cn browser tab close 2       # 关闭第 2 个标签页
+openclaw-cn browser open https://example.com  # 打开网址
 ```
 
 ### 页面检查
 
 ```bash
 # 截图
-moltbot-cn browser screenshot              # 当前视窗
-moltbot-cn browser screenshot --full-page  # 整页截图
-moltbot-cn browser screenshot --ref 12     # 元素截图
+openclaw-cn browser screenshot              # 当前视窗
+openclaw-cn browser screenshot --full-page  # 整页截图
+openclaw-cn browser screenshot --ref 12     # 元素截图
 
 # 页面快照
-moltbot-cn browser snapshot                # AI 快照
-moltbot-cn browser snapshot --interactive  # 交互元素列表
-moltbot-cn browser snapshot --efficient    # 精简模式
+openclaw-cn browser snapshot                # AI 快照
+openclaw-cn browser snapshot --interactive  # 交互元素列表
+openclaw-cn browser snapshot --efficient    # 精简模式
 
 # 调试信息
-moltbot-cn browser console --level error   # 控制台错误
-moltbot-cn browser errors --clear          # 页面错误
-moltbot-cn browser requests --filter api   # 网络请求
-moltbot-cn browser pdf                     # 导出 PDF
+openclaw-cn browser console --level error   # 控制台错误
+openclaw-cn browser errors --clear          # 页面错误
+openclaw-cn browser requests --filter api   # 网络请求
+openclaw-cn browser pdf                     # 导出 PDF
 ```
 
 ### 页面操作
 
 ```bash
 # 导航
-moltbot-cn browser navigate https://example.com
-moltbot-cn browser resize 1280 720
+openclaw-cn browser navigate https://example.com
+openclaw-cn browser resize 1280 720
 
 # 交互（需先获取 snapshot 中的 ref）
-moltbot-cn browser click 12              # 点击元素
-moltbot-cn browser click 12 --double     # 双击
-moltbot-cn browser type 23 "你好"        # 输入文本
-moltbot-cn browser type 23 "你好" --submit  # 输入并提交
-moltbot-cn browser press Enter           # 按键
-moltbot-cn browser hover 44              # 悬停
-moltbot-cn browser select 9 "选项A"      # 选择下拉框
+openclaw-cn browser click 12              # 点击元素
+openclaw-cn browser click 12 --double     # 双击
+openclaw-cn browser type 23 "你好"        # 输入文本
+openclaw-cn browser type 23 "你好" --submit  # 输入并提交
+openclaw-cn browser press Enter           # 按键
+openclaw-cn browser hover 44              # 悬停
+openclaw-cn browser select 9 "选项A"      # 选择下拉框
 
 # 等待
-moltbot-cn browser wait --text "完成"    # 等待文本出现
-moltbot-cn browser wait "#main"          # 等待元素可见
-moltbot-cn browser wait --load networkidle  # 等待网络空闲
+openclaw-cn browser wait --text "完成"    # 等待文本出现
+openclaw-cn browser wait "#main"          # 等待元素可见
+openclaw-cn browser wait --load networkidle  # 等待网络空闲
 
 # 文件
-moltbot-cn browser upload /tmp/file.pdf  # 上传文件
-moltbot-cn browser download e12 /tmp/report.pdf  # 下载
+openclaw-cn browser upload /tmp/file.pdf  # 上传文件
+openclaw-cn browser download e12 /tmp/report.pdf  # 下载
 ```
 
 ### 状态管理
 
 ```bash
 # Cookies
-moltbot-cn browser cookies               # 查看 cookies
-moltbot-cn browser cookies clear         # 清除 cookies
+openclaw-cn browser cookies               # 查看 cookies
+openclaw-cn browser cookies clear         # 清除 cookies
 
 # 本地存储
-moltbot-cn browser storage local get
-moltbot-cn browser storage local set theme dark
-moltbot-cn browser storage local clear
+openclaw-cn browser storage local get
+openclaw-cn browser storage local set theme dark
+openclaw-cn browser storage local clear
 
 # 环境设置
-moltbot-cn browser set offline on        # 离线模式
-moltbot-cn browser set media dark        # 深色模式
-moltbot-cn browser set timezone Asia/Shanghai  # 时区
-moltbot-cn browser set locale zh-CN      # 语言
-moltbot-cn browser set device "iPhone 14"  # 设备模拟
+openclaw-cn browser set offline on        # 离线模式
+openclaw-cn browser set media dark        # 深色模式
+openclaw-cn browser set timezone Asia/Shanghai  # 时区
+openclaw-cn browser set locale zh-CN      # 语言
+openclaw-cn browser set device "iPhone 14"  # 设备模拟
 ```
 
 ---
 
 ## 快照和引用 (ref)
 
-Moltbot 支持两种快照模式：
+Openclaw 支持两种快照模式：
 
 | 模式 | 命令 | 引用格式 | 适用场景 |
 |------|------|----------|----------|
@@ -306,9 +306,9 @@ Moltbot 支持两种快照模式：
 | 角色快照 | `snapshot --interactive` | `e12` | 交互元素列表 |
 
 **使用流程：**
-1. 获取快照：`moltbot-cn browser snapshot`
+1. 获取快照：`openclaw-cn browser snapshot`
 2. 找到目标元素的 ref
-3. 执行操作：`moltbot-cn browser click 12`
+3. 执行操作：`openclaw-cn browser click 12`
 
 **注意：** ref 在页面导航后会失效，需要重新获取快照。
 
@@ -318,15 +318,15 @@ Moltbot 支持两种快照模式：
 
 当操作失败时（如“元素不可见”、“被遮挡”）：
 
-1. 获取交互元素列表：`moltbot-cn browser snapshot --interactive`
-2. 高亮显示目标元素：`moltbot-cn browser highlight e12`
-3. 查看页面错误：`moltbot-cn browser errors --clear`
-4. 查看网络请求：`moltbot-cn browser requests --filter api`
+1. 获取交互元素列表：`openclaw-cn browser snapshot --interactive`
+2. 高亮显示目标元素：`openclaw-cn browser highlight e12`
+3. 查看页面错误：`openclaw-cn browser errors --clear`
+4. 查看网络请求：`openclaw-cn browser requests --filter api`
 5. 录制跟踪：
    ```bash
-   moltbot-cn browser trace start
+   openclaw-cn browser trace start
    # 重现问题
-   moltbot-cn browser trace stop  # 输出跟踪文件路径
+   openclaw-cn browser trace stop  # 输出跟踪文件路径
    ```
 
 ---

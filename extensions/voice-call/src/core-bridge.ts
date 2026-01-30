@@ -88,7 +88,7 @@ function findPackageRoot(startDir: string, name: string): string | null {
 
 function resolveClawdbotRoot(): string {
   if (coreRootCache) return coreRootCache;
-  const override = process.env.CLAWDBOT_ROOT?.trim();
+  const override = process.env.OPENCLAW_ROOT?.trim();
   if (override) {
     coreRootCache = override;
     return override;
@@ -115,7 +115,7 @@ function resolveClawdbotRoot(): string {
   }
 
   throw new Error(
-    "Unable to resolve Clawdbot root. Set CLAWDBOT_ROOT to the package root.",
+    "Unable to resolve Clawdbot root. Set OPENCLAW_ROOT to the package root.",
   );
 }
 

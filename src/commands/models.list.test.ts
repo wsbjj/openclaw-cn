@@ -17,8 +17,8 @@ const discoverAuthStorage = vi.fn().mockReturnValue({});
 const discoverModels = vi.fn();
 
 vi.mock("../config/config.js", () => ({
-  CONFIG_PATH_CLAWDBOT: "/tmp/clawdbot.json",
-  STATE_DIR_CLAWDBOT: "/tmp/clawdbot-state",
+  CONFIG_PATH_OPENCLAW: "/tmp/openclaw.json",
+  STATE_DIR_OPENCLAW: "/tmp/clawdbot-state",
   loadConfig,
 }));
 

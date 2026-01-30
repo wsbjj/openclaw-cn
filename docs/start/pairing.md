@@ -29,14 +29,14 @@ read_when:
 ### 批准发送者
 
 ```bash
-moltbot-cn pairing list telegram
-moltbot-cn pairing approve telegram <CODE>
+openclaw-cn pairing list telegram
+openclaw-cn pairing approve telegram <CODE>
 ```
 
 支持的通道：`telegram`、`whatsapp`、`signal`、`imessage`、`discord`、`slack`。
 ### 状态存储位置
 
-存储在 `~/.clawdbot/credentials/` 下：
+存储在 `~/.openclaw/credentials/` 下：
 - 待处理请求：`<channel>-pairing.json`
 - 已批准白名单存储：`<channel>-allowFrom.json`
 
@@ -51,20 +51,20 @@ moltbot-cn pairing approve telegram <CODE>
 ### 批准节点设备
 
 ```bash
-moltbot-cn devices list
-moltbot-cn devices approve <requestId>
-moltbot-cn devices reject <requestId>
+openclaw-cn devices list
+openclaw-cn devices approve <requestId>
+openclaw-cn devices reject <requestId>
 ```
 
 ### 状态存储位置
 
-存储在 `~/.clawdbot/devices/` 下：
+存储在 `~/.openclaw/devices/` 下：
 - `pending.json`（短期存在；待处理请求会过期）
 - `paired.json`（已配对设备 + 令牌）
 
 ### 注意
 
-- 旧版 `node.pair.*` API（CLI：`moltbot-cn nodes pending/approve`）是一个
+- 旧版 `node.pair.*` API（CLI：`openclaw-cn nodes pending/approve`）是一个
   单独的网关拥有的配对存储。WS 节点仍需要设备配对。
 
 ## 相关文档

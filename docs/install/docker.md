@@ -44,16 +44,16 @@ Docker 是 **可选的**。仅在您想要容器化网关或验证 Docker 流程
 - 生成网关令牌并写入 `.env`
 
 可选环境变量：
-- `CLAWDBOT_DOCKER_APT_PACKAGES` — 在构建期间安装额外的 apt 包
-- `CLAWDBOT_EXTRA_MOUNTS` — 添加额外的主机绑定挂载
-- `CLAWDBOT_HOME_VOLUME` — 在命名卷中持久化 `/home/node`
+- `OPENCLAW_DOCKER_APT_PACKAGES` — 在构建期间安装额外的 apt 包
+- `OPENCLAW_EXTRA_MOUNTS` — 添加额外的主机绑定挂载
+- `OPENCLAW_HOME_VOLUME` — 在命名卷中持久化 `/home/node`
 
 完成后：
 - 在浏览器中打开 `http://127.0.0.1:18789/`。
 - 将令牌粘贴到控制 UI（设置 → 令牌）。
 
 它在主机上写入配置/工作空间：
-- `~/.clawdbot/`
+- `~/.openclaw/`
 - `~/clawd`
 
 在 VPS 上运行？详见 [Hetzner (Docker VPS)](/platforms/hetzner)。
@@ -69,62 +69,62 @@ docker compose up -d clawdbot-gateway
 ### 额外挂载（可选）
 
 如果您想将额外的主机目录挂载到容器中，在运行 `docker-setup.sh` 之前设置
-`CLAWDBOT_EXTRA_MOUNTS`。这接受逗号分隔的 Docker 绑定挂载列表，并通过生成
+`OPENCLAW_EXTRA_MOUNTS`。这接受逗号分隔的 Docker 绑定挂载列表，并通过生成
 `docker-compose.extra.yml` 将它们应用到 `clawdbot-gateway` 和 `clawdbot-cli`。
 
 示例：
 
 ```bash
-export CLAWDBOT_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
+export OPENCLAW_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
 ./docker-setup.sh
 ```
 
 注意：
 - 在 macOS/Windows 上，路径必须与 Docker Desktop 共享。
-- 如果您编辑 `CLAWDBOT_EXTRA_MOUNTS`，重新运行 `docker-setup.sh` 以重新生成额外的 compose 文件。
+- 如果您编辑 `OPENCLAW_EXTRA_MOUNTS`，重新运行 `docker-setup.sh` 以重新生成额外的 compose 文件。
 - `docker-compose.extra.yml` 是生成的。不要手动编辑它。
 
 ### 持久化整个容器 home（可选）
 
-如果您希望 `/home/node` 在容器重建后持久化，通过 `CLAWDBOT_HOME_VOLUME` 设置命名卷。
+如果您希望 `/home/node` 在容器重建后持久化，通过 `OPENCLAW_HOME_VOLUME` 设置命名卷。
 这会创建一个 Docker 卷并将其挂载到 `/home/node`，同时保留标准的配置/工作空间绑定挂载。
-这里使用命名卷（不是绑定路径）；对于绑定挂载，使用 `CLAWDBOT_EXTRA_MOUNTS`。
+这里使用命名卷（不是绑定路径）；对于绑定挂载，使用 `OPENCLAW_EXTRA_MOUNTS`。
 
 示例：
 
 ```bash
-export CLAWDBOT_HOME_VOLUME="clawdbot_home"
+export OPENCLAW_HOME_VOLUME="clawdbot_home"
 ./docker-setup.sh
 ```
 
 您可以将其与额外挂载结合：
 
 ```bash
-export CLAWDBOT_HOME_VOLUME="clawdbot_home"
-export CLAWDBOT_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
+export OPENCLAW_HOME_VOLUME="clawdbot_home"
+export OPENCLAW_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
 ./docker-setup.sh
 ```
 
 注意：
-- 如果您更改 `CLAWDBOT_HOME_VOLUME`，重新运行 `docker-setup.sh` 以重新生成额外的 compose 文件。
+- 如果您更改 `OPENCLAW_HOME_VOLUME`，重新运行 `docker-setup.sh` 以重新生成额外的 compose 文件。
 - 命名卷会持久化，直到使用 `docker volume rm <name>` 删除。
 
 ### 安装额外的 apt 包（可选）
 
 如果您需要镜像内的系统包（例如，构建工具或媒体库），在运行 `docker-setup.sh` 之前
-设置 `CLAWDBOT_DOCKER_APT_PACKAGES`。这会在镜像构建期间安装这些包，因此即使容器被删除
+设置 `OPENCLAW_DOCKER_APT_PACKAGES`。这会在镜像构建期间安装这些包，因此即使容器被删除
 它们也会持久化。
 
 示例：
 
 ```bash
-export CLAWDBOT_DOCKER_APT_PACKAGES="ffmpeg build-essential"
+export OPENCLAW_DOCKER_APT_PACKAGES="ffmpeg build-essential"
 ./docker-setup.sh
 ```
 
 注意：
 - 这接受空格分隔的 apt 包名列表。
-- 如果您更改 `CLAWDBOT_DOCKER_APT_PACKAGES`，重新运行 `docker-setup.sh` 以重建镜像。
+- 如果您更改 `OPENCLAW_DOCKER_APT_PACKAGES`，重新运行 `docker-setup.sh` 以重建镜像。
 
 ### 更快的重建（推荐）
 
@@ -183,7 +183,7 @@ docker compose run --rm clawdbot-cli channels add --channel discord --token "<to
 ### 健康检查
 
 ```bash
-docker compose exec clawdbot-gateway node dist/index.js health --token "$CLAWDBOT_GATEWAY_TOKEN"
+docker compose exec clawdbot-gateway node dist/index.js health --token "$OPENCLAW_GATEWAY_TOKEN"
 ```
 
 ### E2E 冒烟测试（Docker）
@@ -201,7 +201,7 @@ pnpm test:docker:qr
 ### 注意
 
 - 网关绑定默认为 `lan` 用于容器使用。
-- 网关容器是会话的权威来源（`~/.clawdbot/agents/<agentId>/sessions/`）。
+- 网关容器是会话的权威来源（`~/.openclaw/agents/<agentId>/sessions/`）。
 
 ## 代理沙箱（主机网关 + Docker 工具）
 
@@ -235,7 +235,7 @@ pnpm test:docker:qr
 
 - 镜像：`clawdbot-sandbox:bookworm-slim`
 - 每个代理一个容器
-- 代理工作空间访问：`workspaceAccess: "none"`（默认）使用 `~/.clawdbot/sandboxes`
+- 代理工作空间访问：`workspaceAccess: "none"`（默认）使用 `~/.openclaw/sandboxes`
   - `"ro"` 保持沙箱工作空间在 `/workspace` 并以只读方式挂载代理工作空间在 `/agent`（禁用 `write`/`edit`/`apply_patch`）
   - `"rw"` 以读写方式挂载代理工作空间在 `/workspace`
 - 自动清理：空闲 > 24 小时 或 存在时间 > 7 天
@@ -260,7 +260,7 @@ Clawdbot 在 `setupCommand`（或 docker 配置）更改时自动重建容器，
         mode: "non-main", // off | non-main | all
         scope: "agent", // session | agent | shared（默认为 agent）
         workspaceAccess: "none", // none | ro | rw
-        workspaceRoot: "~/.clawdbot/sandboxes",
+        workspaceRoot: "~/.openclaw/sandboxes",
         docker: {
           image: "clawdbot-sandbox:bookworm-slim",
           workdir: "/workspace",
@@ -426,7 +426,7 @@ docker build -t my-clawdbot-sbx -f Dockerfile.sandbox .
 
 ## 故障排除
 
-- 镜像缺失：使用 [`scripts/sandbox-setup.sh`](https://github.com/jiulingyun/moltbot-cn/blob/main/scripts/sandbox-setup.sh) 构建或设置 `agents.defaults.sandbox.docker.image`。
+- 镜像缺失：使用 [`scripts/sandbox-setup.sh`](https://github.com/jiulingyun/openclaw-cn/blob/main/scripts/sandbox-setup.sh) 构建或设置 `agents.defaults.sandbox.docker.image`。
 - 容器未运行：它会按需自动创建每个会话。
 - 沙箱中的权限错误：将 `docker.user` 设置为与挂载的工作空间所有权匹配的 UID:GID（或 chown 工作空间文件夹）。
 - 找不到自定义工具：Clawdbot 使用 `sh -lc`（登录 shell）运行命令，这会 source `/etc/profile` 并可能重置 PATH。设置 `docker.env.PATH` 以在前面添加您的自定义工具路径（例如，`/custom/bin:/usr/local/share/npm-global/bin`），或在 Dockerfile 中的 `/etc/profile.d/` 下添加脚本。

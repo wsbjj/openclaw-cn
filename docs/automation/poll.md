@@ -16,19 +16,19 @@ read_when:
 
 ```bash
 # WhatsApp
-moltbot-cn message poll --target +15555550123 \
+openclaw-cn message poll --target +15555550123 \
   --poll-question "Lunch today?" --poll-option "Yes" --poll-option "No" --poll-option "Maybe"
-moltbot-cn message poll --target 123456789@g.us \
+openclaw-cn message poll --target 123456789@g.us \
   --poll-question "Meeting time?" --poll-option "10am" --poll-option "2pm" --poll-option "4pm" --poll-multi
 
 # Discord
-moltbot-cn message poll --channel discord --target channel:123456789 \
+openclaw-cn message poll --channel discord --target channel:123456789 \
   --poll-question "Snack?" --poll-option "Pizza" --poll-option "Sushi"
-moltbot-cn message poll --channel discord --target channel:123456789 \
+openclaw-cn message poll --channel discord --target channel:123456789 \
   --poll-question "Plan?" --poll-option "A" --poll-option "B" --poll-duration-hours 48
 
 # MS Teams
-moltbot-cn message poll --channel msteams --target conversation:19:abc@thread.tacv2 \
+openclaw-cn message poll --channel msteams --target conversation:19:abc@thread.tacv2 \
   --poll-question "Lunch?" --poll-option "Pizza" --poll-option "Sushi"
 ```
 
@@ -60,4 +60,4 @@ Use the `message` tool with `poll` action (`to`, `pollQuestion`, `pollOption`, o
 
 Note: Discord has no “pick exactly N” mode; `pollMulti` maps to multi-select.
 Teams polls are rendered as Adaptive Cards and require the gateway to stay online
-to record votes in `~/.clawdbot/msteams-polls.json`.
+to record votes in `~/.openclaw/msteams-polls.json`.

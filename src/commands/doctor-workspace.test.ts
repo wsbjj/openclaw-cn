@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { detectLegacyWorkspaceDirs } from "./doctor-workspace.js";
 
 describe("detectLegacyWorkspaceDirs", () => {
-  it("ignores ~/clawdbot when it doesn't look like a workspace (e.g. install dir)", () => {
+  it("ignores ~/openclawot when it doesn't look like a workspace (e.g. install dir)", () => {
     const home = "/home/user";
     const workspaceDir = "/home/user/clawd";
     const candidate = path.join(home, "clawdbot");
@@ -20,7 +20,7 @@ describe("detectLegacyWorkspaceDirs", () => {
     expect(detection.legacyDirs).toEqual([]);
   });
 
-  it("flags ~/clawdbot when it contains workspace markers", () => {
+  it("flags ~/openclawot when it contains workspace markers", () => {
     const home = "/home/user";
     const workspaceDir = "/home/user/clawd";
     const candidate = path.join(home, "clawdbot");

@@ -19,9 +19,9 @@ describe("gateway tool", () => {
   it("schedules SIGUSR1 restart", async () => {
     vi.useFakeTimers();
     const kill = vi.spyOn(process, "kill").mockImplementation(() => true);
-    const previousStateDir = process.env.CLAWDBOT_STATE_DIR;
+    const previousStateDir = process.env.OPENCLAW_STATE_DIR;
     const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "clawdbot-test-"));
-    process.env.CLAWDBOT_STATE_DIR = stateDir;
+    process.env.OPENCLAW_STATE_DIR = stateDir;
 
     try {
       const tool = createClawdbotTools({
@@ -47,7 +47,7 @@ describe("gateway tool", () => {
         payload?: { kind?: string; doctorHint?: string | null };
       };
       expect(parsed.payload?.kind).toBe("restart");
-      expect(parsed.payload?.doctorHint).toBe("Run: moltbot-cn doctor --non-interactive");
+      expect(parsed.payload?.doctorHint).toBe("Run: openclaw-cn doctor --non-interactive");
 
       expect(kill).not.toHaveBeenCalled();
       await vi.runAllTimersAsync();
@@ -56,9 +56,9 @@ describe("gateway tool", () => {
       kill.mockRestore();
       vi.useRealTimers();
       if (previousStateDir === undefined) {
-        delete process.env.CLAWDBOT_STATE_DIR;
+        delete process.env.OPENCLAW_STATE_DIR;
       } else {
-        process.env.CLAWDBOT_STATE_DIR = previousStateDir;
+        process.env.OPENCLAW_STATE_DIR = previousStateDir;
       }
     }
   });

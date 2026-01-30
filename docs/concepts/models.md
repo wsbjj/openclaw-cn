@@ -35,7 +35,7 @@ Related:
 If you don’t want to hand-edit config, run the onboarding wizard:
 
 ```bash
-moltbot-cn onboard
+openclaw-cn onboard
 ```
 
 It can set up model + auth for common providers, including **OpenAI Code (Codex)
@@ -111,27 +111,27 @@ Full command behavior/config: [Slash commands](/tools/slash-commands).
 ## CLI commands
 
 ```bash
-moltbot-cn models list
-moltbot-cn models status
-moltbot-cn models set <provider/model>
-moltbot-cn models set-image <provider/model>
+openclaw-cn models list
+openclaw-cn models status
+openclaw-cn models set <provider/model>
+openclaw-cn models set-image <provider/model>
 
-moltbot-cn models aliases list
-moltbot-cn models aliases add <alias> <provider/model>
-moltbot-cn models aliases remove <alias>
+openclaw-cn models aliases list
+openclaw-cn models aliases add <alias> <provider/model>
+openclaw-cn models aliases remove <alias>
 
-moltbot-cn models fallbacks list
-moltbot-cn models fallbacks add <provider/model>
-moltbot-cn models fallbacks remove <provider/model>
-moltbot-cn models fallbacks clear
+openclaw-cn models fallbacks list
+openclaw-cn models fallbacks add <provider/model>
+openclaw-cn models fallbacks remove <provider/model>
+openclaw-cn models fallbacks clear
 
-moltbot-cn models image-fallbacks list
-moltbot-cn models image-fallbacks add <provider/model>
-moltbot-cn models image-fallbacks remove <provider/model>
-moltbot-cn models image-fallbacks clear
+openclaw-cn models image-fallbacks list
+openclaw-cn models image-fallbacks add <provider/model>
+openclaw-cn models image-fallbacks remove <provider/model>
+openclaw-cn models image-fallbacks clear
 ```
 
-`moltbot-cn models` (no subcommand) is a shortcut for `models status`.
+`openclaw-cn models` (no subcommand) is a shortcut for `models status`.
 
 ### `models list`
 
@@ -159,12 +159,12 @@ Preferred Anthropic auth is the Claude Code CLI setup-token (run anywhere; paste
 
 ```bash
 claude setup-token
-moltbot-cn models status
+openclaw-cn models status
 ```
 
 ## Scanning (OpenRouter free models)
 
-`moltbot-cn models scan` inspects OpenRouter’s **free model catalog** and can
+`openclaw-cn models scan` inspects OpenRouter’s **free model catalog** and can
 optionally probe models for tool and image support.
 
 Key flags:
@@ -198,5 +198,5 @@ mode, pass `--yes` to accept defaults.
 ## Models registry (`models.json`)
 
 Custom providers in `models.providers` are written into `models.json` under the
-agent directory (default `~/.clawdbot/agents/<agentId>/models.json`). This file
+agent directory (default `~/.openclaw/agents/<agentId>/models.json`). This file
 is merged by default unless `models.mode` is set to `replace`.

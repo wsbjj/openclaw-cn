@@ -24,6 +24,6 @@
     }
   },
   "devDependencies": {
-    "clawdbot": "workspace:moltbot-cn@*"
+    "clawdbot": "workspace:openclaw-cn@*"
   }
 }

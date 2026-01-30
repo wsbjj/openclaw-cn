@@ -2,8 +2,8 @@ import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
   ClawdbotConfig,
-} from "moltbot-cn/plugin-sdk";
-import { jsonResult, readStringParam } from "moltbot-cn/plugin-sdk";
+} from "openclaw-cn/plugin-sdk";
+import { jsonResult, readStringParam } from "openclaw-cn/plugin-sdk";
 
 import { listEnabledZaloAccounts } from "./accounts.js";
 import { sendMessageZalo } from "./send.js";

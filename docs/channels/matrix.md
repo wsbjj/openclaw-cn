@@ -20,13 +20,13 @@ Matrix ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-moltbot-cn plugins install @clawdbot/matrix
+openclaw-cn plugins install @clawdbot/matrix
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-moltbot-cn plugins install ./extensions/matrix
+openclaw-cn plugins install ./extensions/matrix
 ```
 
 If you choose Matrix during configure/onboarding and a git checkout is detected,
@@ -37,8 +37,8 @@ Details: [Plugins](/plugin)
 ## Setup
 
 1) Install the Matrix plugin:
-   - From npm: `moltbot-cn plugins install @clawdbot/matrix`
-   - From a local checkout: `moltbot-cn plugins install ./extensions/matrix`
+   - From npm: `openclaw-cn plugins install @clawdbot/matrix`
+   - From a local checkout: `openclaw-cn plugins install ./extensions/matrix`
 2) Create a Matrix account on a homeserver:
    - Browse hosting options at [https://matrix.org/ecosystem/hosting/](https://matrix.org/ecosystem/hosting/)
    - Or host it yourself.
@@ -61,7 +61,7 @@ Details: [Plugins](/plugin)
 
    - Replace `matrix.example.org` with your homeserver URL.
    - Or set `channels.matrix.userId` + `channels.matrix.password`: Clawdbot calls the same
-     login endpoint, stores the access token in `~/.clawdbot/credentials/matrix/credentials.json`,
+     login endpoint, stores the access token in `~/.openclaw/credentials/matrix/credentials.json`,
      and reuses it on next start.
 4) Configure credentials:
    - Env: `MATRIX_HOMESERVER`, `MATRIX_ACCESS_TOKEN` (or `MATRIX_USER_ID` + `MATRIX_PASSWORD`)
@@ -123,7 +123,7 @@ Enable with `channels.matrix.encryption: true`:
   `node node_modules/@matrix-org/matrix-sdk-crypto-nodejs/download-lib.js`.
 
 Crypto state is stored per account + access token in
-`~/.clawdbot/matrix/accounts/<account>/<homeserver>__<user>/<token-hash>/crypto/`
+`~/.openclaw/matrix/accounts/<account>/<homeserver>__<user>/<token-hash>/crypto/`
 (SQLite database). Sync state lives alongside it in `bot-storage.json`.
 If the access token (device) changes, a new store is created and the bot must be
 re-verified for encrypted rooms.
@@ -142,8 +142,8 @@ Once verified, the bot can decrypt messages in encrypted rooms.
 
 - Default: `channels.matrix.dm.policy = "pairing"`. Unknown senders get a pairing code.
 - Approve via:
-  - `moltbot-cn pairing list matrix`
-  - `moltbot-cn pairing approve matrix <CODE>`
+  - `openclaw-cn pairing list matrix`
+  - `openclaw-cn pairing approve matrix <CODE>`
 - Public DMs: `channels.matrix.dm.policy="open"` plus `channels.matrix.dm.allowFrom=["*"]`.
 - `channels.matrix.dm.allowFrom` accepts user IDs or display names. The wizard resolves display names to user IDs when directory search is available.
 

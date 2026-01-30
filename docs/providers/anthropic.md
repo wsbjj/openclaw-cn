@@ -18,11 +18,11 @@ Create your API key in the Anthropic Console.
 ### CLI setup
 
 ```bash
-moltbot-cn onboard
+openclaw-cn onboard
 # choose: Anthropic API key
 
 # or non-interactive
-moltbot-cn onboard --anthropic-api-key "$ANTHROPIC_API_KEY"
+openclaw-cn onboard --anthropic-api-key "$ANTHROPIC_API_KEY"
 ```
 
 ### Config snippet
@@ -73,20 +73,20 @@ claude setup-token
 Paste the token into Clawdbot (wizard: **Anthropic token (paste setup-token)**), or run it on the gateway host:
 
 ```bash
-moltbot-cn models auth setup-token --provider anthropic
+openclaw-cn models auth setup-token --provider anthropic
 ```
 
 If you generated the token on a different machine, paste it:
 
 ```bash
-moltbot-cn models auth paste-token --provider anthropic
+openclaw-cn models auth paste-token --provider anthropic
 ```
 
 ### CLI setup
 
 ```bash
 # Reuse Claude Code CLI OAuth credentials if already logged in
-moltbot-cn onboard --auth-choice claude-cli
+openclaw-cn onboard --auth-choice claude-cli
 ```
 
 ### Config snippet
@@ -99,7 +99,7 @@ moltbot-cn onboard --auth-choice claude-cli
 
 ## Notes
 
-- Generate the setup-token with `claude setup-token` and paste it, or run `moltbot-cn models auth setup-token` on the gateway host.
+- Generate the setup-token with `claude setup-token` and paste it, or run `openclaw-cn models auth setup-token` on the gateway host.
 - If you see “OAuth token refresh failed …” on a Claude subscription, re-auth with a setup-token or resync Claude Code CLI OAuth on the gateway host. See [/gateway/troubleshooting#oauth-token-refresh-failed-anthropic-claude-subscription](/gateway/troubleshooting#oauth-token-refresh-failed-anthropic-claude-subscription).
 - Clawdbot writes `auth.profiles["anthropic:claude-cli"].mode` as `"oauth"` so the profile
   accepts both OAuth and setup-token credentials. Older configs using `"token"` are
@@ -112,19 +112,19 @@ moltbot-cn onboard --auth-choice claude-cli
 - Claude subscription auth can expire or be revoked. Re-run `claude setup-token`
   and paste it into the **gateway host**.
 - If the Claude CLI login lives on a different machine, use
-  `moltbot-cn models auth paste-token --provider anthropic` on the gateway host.
+  `openclaw-cn models auth paste-token --provider anthropic` on the gateway host.
 
 **No API key found for provider "anthropic"**
 - Auth is **per agent**. New agents don’t inherit the main agent’s keys.
 - Re-run onboarding for that agent, or paste a setup-token / API key on the
-  gateway host, then verify with `moltbot-cn models status`.
+  gateway host, then verify with `openclaw-cn models status`.
 
 **No credentials found for profile `anthropic:default` or `anthropic:claude-cli`**
-- Run `moltbot-cn models status` to see which auth profile is active.
+- Run `openclaw-cn models status` to see which auth profile is active.
 - Re-run onboarding, or paste a setup-token / API key for that profile.
 
 **No available auth profile (all in cooldown/unavailable)**
-- Check `moltbot-cn models status --json` for `auth.unusableProfiles`.
+- Check `openclaw-cn models status --json` for `auth.unusableProfiles`.
 - Add another Anthropic profile or wait for cooldown.
 
 More: [/gateway/troubleshooting](/gateway/troubleshooting) and [/help/faq](/help/faq).

@@ -31,7 +31,7 @@ You can change the filename via hook config.
 
 ## Configuration
 
-Add this to your config (`~/.clawdbot/clawdbot.json`):
+Add this to your config (`~/.openclaw/openclaw.json`):
 
 ```json
 {
@@ -67,5 +67,5 @@ Add this to your config (`~/.clawdbot/clawdbot.json`):
 ## Enable
 
 ```bash
-moltbot-cn hooks enable soul-evil
+openclaw-cn hooks enable soul-evil
 ```

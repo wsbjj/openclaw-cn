@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "moltbot-cn/plugin-sdk";
+import type { MSTeamsConfig } from "openclaw-cn/plugin-sdk";
 
 export type MSTeamsCredentials = {
   appId: string;

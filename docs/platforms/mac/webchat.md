@@ -20,7 +20,7 @@ agent (with a session switcher for other sessions).
   ```bash
   dist/Clawdbot.app/Contents/MacOS/Clawdbot --webchat
   ```
-- Logs: `./scripts/clawlog.sh` (subsystem `com.clawdbot`, category `WebChatSwiftUI`).
+- Logs: `./scripts/clawlog.sh` (subsystem `com.openclaw`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 

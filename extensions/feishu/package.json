@@ -19,10 +19,10 @@
     }
   },
   "devDependencies": {
-    "clawdbot": "workspace:moltbot-cn@*",
-    "moltbot-cn": "workspace:*"
+    "clawdbot": "workspace:openclaw-cn@*",
+    "openclaw-cn": "workspace:*"
   },
   "peerDependencies": {
-    "moltbot-cn": "*"
+    "openclaw-cn": "*"
   }
 }

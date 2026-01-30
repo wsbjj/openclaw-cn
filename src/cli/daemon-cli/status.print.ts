@@ -100,7 +100,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     }
     defaultRuntime.error(
       warnText(
-        `建议: 运行 "${formatCliCommand("moltbot-cn doctor")}" (或 "${formatCliCommand("moltbot-cn doctor --repair")}").`,
+        `建议: 运行 "${formatCliCommand("openclaw-cn doctor")}" (或 "${formatCliCommand("openclaw-cn doctor --repair")}").`,
       ),
     );
   }
@@ -132,7 +132,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
       );
       defaultRuntime.error(
         errorText(
-          `修复: 从相同的 --profile / CLAWDBOT_STATE_DIR 重新运行 \`${formatCliCommand("moltbot-cn gateway install --force")}\``,
+          `修复: 从相同的 --profile / OPENCLAW_STATE_DIR 重新运行 \`${formatCliCommand("openclaw-cn gateway install --force")}\``,
         ),
       );
     }
@@ -224,14 +224,14 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
 
   if (service.runtime?.cachedLabel) {
     const env = (service.command?.environment ?? process.env) as NodeJS.ProcessEnv;
-    const labelValue = resolveGatewayLaunchAgentLabel(env.CLAWDBOT_PROFILE);
+    const labelValue = resolveGatewayLaunchAgentLabel(env.OPENCLAW_PROFILE);
     defaultRuntime.error(
       errorText(
         `LaunchAgent 标签已缓存但 plist 缺失。使用以下命令清除: launchctl bootout gui/$UID/${labelValue}`,
       ),
     );
     defaultRuntime.error(
-      errorText(`Then reinstall: ${formatCliCommand("moltbot-cn gateway install")}`),
+      errorText(`Then reinstall: ${formatCliCommand("openclaw-cn gateway install")}`),
     );
     spacer();
   }
@@ -265,7 +265,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     }
     if (process.platform === "linux") {
       const env = (service.command?.environment ?? process.env) as NodeJS.ProcessEnv;
-      const unit = resolveGatewaySystemdServiceName(env.CLAWDBOT_PROFILE);
+      const unit = resolveGatewaySystemdServiceName(env.OPENCLAW_PROFILE);
       defaultRuntime.error(
         errorText(`Logs: journalctl --user -u ${unit}.service -n 200 --no-pager`),
       );
@@ -284,7 +284,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     for (const svc of legacyServices) {
       defaultRuntime.error(`- ${errorText(svc.label)} (${svc.detail})`);
     }
-    defaultRuntime.error(errorText(`Cleanup: ${formatCliCommand("moltbot-cn doctor")}`));
+    defaultRuntime.error(errorText(`Cleanup: ${formatCliCommand("openclaw-cn doctor")}`));
     spacer();
   }
 
@@ -313,6 +313,6 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     spacer();
   }
 
-  defaultRuntime.log(`${label("问题排查:")} run ${formatCliCommand("moltbot-cn status")}`);
+  defaultRuntime.log(`${label("问题排查:")} run ${formatCliCommand("openclaw-cn status")}`);
   defaultRuntime.log(`${label("故障排除:")} https://docs.clawd.bot/troubleshooting`);
 }

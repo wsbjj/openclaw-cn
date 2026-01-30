@@ -8,7 +8,7 @@ read_when:
 
 # 自定义 AI 供应商配置
 
-Moltbot 支持多种 AI 供应商，包括内置供应商和自定义供应商。本文档介绍如何配置自定义 AI 供应商和模型。
+Openclaw 支持多种 AI 供应商，包括内置供应商和自定义供应商。本文档介绍如何配置自定义 AI 供应商和模型。
 
 ---
 
@@ -16,7 +16,7 @@ Moltbot 支持多种 AI 供应商，包括内置供应商和自定义供应商�
 
 ### 配置方式
 
-配置文件位于 `~/.moltbot/moltbot.json`。
+配置文件位于 `~/.openclaw/openclaw.json`。
 
 **最简配置示例**（以硅基流动为例）：
 
@@ -52,7 +52,7 @@ Moltbot 支持多种 AI 供应商，包括内置供应商和自定义供应商�
 
 ## API 协议支持
 
-Moltbot 支持两种主流 API 协议：
+Openclaw 支持两种主流 API 协议：
 
 | 协议 | `api` 值 | 兼容服务 |
 |------|----------|----------|
@@ -222,7 +222,7 @@ DeepSeek 官方 API：
 
 ### Ollama
 
-Ollama 是最简单的本地模型运行方式。Moltbot 可以自动发现 Ollama 中的模型。
+Ollama 是最简单的本地模型运行方式。Openclaw 可以自动发现 Ollama 中的模型。
 
 **安装和使用：**
 
@@ -239,7 +239,7 @@ ollama pull qwen2.5:32b
 ollama serve
 ```
 
-**配置 Moltbot：**
+**配置 Openclaw：**
 
 ```json5
 {
@@ -251,7 +251,7 @@ ollama serve
 }
 ```
 
-Moltbot 会自动发现本地 Ollama 中支持工具调用的模型。
+Openclaw 会自动发现本地 Ollama 中支持工具调用的模型。
 
 **手动配置（可选）：**
 
@@ -377,44 +377,44 @@ vLLM 是高性能的本地推理服务器：
 
 ```bash
 # 查看已配置的模型
-moltbot-cn models list
+openclaw-cn models list
 
 # 查看所有可用模型
-moltbot-cn models list --all
+openclaw-cn models list --all
 
 # 查看模型状态
-moltbot-cn models status
+openclaw-cn models status
 ```
 
 ### 设置默认模型
 
 ```bash
 # 设置主模型
-moltbot-cn models set <provider/model>
+openclaw-cn models set <provider/model>
 
 # 设置图像模型
-moltbot-cn models set-image <provider/model>
+openclaw-cn models set-image <provider/model>
 ```
 
 ### 管理回退模型
 
 ```bash
 # 添加回退模型
-moltbot-cn models fallbacks add <provider/model>
+openclaw-cn models fallbacks add <provider/model>
 
 # 查看回退列表
-moltbot-cn models fallbacks list
+openclaw-cn models fallbacks list
 
 # 清空回退
-moltbot-cn models fallbacks clear
+openclaw-cn models fallbacks clear
 ```
 
 ### 配置命令
 
 ```bash
 # 直接设置供应商配置
-moltbot-cn config set models.providers.siliconflow.baseUrl "https://api.siliconflow.cn/v1"
-moltbot-cn config set models.providers.siliconflow.apiKey "sk-xxx"
+openclaw-cn config set models.providers.siliconflow.baseUrl "https://api.siliconflow.cn/v1"
+openclaw-cn config set models.providers.siliconflow.apiKey "sk-xxx"
 ```
 
 ---
@@ -460,7 +460,7 @@ models: [
 
 1. 检查模型 ID 是否正确
 2. 确认 API 协议类型（`openai-completions` 或 `anthropic-messages`）
-3. 查看日志：`moltbot-cn logs --follow`
+3. 查看日志：`openclaw-cn logs --follow`
 
 ---
 

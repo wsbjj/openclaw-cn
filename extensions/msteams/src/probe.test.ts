@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { MSTeamsConfig } from "moltbot-cn/plugin-sdk";
+import type { MSTeamsConfig } from "openclaw-cn/plugin-sdk";
 
 const hostMockState = vi.hoisted(() => ({
   tokenError: null as Error | null,

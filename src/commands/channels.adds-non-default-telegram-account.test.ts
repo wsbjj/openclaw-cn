@@ -50,7 +50,7 @@ const runtime: RuntimeEnv = {
 };
 
 const baseSnapshot = {
-  path: "/tmp/clawdbot.json",
+  path: "/tmp/openclaw.json",
   exists: true,
   raw: "{}",
   parsed: {},
@@ -370,7 +370,7 @@ describe("channels command", () => {
     });
     expect(lines.join("\n")).toMatch(/Warnings:/);
     expect(lines.join("\n")).toMatch(/Message Content Intent is disabled/i);
-    expect(lines.join("\n")).toMatch(/Run: moltbot-cn doctor/);
+    expect(lines.join("\n")).toMatch(/Run: openclaw-cn doctor/);
   });
 
   it("surfaces Discord permission audit issues in channels status output", () => {

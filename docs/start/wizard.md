@@ -13,17 +13,17 @@ read_when:
 主要入口点：
 
 ```bash
-moltbot-cn onboard
+openclaw-cn onboard
 ```
 
 后续重新配置：
 
 ```bash
-moltbot-cn configure
+openclaw-cn configure
 ```
 
 推荐：设置一个 Brave Search API 密钥，以便代理可以使用 `web_search`
-（`web_fetch` 不需要密钥即可工作）。最简单的路径：`moltbot-cn configure --section web`
+（`web_fetch` 不需要密钥即可工作）。最简单的路径：`openclaw-cn configure --section web`
 它会存储 `tools.web.search.apiKey`。文档：[Web 工具](/tools/web)。
 
 ## 快速启动 vs 高级
@@ -57,18 +57,18 @@ moltbot-cn configure
 要添加更多隔离代理（独立工作区 + 会话 + 认证），请使用：
 
 ```bash
-moltbot-cn agents add <name>
+openclaw-cn agents add <name>
 ```
 
 提示：`--json` **不**表示非交互模式。脚本请使用 `--non-interactive`（和 `--workspace`）。
 ## 流程详情（本地）
 
 1) **现有配置检测**
-   - 如果 `~/.clawdbot/clawdbot.json` 存在，选择 **保留 / 修改 / 重置**。
+   - 如果 `~/.openclaw/openclaw.json` 存在，选择 **保留 / 修改 / 重置**。
    - 重新运行向导**不会**清除任何内容，除非您明确选择 **重置**
      （或传递 `--reset`）。
    - 如果配置无效或包含旧密钥，向导会停止并要求
-     您在继续之前运行 `moltbot-cn doctor`。
+     您在继续之前运行 `openclaw-cn doctor`。
    - 重置使用 `trash`（从不使用 `rm`）并提供范围：
      - 仅配置
      - 配置 + 凭据 + 会话
@@ -81,7 +81,7 @@ moltbot-cn agents add <name>
    - **OpenAI Code（Codex）订阅（Codex CLI）**：如果 `~/.codex/auth.json` 存在，向导可以重用它。
    - **OpenAI Code（Codex）订阅（OAuth）**：浏览器流程；粘贴 `code#state`。
      - 当模型未设置或为 `openai/*` 时，将 `agents.defaults.model` 设置为 `openai-codex/gpt-5.2`。
-   - **OpenAI API 密钥**：如果存在则使用 `OPENAI_API_KEY` 或提示输入密钥，然后保存到 `~/.clawdbot/.env` 以便 launchd 可以读取。
+   - **OpenAI API 密钥**：如果存在则使用 `OPENAI_API_KEY` 或提示输入密钥，然后保存到 `~/.openclaw/.env` 以便 launchd 可以读取。
    - **OpenCode Zen（多模型代理）**：提示输入 `OPENCODE_API_KEY`（或 `OPENCODE_ZEN_API_KEY`，在 https://opencode.ai/auth 获取）。
    - **API 密钥**：为您存储密钥。
    - **Vercel AI 网关（多模型代理）**：提示输入 `AI_GATEWAY_API_KEY`。
@@ -96,7 +96,7 @@ moltbot-cn agents add <name>
    - **跳过**：尚未配置认证。
    - 从检测到的选项中选择默认模型（或手动输入提供者/模型）。
    - 向导运行模型检查，如果配置的模型未知或缺少认证则发出警告。
-  - OAuth 凭据位于 `~/.clawdbot/credentials/oauth.json`；认证配置文件位于 `~/.clawdbot/agents/<agentId>/agent/auth-profiles.json`（API 密钥 + OAuth）。
+  - OAuth 凭据位于 `~/.openclaw/credentials/oauth.json`；认证配置文件位于 `~/.openclaw/agents/<agentId>/agent/auth-profiles.json`（API 密钥 + OAuth）。
    - 更多详情：[/concepts/oauth](/concepts/oauth)
 
 3) **工作区**
@@ -118,7 +118,7 @@ moltbot-cn agents add <name>
   - Mattermost（插件）：机器人令牌 + 基础 URL。
    - Signal：可选 `signal-cli` 安装 + 账户配置。
    - iMessage：本地 `imsg` CLI 路径 + 数据库访问。
-  - 私信安全：默认为配对。第一次私信发送代码；通过 `moltbot-cn pairing approve <channel> <code>` 批准或使用白名单。
+  - 私信安全：默认为配对。第一次私信发送代码；通过 `openclaw-cn pairing approve <channel> <code>` 批准或使用白名单。
 6) **守护进程安装**
    - macOS: LaunchAgent
      - 需要登录的用户会话；对于无头模式，使用自定义 LaunchDaemon（未提供）。
@@ -128,8 +128,8 @@ moltbot-cn agents add <name>
    - **运行时选择：** Node（推荐；WhatsApp/Telegram 必需）。**不推荐**使用 Bun。
 
 7) **健康检查**
-   - 启动网关（如果需要）并运行 `moltbot-cn health`。
-   - 提示：`moltbot-cn status --deep` 将网关健康探测添加到状态输出（需要可访问的网关）。
+   - 启动网关（如果需要）并运行 `openclaw-cn health`。
+   - 提示：`openclaw-cn status --deep` 将网关健康探测添加到状态输出（需要可访问的网关）。
 
 8) **技能（推荐）**
    - 读取可用技能并检查要求。
@@ -158,7 +158,7 @@ moltbot-cn agents add <name>
 
 ## 添加另一个代理
 
-使用 `moltbot-cn agents add <name>` 创建具有自己工作区、会话和认证配置文件的独立代理。不使用 `--workspace` 运行会启动向导。
+使用 `openclaw-cn agents add <name>` 创建具有自己工作区、会话和认证配置文件的独立代理。不使用 `--workspace` 运行会启动向导。
 
 它设置：
 - `agents.list[].name`
@@ -174,7 +174,7 @@ moltbot-cn agents add <name>
 使用 `--non-interactive` 自动化或脚本化入门：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice apiKey \
   --anthropic-api-key "$ANTHROPIC_API_KEY" \
@@ -190,7 +190,7 @@ moltbot-cn onboard --non-interactive \
 Gemini 示例：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice gemini-api-key \
   --gemini-api-key "$GEMINI_API_KEY" \
@@ -201,7 +201,7 @@ moltbot-cn onboard --non-interactive \
 Z.AI 示例：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice zai-api-key \
   --zai-api-key "$ZAI_API_KEY" \
@@ -212,7 +212,7 @@ moltbot-cn onboard --non-interactive \
 Vercel AI 网关示例：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice ai-gateway-api-key \
   --ai-gateway-api-key "$AI_GATEWAY_API_KEY" \
@@ -223,7 +223,7 @@ moltbot-cn onboard --non-interactive \
 Moonshot 示例：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice moonshot-api-key \
   --moonshot-api-key "$MOONSHOT_API_KEY" \
@@ -234,7 +234,7 @@ moltbot-cn onboard --non-interactive \
 Synthetic 示例：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice synthetic-api-key \
   --synthetic-api-key "$SYNTHETIC_API_KEY" \
@@ -245,7 +245,7 @@ moltbot-cn onboard --non-interactive \
 OpenCode Zen 示例：
 
 ```bash
-moltbot-cn onboard --non-interactive \
+openclaw-cn onboard --non-interactive \
   --mode local \
   --auth-choice opencode-zen \
   --opencode-zen-api-key "$OPENCODE_API_KEY" \
@@ -256,7 +256,7 @@ moltbot-cn onboard --non-interactive \
 添加代理（非交互式）示例：
 
 ```bash
-moltbot-cn agents add work \
+openclaw-cn agents add work \
   --workspace ~/clawd-work \
   --model openai/gpt-5.2 \
   --bind whatsapp:biz \
@@ -273,7 +273,7 @@ moltbot-cn agents add work \
 
 向导可以从 GitHub 发布版安装 `signal-cli`：
 - 下载适当的发布资产。
-- 将其存储在 `~/.clawdbot/tools/signal-cli/<version>/` 下。
+- 将其存储在 `~/.openclaw/tools/signal-cli/<version>/` 下。
 - 将 `channels.signal.cliPath` 写入您的配置。
 
 注意事项：
@@ -283,7 +283,7 @@ moltbot-cn agents add work \
 
 ## 向导写入的内容
 
-`~/.clawdbot/clawdbot.json` 中的典型字段：
+`~/.openclaw/openclaw.json` 中的典型字段：
 - `agents.defaults.workspace`
 - `agents.defaults.model` / `models.providers`（如果选择了 Minimax）
 - `gateway.*`（模式、绑定、认证、tailscale）
@@ -296,10 +296,10 @@ moltbot-cn agents add work \
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`moltbot-cn agents add` 写入 `agents.list[]` 和可选的 `bindings`。
+`openclaw-cn agents add` 写入 `agents.list[]` 和可选的 `bindings`。
 
-WhatsApp 凭据位于 `~/.clawdbot/credentials/whatsapp/<accountId>/` 下。
-会话存储在 `~/.clawdbot/agents/<agentId>/sessions/` 下。
+WhatsApp 凭据位于 `~/.openclaw/credentials/whatsapp/<accountId>/` 下。
+会话存储在 `~/.openclaw/agents/<agentId>/sessions/` 下。
 
 一些通道作为插件提供。当您在入门期间选择一个时，向导
 会在配置之前提示安装它（npm 或本地路径）。

@@ -10,7 +10,7 @@ import { runCommandWithRuntime } from "../cli-utils.js";
 export function registerSetupCommand(program: Command) {
   program
     .command("setup")
-    .description("初始化 ~/.clawdbot/clawdbot.json 和智能体工作区")
+    .description("初始化 ~/.openclaw/openclaw.json 和智能体工作区")
     .addHelpText(
       "after",
       () =>

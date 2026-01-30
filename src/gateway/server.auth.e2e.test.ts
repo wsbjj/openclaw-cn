@@ -49,8 +49,8 @@ describe("gateway server auth/connect", () => {
 
     test("closes silent handshakes after timeout", { timeout: 60_000 }, async () => {
       vi.useRealTimers();
-      const prevHandshakeTimeout = process.env.CLAWDBOT_TEST_HANDSHAKE_TIMEOUT_MS;
-      process.env.CLAWDBOT_TEST_HANDSHAKE_TIMEOUT_MS = "50";
+      const prevHandshakeTimeout = process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
+      process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS = "50";
       try {
         const ws = await openWs(port);
         const handshakeTimeoutMs = getHandshakeTimeoutMs();
@@ -58,15 +58,15 @@ describe("gateway server auth/connect", () => {
         expect(closed).toBe(true);
       } finally {
         if (prevHandshakeTimeout === undefined) {
-          delete process.env.CLAWDBOT_TEST_HANDSHAKE_TIMEOUT_MS;
+          delete process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
         } else {
-          process.env.CLAWDBOT_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
+          process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
         }
       }
     });
 
     test("connect (req) handshake returns hello-ok payload", async () => {
-      const { CONFIG_PATH_CLAWDBOT, STATE_DIR_CLAWDBOT } = await import("../config/config.js");
+      const { CONFIG_PATH_OPENCLAW, STATE_DIR_OPENCLAW } = await import("../config/config.js");
       const ws = await openWs(port);
 
       const res = await connectReq(ws);
@@ -78,8 +78,8 @@ describe("gateway server auth/connect", () => {
           }
         | undefined;
       expect(payload?.type).toBe("hello-ok");
-      expect(payload?.snapshot?.configPath).toBe(CONFIG_PATH_CLAWDBOT);
-      expect(payload?.snapshot?.stateDir).toBe(STATE_DIR_CLAWDBOT);
+      expect(payload?.snapshot?.configPath).toBe(CONFIG_PATH_OPENCLAW);
+      expect(payload?.snapshot?.stateDir).toBe(STATE_DIR_OPENCLAW);
 
       ws.close();
     });
@@ -208,8 +208,8 @@ describe("gateway server auth/connect", () => {
     let prevToken: string | undefined;
 
     beforeAll(async () => {
-      prevToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
-      process.env.CLAWDBOT_GATEWAY_TOKEN = "secret";
+      prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+      process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
       port = await getFreePort();
       server = await startGatewayServer(port);
     });
@@ -217,9 +217,9 @@ describe("gateway server auth/connect", () => {
     afterAll(async () => {
       await server.close();
       if (prevToken === undefined) {
-        delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+        delete process.env.OPENCLAW_GATEWAY_TOKEN;
       } else {
-        process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
       }
     });
 
@@ -282,9 +282,9 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -296,8 +296,8 @@ describe("gateway server auth/connect", () => {
         trustedProxies: ["127.0.0.1"],
       },
     } as any);
-    const prevToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
-    process.env.CLAWDBOT_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+    process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
     const port = await getFreePort();
     const server = await startGatewayServer(port);
     const ws = new WebSocket(`ws://127.0.0.1:${port}`, {
@@ -346,16 +346,16 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 
   test("allows control ui with stale device identity when device auth is disabled", async () => {
     testState.gatewayControlUi = { dangerouslyDisableDeviceAuth: true };
-    const prevToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
-    process.env.CLAWDBOT_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+    process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
     const port = await getFreePort();
     const server = await startGatewayServer(port);
     const ws = await openWs(port);
@@ -393,16 +393,16 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 
   test("rejects proxied connections without auth when proxy headers are untrusted", async () => {
     testState.gatewayAuth = { mode: "none" };
-    const prevToken = process.env.CLAWDBOT_GATEWAY_TOKEN;
-    delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+    delete process.env.OPENCLAW_GATEWAY_TOKEN;
     const port = await getFreePort();
     const server = await startGatewayServer(port);
     const ws = new WebSocket(`ws://127.0.0.1:${port}`, {
@@ -415,9 +415,9 @@ describe("gateway server auth/connect", () => {
     ws.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -451,9 +451,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -530,9 +530,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 
@@ -568,9 +568,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.CLAWDBOT_GATEWAY_TOKEN;
+      delete process.env.OPENCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.CLAWDBOT_GATEWAY_TOKEN = prevToken;
+      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 

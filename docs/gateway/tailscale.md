@@ -20,8 +20,8 @@ Tailscale provides HTTPS, routing, and (for Serve) identity headers.
 
 Set `gateway.auth.mode` to control the handshake:
 
-- `token` (default when `CLAWDBOT_GATEWAY_TOKEN` is set)
-- `password` (shared secret via `CLAWDBOT_GATEWAY_PASSWORD` or config)
+- `token` (default when `OPENCLAW_GATEWAY_TOKEN` is set)
+- `password` (shared secret via `OPENCLAW_GATEWAY_PASSWORD` or config)
 
 When `tailscale.mode = "serve"` and `gateway.auth.allowTailscale` is `true`,
 valid Serve proxy requests can authenticate via Tailscale identity headers
@@ -80,7 +80,7 @@ Note: loopback (`http://127.0.0.1:18789`) will **not** work in this mode.
 }
 ```
 
-Prefer `CLAWDBOT_GATEWAY_PASSWORD` over committing a password to disk.
+Prefer `OPENCLAW_GATEWAY_PASSWORD` over committing a password to disk.
 
 ## CLI examples
 
@@ -125,7 +125,7 @@ Then point the Gateway config at the HTTPS URL:
 And authenticate from the Gateway with the same token (prefer env):
 
 ```bash
-export CLAWDBOT_BROWSER_CONTROL_TOKEN="<token>"
+export OPENCLAW_BROWSER_CONTROL_TOKEN="<token>"
 ```
 
 Avoid Funnel for browser control endpoints unless you explicitly want public exposure.

@@ -19,7 +19,7 @@ read_when:
 
 ## 哪个浏览器配置文件？
 
-Moltbot 控制的是一个**专用的 Chrome 配置文件**（名为 `clawd`，橙色 UI）。这与您的日常浏览器完全分开。
+Openclaw 控制的是一个**专用的 Chrome 配置文件**（名为 `clawd`，橙色 UI）。这与您的日常浏览器完全分开。
 
 **两种方式访问该浏览器：**
 
@@ -27,8 +27,8 @@ Moltbot 控制的是一个**专用的 Chrome 配置文件**（名为 `clawd`，�
 2. **通过命令行打开**：
 
 ```bash
-moltbot-cn browser start
-moltbot-cn browser open https://x.com
+openclaw-cn browser start
+openclaw-cn browser open https://x.com
 ```
 
 如果有多个配置文件，使用 `--browser-profile <名称>`（默认是 `clawd`）。
@@ -70,7 +70,7 @@ moltbot-cn browser open https://x.com
 然后指定主机浏览器：
 
 ```bash
-moltbot-cn browser open https://x.com --browser-profile clawd --target host
+openclaw-cn browser open https://x.com --browser-profile clawd --target host
 ```
 
 或者禁用发帖代理的沙箱模式。

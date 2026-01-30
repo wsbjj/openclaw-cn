@@ -3,7 +3,7 @@ import type { ZodIssue } from "zod";
 import type { ClawdbotConfig } from "../config/config.js";
 import {
   ClawdbotSchema,
-  CONFIG_PATH_CLAWDBOT,
+  CONFIG_PATH_OPENCLAW,
   migrateLegacyConfig,
   readConfigFileSnapshot,
 } from "../config/config.js";
@@ -156,7 +156,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       if (migrated) cfg = migrated;
     } else {
       fixHints.push(
-        `Run "${formatCliCommand("moltbot-cn doctor --fix")}" to apply legacy migrations.`,
+        `Run "${formatCliCommand("openclaw-cn doctor --fix")}" to apply legacy migrations.`,
       );
     }
   }
@@ -169,7 +169,9 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     if (shouldRepair) {
       cfg = normalized.config;
     } else {
-      fixHints.push(`Run "${formatCliCommand("moltbot-cn doctor --fix")}" to apply these changes.`);
+      fixHints.push(
+        `Run "${formatCliCommand("openclaw-cn doctor --fix")}" to apply these changes.`,
+      );
     }
   }
 
@@ -181,7 +183,9 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     if (shouldRepair) {
       cfg = autoEnable.config;
     } else {
-      fixHints.push(`Run "${formatCliCommand("moltbot-cn doctor --fix")}" to apply these changes.`);
+      fixHints.push(
+        `Run "${formatCliCommand("openclaw-cn doctor --fix")}" to apply these changes.`,
+      );
     }
   }
 
@@ -195,7 +199,7 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
       note(lines, "Doctor changes");
     } else {
       note(lines, "Unknown config keys");
-      fixHints.push('Run "moltbot-cn doctor --fix" to remove these keys.');
+      fixHints.push('Run "openclaw-cn doctor --fix" to remove these keys.');
     }
   }
 
@@ -214,5 +218,5 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
 
   noteOpencodeProviderOverrides(cfg);
 
-  return { cfg, path: snapshot.path ?? CONFIG_PATH_CLAWDBOT, shouldWriteConfig };
+  return { cfg, path: snapshot.path ?? CONFIG_PATH_OPENCLAW, shouldWriteConfig };
 }

@@ -44,27 +44,27 @@ read_when:
 
 ## Nix 模式运行时行为
 
-当设置 `CLAWDBOT_NIX_MODE=1` 时（使用 nix-clawdbot 会自动设置）：
+当设置 `OPENCLAW_NIX_MODE=1` 时（使用 nix-clawdbot 会自动设置）：
 
 Clawdbot 支持一种 **Nix 模式**，使配置具有确定性并禁用自动安装流程。
 通过导出来启用：
 
 ```bash
-CLAWDBOT_NIX_MODE=1
+OPENCLAW_NIX_MODE=1
 ```
 
 在 macOS 上，GUI 应用不会自动继承 shell 环境变量。您也可以通过 defaults 启用 Nix 模式：
 
 ```bash
-defaults write com.clawdbot.mac clawdbot.nixMode -bool true
+defaults write com.openclaw.mac clawdbot.nixMode -bool true
 ```
 
 ### 配置和状态路径
 
-Clawdbot 从 `CLAWDBOT_CONFIG_PATH` 读取 JSON5 配置，并在 `CLAWDBOT_STATE_DIR` 中存储可变数据。
+Clawdbot 从 `OPENCLAW_CONFIG_PATH` 读取 JSON5 配置，并在 `OPENCLAW_STATE_DIR` 中存储可变数据。
 
-- `CLAWDBOT_STATE_DIR`（默认：`~/.clawdbot`）
-- `CLAWDBOT_CONFIG_PATH`（默认：`$CLAWDBOT_STATE_DIR/clawdbot.json`）
+- `OPENCLAW_STATE_DIR`（默认：`~/.openclaw`）
+- `OPENCLAW_CONFIG_PATH`（默认：`$OPENCLAW_STATE_DIR/openclaw.json`）
 
 在 Nix 下运行时，将这些明确设置为 Nix 管理的位置，以便运行时状态和配置保持在不可变存储之外。
 
@@ -82,7 +82,7 @@ macOS 打包流程期望在以下位置有稳定的 Info.plist 模板：
 apps/macos/Sources/Clawdbot/Resources/Info.plist
 ```
 
-[`scripts/package-mac-app.sh`](https://github.com/jiulingyun/moltbot-cn/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段
+[`scripts/package-mac-app.sh`](https://github.com/jiulingyun/openclaw-cn/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段
 （bundle ID、版本/构建号、Git SHA、Sparkle keys）。这使 plist 对于 SwiftPM 打包和 Nix 构建
 （不依赖完整 Xcode 工具链）保持确定性。
 

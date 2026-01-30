@@ -83,6 +83,6 @@ export function formatLegacyWorkspaceWarning(detection: LegacyWorkspaceDetection
     "Extra workspace directories detected (may contain old agent files):",
     ...detection.legacyDirs.map((dir) => `- ${shortenHomePath(dir)}`),
     `Active workspace: ${shortenHomePath(detection.activeWorkspace)}`,
-    "If unused, archive or move to Trash (e.g. trash ~/clawdbot).",
+    "If unused, archive or move to Trash (e.g. trash ~/openclawot).",
   ].join("\n");
 }

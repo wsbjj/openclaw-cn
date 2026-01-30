@@ -72,7 +72,7 @@ export async function ensureConfigReady(params: {
   }
   params.runtime.error("");
   params.runtime.error(
-    `${muted("Run:")} ${commandText(formatCliCommand("moltbot-cn doctor --fix"))}`,
+    `${muted("Run:")} ${commandText(formatCliCommand("openclaw-cn doctor --fix"))}`,
   );
   if (!allowInvalid) {
     params.runtime.exit(1);

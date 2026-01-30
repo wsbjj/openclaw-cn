@@ -15,7 +15,7 @@ provider mixes reasoning into normal text.
 
 Use `/debug` in chat to set **runtime-only** config overrides (memory, not disk).
 `/debug` is disabled by default; enable with `commands.debug: true`.
-This is handy when you need to toggle obscure settings without editing `clawdbot.json`.
+This is handy when you need to toggle obscure settings without editing `openclaw.json`.
 
 Examples:
 
@@ -50,7 +50,7 @@ on each restart.
 Use the dev profile to isolate state and spin up a safe, disposable setup for
 debugging. There are **two** `--dev` flags:
 
-- **Global `--dev` (profile):** isolates state under `~/.clawdbot-dev` and
+- **Global `--dev` (profile):** isolates state under `~/.openclaw-dev` and
   defaults the gateway port to `19001` (derived ports shift with it).
 - **`gateway --dev`: tells the Gateway to auto-create a default config +
   workspace** when missing (and skip BOOTSTRAP.md).
@@ -59,7 +59,7 @@ Recommended flow (dev profile + dev bootstrap):
 
 ```bash
 pnpm gateway:dev
-CLAWDBOT_PROFILE=dev clawdbot tui
+OPENCLAW_PROFILE=dev clawdbot tui
 ```
 
 If you don’t have a global install yet, run the CLI via `pnpm clawdbot ...`.
@@ -67,10 +67,10 @@ If you don’t have a global install yet, run the CLI via `pnpm clawdbot ...`.
 What this does:
 
 1) **Profile isolation** (global `--dev`)
-   - `CLAWDBOT_PROFILE=dev`
-   - `CLAWDBOT_STATE_DIR=~/.clawdbot-dev`
-   - `CLAWDBOT_CONFIG_PATH=~/.clawdbot-dev/clawdbot.json`
-   - `CLAWDBOT_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
+   - `OPENCLAW_PROFILE=dev`
+   - `OPENCLAW_STATE_DIR=~/.openclaw-dev`
+   - `OPENCLAW_CONFIG_PATH=~/.openclaw-dev/openclaw.json`
+   - `OPENCLAW_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
 
 2) **Dev bootstrap** (`gateway --dev`)
    - Writes a minimal config if missing (`gateway.mode=local`, bind loopback).
@@ -79,7 +79,7 @@ What this does:
    - Seeds the workspace files if missing:
      `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`.
    - Default identity: **C3‑PO** (protocol droid).
-   - Skips channel providers in dev mode (`CLAWDBOT_SKIP_CHANNELS=1`).
+   - Skips channel providers in dev mode (`OPENCLAW_SKIP_CHANNELS=1`).
 
 Reset flow (fresh start):
 
@@ -91,7 +91,7 @@ Note: `--dev` is a **global** profile flag and gets eaten by some runners.
 If you need to spell it out, use the env var form:
 
 ```bash
-CLAWDBOT_PROFILE=dev clawdbot gateway --dev --reset
+OPENCLAW_PROFILE=dev clawdbot gateway --dev --reset
 ```
 
 `--reset` wipes config, credentials, sessions, and the dev workspace (using
@@ -118,19 +118,19 @@ pnpm gateway:watch --force --raw-stream
 Optional path override:
 
 ```bash
-pnpm gateway:watch --force --raw-stream --raw-stream-path ~/.clawdbot/logs/raw-stream.jsonl
+pnpm gateway:watch --force --raw-stream --raw-stream-path ~/.openclaw/logs/raw-stream.jsonl
 ```
 
 Equivalent env vars:
 
 ```bash
-CLAWDBOT_RAW_STREAM=1
-CLAWDBOT_RAW_STREAM_PATH=~/.clawdbot/logs/raw-stream.jsonl
+OPENCLAW_RAW_STREAM=1
+OPENCLAW_RAW_STREAM_PATH=~/.openclaw/logs/raw-stream.jsonl
 ```
 
 Default file:
 
-`~/.clawdbot/logs/raw-stream.jsonl`
+`~/.openclaw/logs/raw-stream.jsonl`
 
 ## Raw chunk logging (pi-mono)
 

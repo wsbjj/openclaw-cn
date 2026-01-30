@@ -180,7 +180,7 @@ export function buildMSTeamsPollCard(params: {
         },
         msteams: {
           type: "messageBack",
-          text: "moltbot-cn poll vote",
+          text: "openclaw-cn poll vote",
           displayText: "Vote recorded",
           value: { clawdbotPollId: pollId },
         },

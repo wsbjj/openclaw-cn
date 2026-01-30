@@ -61,7 +61,7 @@ when no OpenAI or ElevenLabs API keys are available.
 
 ## Config
 
-TTS config lives under `messages.tts` in `clawdbot.json`.
+TTS config lives under `messages.tts` in `openclaw.json`.
 Full schema is in [Gateway configuration](/gateway/configuration).
 
 ### Minimal config (enable + provider)
@@ -159,7 +159,7 @@ Full schema is in [Gateway configuration](/gateway/configuration).
       auto: "always",
       maxTextLength: 4000,
       timeoutMs: 30000,
-      prefsPath: "~/.clawdbot/settings/tts.json"
+      prefsPath: "~/.openclaw/settings/tts.json"
     }
   }
 }
@@ -291,7 +291,7 @@ Optional allowlist (disable specific overrides while keeping tags enabled):
 ## Per-user preferences
 
 Slash commands write local overrides to `prefsPath` (default:
-`~/.clawdbot/settings/tts.json`, override with `CLAWDBOT_TTS_PREFS` or
+`~/.openclaw/settings/tts.json`, override with `OPENCLAW_TTS_PREFS` or
 `messages.tts.prefsPath`).
 
 Stored fields:

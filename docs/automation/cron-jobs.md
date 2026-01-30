@@ -17,7 +17,7 @@ cron is the mechanism.
 
 ## TL;DR
 - Cron runs **inside the Gateway** (not inside the model).
-- Jobs persist under `~/.moltbot-cn/cron/` so restarts don’t lose schedules.
+- Jobs persist under `~/.openclaw-cn/cron/` so restarts don’t lose schedules.
 - Two execution styles:
   - **Main session**: enqueue a system event, then run on the next heartbeat.
   - **Isolated**: run a dedicated agent turn in `cron:<jobId>`, optionally deliver output.
@@ -151,8 +151,8 @@ Prefixed targets like `telegram:...` / `telegram:group:...` are also accepted:
 - `telegram:group:-1001234567890:topic:123`
 
 ## Storage & history
-- Job store: `~/.moltbot-cn/cron/jobs.json` (Gateway-managed JSON).
-- Run history: `~/.moltbot-cn/cron/runs/<jobId>.jsonl` (JSONL, auto-pruned).
+- Job store: `~/.openclaw-cn/cron/jobs.json` (Gateway-managed JSON).
+- Run history: `~/.openclaw-cn/cron/runs/<jobId>.jsonl` (JSONL, auto-pruned).
 - Override store path: `cron.store` in config.
 
 ## Configuration
@@ -161,7 +161,7 @@ Prefixed targets like `telegram:...` / `telegram:group:...` are also accepted:
 {
   cron: {
     enabled: true, // default true
-    store: "~/.moltbot-cn/cron/jobs.json",
+    store: "~/.openclaw-cn/cron/jobs.json",
     maxConcurrentRuns: 1 // default 1
   }
 }
@@ -169,7 +169,7 @@ Prefixed targets like `telegram:...` / `telegram:group:...` are also accepted:
 
 Disable cron entirely:
 - `cron.enabled: false` (config)
-- `CLAWDBOT_SKIP_CRON=1` (env)
+- `OPENCLAW_SKIP_CRON=1` (env)
 
 ## CLI quickstart
 
@@ -276,7 +276,7 @@ For immediate system events without a job, use [`clawdbot system event`](/cli/sy
 ## Troubleshooting
 
 ### “Nothing runs”
-- Check cron is enabled: `cron.enabled` and `CLAWDBOT_SKIP_CRON`.
+- Check cron is enabled: `cron.enabled` and `OPENCLAW_SKIP_CRON`.
 - Check the Gateway is running continuously (cron runs inside the Gateway process).
 - For `cron` schedules: confirm timezone (`--tz`) vs the host timezone.
 

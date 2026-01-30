@@ -24,7 +24,7 @@
     }
   },
   "dependencies": {
-    "clawdbot": "workspace:moltbot-cn@*",
+    "clawdbot": "workspace:openclaw-cn@*",
     "nostr-tools": "^2.20.0",
     "zod": "^4.3.6"
   }
