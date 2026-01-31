@@ -8,6 +8,7 @@ import { recordPluginInstall } from "../../plugins/installs.js";
 import { enablePluginInConfig } from "../../plugins/enable.js";
 import { loadClawdbotPlugins } from "../../plugins/loader.js";
 import { installPluginFromNpmSpec } from "../../plugins/install.js";
+import { resolveBundledPluginsDir } from "../../plugins/bundled-dir.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
 
@@ -35,14 +36,26 @@ function resolveLocalPath(
   workspaceDir: string | undefined,
   allowLocal: boolean,
 ): string | null {
-  if (!allowLocal) return null;
   const raw = entry.install.localPath?.trim();
   if (!raw) return null;
   const candidates = new Set<string>();
-  candidates.add(path.resolve(process.cwd(), raw));
-  if (workspaceDir && workspaceDir !== process.cwd()) {
-    candidates.add(path.resolve(workspaceDir, raw));
+
+  // 1. Check bundled plugins (always allowed)
+  const bundledDir = resolveBundledPluginsDir();
+  if (bundledDir) {
+    // raw is like "extensions/feishu", bundledDir is ".../extensions"
+    // So we resolve from bundledDir's parent.
+    candidates.add(path.resolve(bundledDir, "..", raw));
   }
+
+  // 2. Check local workspace (if allowed)
+  if (allowLocal) {
+    candidates.add(path.resolve(process.cwd(), raw));
+    if (workspaceDir && workspaceDir !== process.cwd()) {
+      candidates.add(path.resolve(workspaceDir, raw));
+    }
+  }
+
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) return candidate;
   }
