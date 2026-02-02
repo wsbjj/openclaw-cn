@@ -86,6 +86,7 @@ openclaw-cn channels add
       "application:application.app_message_stats.overview:readonly",
       "application:application:self_manage",
       "application:bot.menu:write",
+      "cardkit:card:write",
       "contact:user.employee_id:readonly",
       "corehr:file:download",
       "event:ip_list",
@@ -96,7 +97,8 @@ openclaw-cn channels add
       "im:message.p2p_msg:readonly",
       "im:message:readonly",
       "im:message:send_as_bot",
-      "im:resource"
+      "im:resource",
+      "sheets:spreadsheet"
     ],
     "user": [
       "aily:file:read",
