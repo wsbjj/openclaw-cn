@@ -301,6 +301,46 @@ export function createGatewayHttpServer(opts: {
   return httpServer;
 }
 
+/**
+ * Validate WebSocket Origin header to prevent Cross-Site WebSocket Hijacking (CSWSH).
+ * See CVE: GHSA-g8p2-7wf7-98mq
+ *
+ * Rules:
+ * - Localhost origins (http://localhost:*, http://127.0.0.1:*, etc.) are always allowed
+ * - Null origin (file:// protocol, privacy mode) is allowed for local clients
+ * - Empty origin (non-browser clients) is allowed
+ * - All other origins are rejected
+ */
+function isValidWebSocketOrigin(req: IncomingMessage): boolean {
+  const origin = req.headers.origin;
+
+  // Non-browser clients may not send Origin header - allow
+  if (origin === undefined || origin === "") return true;
+
+  // Some browsers send "null" for file:// or privacy mode - allow for local access
+  if (origin === "null") return true;
+
+  try {
+    const parsed = new URL(origin);
+    const hostname = parsed.hostname.toLowerCase();
+
+    // Allow localhost and loopback addresses
+    if (hostname === "localhost") return true;
+    if (hostname === "127.0.0.1") return true;
+    if (hostname === "::1") return true;
+    if (hostname === "[::1]") return true;
+    if (hostname.startsWith("127.")) return true;
+
+    // Allow Tailscale serve domains
+    if (hostname.endsWith(".ts.net")) return true;
+
+    return false;
+  } catch {
+    // Invalid URL - reject
+    return false;
+  }
+}
+
 export function attachGatewayUpgradeHandler(opts: {
   httpServer: HttpServer;
   wss: WebSocketServer;
@@ -309,6 +349,15 @@ export function attachGatewayUpgradeHandler(opts: {
   const { httpServer, wss, canvasHost } = opts;
   httpServer.on("upgrade", (req, socket, head) => {
     if (canvasHost?.handleUpgrade(req, socket, head)) return;
+
+    // Security: Validate Origin header to prevent CSWSH attacks
+    // See CVE: GHSA-g8p2-7wf7-98mq
+    if (!isValidWebSocketOrigin(req)) {
+      socket.write("HTTP/1.1 403 Forbidden\r\n\r\n");
+      socket.destroy();
+      return;
+    }
+
     wss.handleUpgrade(req, socket, head, (ws) => {
       wss.emit("connection", ws, req);
     });

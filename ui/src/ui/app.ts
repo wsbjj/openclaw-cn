@@ -116,6 +116,10 @@ export class ClawdbotApp extends LitElement {
   @state() assistantAvatar = injectedAssistantIdentity.avatar;
   @state() assistantAgentId = injectedAssistantIdentity.agentId ?? null;
 
+  // Security: Pending gateway URL from URL params, requires user confirmation.
+  // See CVE: GHSA-g8p2-7wf7-98mq
+  @state() pendingGatewayUrl: string | null = null;
+
   @state() sessionKey = this.settings.sessionKey;
   @state() chatLoading = false;
   @state() chatSending = false;
@@ -477,6 +481,27 @@ export class ClawdbotApp extends LitElement {
     const newRatio = Math.max(0.4, Math.min(0.7, ratio));
     this.splitRatio = newRatio;
     this.applySettings({ ...this.settings, splitRatio: newRatio });
+  }
+
+  /**
+   * Accept the pending gateway URL and apply it to settings.
+   * Called when user confirms the gateway URL change in the security prompt.
+   */
+  acceptPendingGatewayUrl() {
+    const pending = this.pendingGatewayUrl;
+    if (!pending) return;
+    this.pendingGatewayUrl = null;
+    this.applySettings({ ...this.settings, gatewayUrl: pending });
+    // Reconnect with the new gateway URL
+    this.connect();
+  }
+
+  /**
+   * Reject the pending gateway URL change.
+   * Called when user denies the gateway URL change in the security prompt.
+   */
+  rejectPendingGatewayUrl() {
+    this.pendingGatewayUrl = null;
   }
 
   render() {

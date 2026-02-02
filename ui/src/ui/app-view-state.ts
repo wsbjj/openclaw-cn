@@ -45,6 +45,9 @@ export type AppViewState = {
   assistantName: string;
   assistantAvatar: string | null;
   assistantAgentId: string | null;
+  // Security: Pending gateway URL from URL params, requires user confirmation.
+  // See CVE: GHSA-g8p2-7wf7-98mq
+  pendingGatewayUrl: string | null;
   sessionKey: string;
   chatLoading: boolean;
   chatSending: boolean;
@@ -203,4 +206,7 @@ export type AppViewState = {
   handleLogsLevelFilterToggle: (level: LogLevel) => void;
   handleLogsAutoFollowToggle: (next: boolean) => void;
   handleCallDebugMethod: (method: string, params: string) => Promise<void>;
+  // Security: Gateway URL confirmation methods (CVE: GHSA-g8p2-7wf7-98mq)
+  acceptPendingGatewayUrl: () => void;
+  rejectPendingGatewayUrl: () => void;
 };
