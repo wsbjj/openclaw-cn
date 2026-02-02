@@ -137,9 +137,6 @@ importers:
       node-edge-tts:
         specifier: ^1.2.9
         version: 1.2.9
-      openclaw:
-        specifier: 'link:'
-        version: 'link:'
       osc-progress:
         specifier: ^0.3.0
         version: 0.3.0
