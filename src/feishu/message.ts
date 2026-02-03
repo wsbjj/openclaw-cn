@@ -28,6 +28,8 @@ export type ProcessFeishuMessageOptions = {
   resolvedConfig?: ResolvedFeishuConfig;
   /** Feishu app credentials for streaming card API */
   credentials?: { appId: string; appSecret: string };
+  /** Bot name for streaming card title (optional, defaults to no title) */
+  botName?: string;
 };
 
 export async function processFeishuMessage(
@@ -37,7 +39,7 @@ export async function processFeishuMessage(
   options: ProcessFeishuMessageOptions = {},
 ) {
   const cfg = options.cfg ?? loadConfig();
-  const accountId = options.accountId ?? appId;
+  const accountId = options.accountId || "default";
   const feishuCfg = options.resolvedConfig ?? resolveFeishuConfig({ cfg, accountId });
 
   // SDK 2.0 schema: data directly contains message, sender, etc.
@@ -337,10 +339,17 @@ export async function processFeishuMessage(
         }
       },
       onError: (err) => {
-        logger.error(`Reply error: ${String(err)}`);
+        const msg = String(err);
+        if (msg.includes("permission") || msg.includes("forbidden") || msg.includes("code: 99991660")) {
+          logger.error(
+            `Reply error: ${msg} (Check if "im:message" or "im:resource" permissions are enabled in Feishu Console)`,
+          );
+        } else {
+          logger.error(`Reply error: ${msg}`);
+        }
         // Clean up streaming session on error
         if (streamingSession?.isActive()) {
-          streamingSession.close().catch(() => {});
+          streamingSession.close().catch(() => { });
         }
       },
       onReplyStart: async () => {
@@ -351,7 +360,14 @@ export async function processFeishuMessage(
             streamingStarted = true;
             logger.debug(`Started streaming card for chat ${chatId}`);
           } catch (err) {
-            logger.warn(`Failed to start streaming card: ${String(err)}`);
+            const msg = String(err);
+            if (msg.includes("permission") || msg.includes("forbidden")) {
+              logger.warn(
+                `Failed to start streaming card: ${msg} (Check if "im:resource:msg:send" or card permissions are enabled)`,
+              );
+            } else {
+              logger.warn(`Failed to start streaming card: ${msg}`);
+            }
             // Continue without streaming
           }
         }
@@ -361,20 +377,20 @@ export async function processFeishuMessage(
       disableBlockStreaming: !feishuCfg.blockStreaming,
       onPartialReply: streamingSession
         ? async (payload) => {
-            if (!streamingSession.isActive() || !payload.text) return;
-            if (payload.text === lastPartialText) return;
-            lastPartialText = payload.text;
-            await streamingSession.update(payload.text);
-          }
+          if (!streamingSession.isActive() || !payload.text) return;
+          if (payload.text === lastPartialText) return;
+          lastPartialText = payload.text;
+          await streamingSession.update(payload.text);
+        }
         : undefined,
       onReasoningStream: streamingSession
         ? async (payload) => {
-            // Also update on reasoning stream for extended thinking models
-            if (!streamingSession.isActive() || !payload.text) return;
-            if (payload.text === lastPartialText) return;
-            lastPartialText = payload.text;
-            await streamingSession.update(payload.text);
-          }
+          // Also update on reasoning stream for extended thinking models
+          if (!streamingSession.isActive() || !payload.text) return;
+          if (payload.text === lastPartialText) return;
+          lastPartialText = payload.text;
+          await streamingSession.update(payload.text);
+        }
         : undefined,
     },
   });
